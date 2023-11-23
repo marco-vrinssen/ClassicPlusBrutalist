@@ -16,11 +16,11 @@ local function SystemUpdate()
     MuteSoundFile(567677)
 
     local messages = {
-        "1. /leave: Leave your party or raid.",
-        "2. /post MESSAGE: Sends the MESSAGE across all active channels.",
-        "3. /spam MESSAGE: Sends the MESSAGE to all players currently displayed in an open /who window.",
-        "4. /recruit MESSAGE: Sends the MESSAGE and guild invite to all players who are not in a guild and are currently displayed in an open /who window.",
-        "5. /filter KEYWORD: Filters all channels for the specific KEYWORD and resends the appropriate message when a match is found."
+        "/post MESSAGE: Broadcasts MESSAGE in all joined and active chat channels.",
+        "/spam MESSAGE: Sends MESSAGE to all players currently visible in the active /who list.",
+        "/recruit MESSAGE: Delivers MESSAGE and a guild invitation to unaffiliated players listed in the active /who list.",
+        "/leave: Enables quick exit from the current party or raid.",
+        "/filter KEYWORD: Scans all active chats for a specified KEYWORD and shares matching messages in the main chat tab."
     }
 
     local style = "|cffffffbf %s|r"
