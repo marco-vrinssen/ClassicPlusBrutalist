@@ -2,7 +2,7 @@
 ##  Addon for World of Warcraft Classic 1.15.
 
 ## Summary
-Super lightweight, simple (380kb memory) add-on that modifies the user interface for a more contemporary design while maintaining the integrity of the game's overall art direction, and implements significant user experience improvements in terms of item handling and player interaction.
+Super lightweight (380kb memory) add-on that modifies the user interface for a more contemporary design while maintaining the integrity of the game's overall art direction, and implements fundamental user experience improvements in terms of item handling and player interaction.
 
 ### User Interface Enhancements
 - **Action Bar Customization**: Streamlines your gameplay by removing default textures, centering action bars, and stacking them at the screen's bottom center.
