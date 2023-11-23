@@ -1,8 +1,10 @@
 # Classic+ Pro
 
-## Addon Version 1.0
+## Addon Version
+1.0
 
-## Game Version Requirement: WoW Classic 1.15.0
+## Game Version Requirement
+WoW Classic 1.15.0
 
 ### Summary
 Super lightweight (380kb memory) add-on that modifies the user interface for a more contemporary design while maintaining the integrity of the game's overall art direction, and implements fundamental user experience improvements in terms of item handling and player interaction.
