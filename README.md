@@ -28,3 +28,6 @@ Super lightweight (380kb memory) add-on that modifies the user interface for a m
 - **/recruit MESSAGE**: Delivers MESSAGE and a guild invitation to unaffiliated players listed in the active /who list.
 - **/leave**: Enables quick exit from the current party or raid.
 - **/filter KEYWORD**: Scans all active chats for a specified KEYWORD and shares matching messages in the main chat tab.
+
+### Changed In-Game Fonts
+Move the Fonts folder to your "classic" directory to enable a cleaner typographic style in the game.
