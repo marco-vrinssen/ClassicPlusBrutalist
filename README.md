@@ -8,7 +8,7 @@ Super lightweight (380kb memory) add-on that modifies the user interface for a m
 - **Action Bar Customization**: Streamlines your gameplay by removing default textures, centering action bars, and stacking them at the screen's bottom center.
 - **Micromenu Bar**: Now hidden for a cleaner interface. Please use keyboard shortcuts for micromenu functionalities.
 - **Bag Slot Accessibility**: The bag slot button is now integrated with the container frame. Utilize keyboard shortcuts to open all bags simultaneously.
-- **Interface Element Overhaul**: Refines the visual presentation of default interface elements, including unit frames, cast bars, and the minimap.
+- **Interface Element Overhaul**: Refines the visual presentation of default interface elements, including unit frames, cast bars, nameplates or the minimap.
 - **Personal Resource Display**: Introduces a combat-specific resource meter, displayed below the player character during combat encounters.
 - **Bag Layout Update**: Redesigns the bag container for improved item management.
 
