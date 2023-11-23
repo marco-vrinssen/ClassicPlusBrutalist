@@ -1,6 +1,5 @@
 local function ActionbarsUpdate()
 
-
     MainMenuBar:SetWidth(512)
     MainMenuBar:ClearAllPoints()
     MainMenuBar:SetPoint("BOTTOM", UIParent, "BOTTOM", -2, 68)
