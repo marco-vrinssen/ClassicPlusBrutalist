@@ -1,6 +1,7 @@
 ## Classic+ Pro
 
-### Addon for World of Warcraft Classic 1.15.
+Addon for World of Warcraft Classic 1.15.
+v1.0
 
 ### Summary
 Super lightweight (380kb memory) add-on that modifies the user interface for a more contemporary design while maintaining the integrity of the game's overall art direction, and implements fundamental user experience improvements in terms of item handling and player interaction.
