@@ -1,6 +1,7 @@
 ## Classic+ Pro
 
 Addon for World of Warcraft Classic 1.15.
+
 v1.0
 
 ### Summary
