@@ -1,5 +1,5 @@
 ## Interface: 11500
-## Title: UX+ Classic
+## Title: Classic+ Pro
 ## Version: 1.0
 ## Author: MIYANKO
 
