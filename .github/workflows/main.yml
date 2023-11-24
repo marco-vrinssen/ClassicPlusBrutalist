@@ -22,6 +22,7 @@ jobs:
         file_path: "./Classic-Plus-Pro-1.0.zip"
         game_endpoint: "wow-classic"  # For World of Warcraft Classic
         project_id: 941941  # Your CurseForge project ID
-        token: ${{ secrets.8b14adab-9236-4222-bdcd-8335f939ab90 }}  # Your CurseForge API key
+
+        token: ${{ secrets.CURSEFORGE }}  # Your CurseForge API key
         game_versions: "1.15.0"  # WoW Classic version
         release_type: "release"  # Can be 'alpha', 'beta', or 'release'
