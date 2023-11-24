@@ -1,0 +1,27 @@
+name: Deploy to CurseForge
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Create Zip Archive
+      run: zip -r Classic-Plus-Pro-1.0.zip
+
+    - name: Upload to CurseForge
+      uses: itsmeow/curseforge-upload@3.1.1
+      with:
+        file_path: "./Classic-Plus-Pro-1.0.zip"
+        game_endpoint: "wow-classic"  # For World of Warcraft Classic
+        project_id: 941941  # Your CurseForge project ID
+        token: ${{ secrets.8b14adab-9236-4222-bdcd-8335f939ab90 }}  # Your CurseForge API key
+        game_versions: "1.15.0"  # WoW Classic version
+        release_type: "release"  # Can be 'alpha', 'beta', or 'release'
