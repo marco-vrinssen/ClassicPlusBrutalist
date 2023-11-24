@@ -1,5 +1,4 @@
 local function AutoLootUpdate()
-
     if GetNumLootItems() > 0 then
         for i = 1, GetNumLootItems() do
             LootSlot(i)
@@ -7,15 +6,18 @@ local function AutoLootUpdate()
     end
 end
 
+
 local AutoLootEventFrame = CreateFrame("Frame")
 AutoLootEventFrame:RegisterEvent("LOOT_READY")
 AutoLootEventFrame:SetScript("OnEvent", AutoLootUpdate)
 
 
-
-
-
-
+local LootConfigEventFrame = CreateFrame("Frame")
+LootConfigEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+LootConfigEventFrame:SetScript("OnEvent", function()
+    SetCVar("autoLootDefault", 1)
+    SetCVar("lootUnderMouse", 0)
+end)
 
 
 local function MerchantUpdate()
@@ -50,20 +52,7 @@ local function MerchantUpdate()
     end
 end
 
+
 local MerchantEventFrame = CreateFrame("Frame")
 MerchantEventFrame:RegisterEvent("MERCHANT_SHOW")
 MerchantEventFrame:SetScript("OnEvent", MerchantUpdate)
-
-
-
-
-
-
-
-
-local LootConfigFrame = CreateFrame("Frame")
-LootConfigFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-LootConfigFrame:SetScript("OnEvent", function()
-    SetCVar("autoLootDefault", 1)
-    SetCVar("lootUnderMouse", 0)
-end)

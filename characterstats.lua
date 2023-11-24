@@ -1,8 +1,6 @@
-local function CharacterFrameUpdate()
-
+local function CharacterStatsUpdate()
     CharacterModelFrameRotateLeftButton:Hide()
     CharacterModelFrameRotateRightButton:Hide()
-
     CharacterAttackFrame:SetScript("OnEnter", nil)
     CharacterAttackPowerFrame:SetScript("OnEnter", nil)
     CharacterDamageFrame:SetScript("OnEnter", nil)
@@ -18,9 +16,11 @@ local function CharacterFrameUpdate()
     local restedPercent = floor((restedXP / maxXP) * 100)
     local characterLevel = UnitLevel("player")  
     
-    local xpText = string.format("Level: |cffFFFFFF%d|r / Progress: |cffFFFFFF%d%%|r |cffFFFFFF(%d)|r\nLevel Up: |cffFFFFFF+%d|r / Rested: |cffFFFFFF%d%%|r |cffFFFFFF(%d)|r", characterLevel, xpPercent, currentXP, missingXP, restedPercent, restedXP)
+    local xpText = string.format("Level: |cffFFFFFF%d|r / Progress: |cffFFFFFF%d%%|r |cffFFFFFF(%d)|r\nLevel Up: |cffFFFFFF+%d|r / Rested: |cffFFFFFF%d%%|r |cffFFFFFF(%d)|r",
+        characterLevel, xpPercent, currentXP, missingXP, restedPercent, restedXP)
+
     CharacterLevelText:SetText(xpText)
-    
+
     local baseAP, posBuffAP, negBuffAP = UnitAttackPower("player")
     local meleeAP = baseAP + posBuffAP + negBuffAP
     local meleeCrit = GetCritChance()
@@ -51,15 +51,15 @@ local function CharacterFrameUpdate()
 
     CharacterRangedDamageFrameLabel:SetText("Spell Hit")
     CharacterRangedDamageFrameStatText:SetText(string.format("%.1f%%", spellHit))
-
 end
 
-CharacterFrame:SetScript("OnShow", CharacterFrameUpdate)
 
-local CharacterFrameEventFrame = CreateFrame("Frame")
-CharacterFrameEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-CharacterFrameEventFrame:RegisterEvent("PLAYER_LEVEL_UP")
-CharacterFrameEventFrame:RegisterEvent("PLAYER_XP_UPDATE")
-CharacterFrameEventFrame:RegisterEvent("UPDATE_EXHAUSTION")
-CharacterFrameEventFrame:RegisterEvent("UNIT_INVENTORY_CHANGED")
-CharacterFrameEventFrame:SetScript("OnEvent", CharacterFrameUpdate)
+CharacterFrame:SetScript("OnShow", CharacterStatsUpdate)
+
+local CharacterStatsEventFrame = CreateFrame("Frame")
+CharacterStatsEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+CharacterStatsEventFrame:RegisterEvent("PLAYER_LEVEL_UP")
+CharacterStatsEventFrame:RegisterEvent("PLAYER_XP_UPDATE")
+CharacterStatsEventFrame:RegisterEvent("UPDATE_EXHAUSTION")
+CharacterStatsEventFrame:RegisterEvent("UNIT_INVENTORY_CHANGED")
+CharacterStatsEventFrame:SetScript("OnEvent", CharacterStatsUpdate)

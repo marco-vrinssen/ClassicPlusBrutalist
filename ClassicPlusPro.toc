@@ -1,5 +1,6 @@
 ## Interface: 11500
 ## Title: Classic+ Pro
+## Notes: Lightweight (380kb memory) UI and UX improvements.
 ## Version: 1.0
 ## Author: MIYANKO
 
@@ -10,11 +11,11 @@ bagsorting.lua
 castbar.lua
 characterstats.lua
 chat.lua
+config.lua
 items.lua
 maps.lua
 nameplates.lua
 playerframe.lua
 resourcedisplay.lua
-system.lua
 targetframe.lua
 tooltips.lua

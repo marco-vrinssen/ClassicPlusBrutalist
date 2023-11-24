@@ -1,32 +1,30 @@
-local ResourceDisplayContainer = CreateFrame("Frame", nil, UIParent, "BackdropTemplate")
-ResourceDisplayContainer:SetSize(160,28)
-ResourceDisplayContainer:SetPoint("CENTER", UIParent, "CENTER", 0, -160)
-ResourceDisplayContainer:SetBackdrop({edgeFile = "Interface/Tooltips/UI-Tooltip-Border", edgeSize = 14})
-ResourceDisplayContainer:SetBackdropBorderColor(0.5, 0.5, 0.5)
-ResourceDisplayContainer:SetAlpha(0)  -- Initially hidden
+local StatusBarContainer = CreateFrame("Frame", nil, UIParent, "BackdropTemplate")
+StatusBarContainer:SetSize(160, 28)
+StatusBarContainer:SetPoint("CENTER", UIParent, "CENTER", 0, -160)
+StatusBarContainer:SetBackdrop({edgeFile = "Interface/Tooltips/UI-Tooltip-Border", edgeSize = 14})
+StatusBarContainer:SetBackdropBorderColor(0.5, 0.5, 0.5)
+StatusBarContainer:SetAlpha(0)  -- Initially hidden
 
-local HealthBar = CreateFrame("StatusBar", nil, ResourceDisplayContainer)
-HealthBar:SetSize(156, 12)
-HealthBar:SetPoint("TOP", ResourceDisplayContainer, "TOP", 0, -4)
-HealthBar:SetStatusBarTexture("Interface/RaidFrame/Raid-Bar-HP-Fill.blp")
-HealthBar:SetFrameStrata("LOW")
+local HealthStatusBar = CreateFrame("StatusBar", nil, StatusBarContainer)
+HealthStatusBar:SetSize(156, 12)
+HealthStatusBar:SetPoint("TOP", StatusBarContainer, "TOP", 0, -4)
+HealthStatusBar:SetStatusBarTexture("Interface/RaidFrame/Raid-Bar-HP-Fill.blp")
+HealthStatusBar:SetFrameStrata("LOW")
 
-local ResourceBar = CreateFrame("StatusBar", nil, ResourceDisplayContainer)
-ResourceBar:SetSize(156, 10)
-ResourceBar:SetPoint("BOTTOM", ResourceDisplayContainer, "BOTTOM", 0, 2)
-ResourceBar:SetStatusBarTexture("Interface/RaidFrame/Raid-Bar-HP-Fill.blp")
-ResourceBar:SetFrameStrata("LOW")
-
+local PowerStatusBar = CreateFrame("StatusBar", nil, StatusBarContainer)
+PowerStatusBar:SetSize(156, 10)
+PowerStatusBar:SetPoint("BOTTOM", StatusBarContainer, "BOTTOM", 0, 2)
+PowerStatusBar:SetStatusBarTexture("Interface/RaidFrame/Raid-Bar-HP-Fill.blp")
+PowerStatusBar:SetFrameStrata("LOW")
 
 local function SetContainerVisibility(isVisible)
     local alpha = isVisible and 1 or 0
     if isVisible then
-        UIFrameFadeIn(ResourceDisplayContainer, 0.5, ResourceDisplayContainer:GetAlpha(), alpha)
+        UIFrameFadeIn(StatusBarContainer, 0.5, StatusBarContainer:GetAlpha(), alpha)
     else
-        UIFrameFadeOut(ResourceDisplayContainer, 0.25, ResourceDisplayContainer:GetAlpha(), alpha)
+        UIFrameFadeOut(StatusBarContainer, 0.25, StatusBarContainer:GetAlpha(), alpha)
     end
 end
-
 
 local fadeOutTimer = nil
 
@@ -39,36 +37,32 @@ local function DelayedFadeOut()
     end)
 end
 
-
-
 local function ResourceDisplayUpdate()
     local health = UnitHealth("player")
     local maxHealth = UnitHealthMax("player")
-    HealthBar:SetMinMaxValues(0, maxHealth)
-    HealthBar:SetValue(health)
+    HealthStatusBar:SetMinMaxValues(0, maxHealth)
+    HealthStatusBar:SetValue(health)
 
     local resource = UnitPower("player")
     local maxResource = UnitPowerMax("player")
-    ResourceBar:SetMinMaxValues(0, maxResource)
-    ResourceBar:SetValue(resource)
+    PowerStatusBar:SetMinMaxValues(0, maxResource)
+    PowerStatusBar:SetValue(resource)
 
     if health / maxHealth <= 0.2 then
-        HealthBar:SetStatusBarColor(1, 0, 0)
+        HealthStatusBar:SetStatusBarColor(1, 0, 0)
     else
-        HealthBar:SetStatusBarColor(0, 1, 0)
+        HealthStatusBar:SetStatusBarColor(0, 1, 0)
     end
 
     local resourceType = UnitPowerType("player")
     if resourceType == Enum.PowerType.Mana then
-        ResourceBar:SetStatusBarColor(0, 0, 1)
+        PowerStatusBar:SetStatusBarColor(0, 0, 1)
     elseif resourceType == Enum.PowerType.Rage then
-        ResourceBar:SetStatusBarColor(1, 0, 0)
+        PowerStatusBar:SetStatusBarColor(1, 0, 0)
     elseif resourceType == Enum.PowerType.Energy then
-        ResourceBar:SetStatusBarColor(1, 1, 0)
+        PowerStatusBar:SetStatusBarColor(1, 1, 0)
     end
-
 end
-
 
 local ResourceDisplayEventFrame = CreateFrame("Frame")
 ResourceDisplayEventFrame:RegisterUnitEvent("UNIT_HEALTH", "player")
@@ -89,14 +83,6 @@ end)
 
 ResourceDisplayUpdate()
 
-
-
-
-
-
-
-
-
 local _, playerClass = UnitClass("player")
 if playerClass ~= "ROGUE" and playerClass ~= "DRUID" then
     return
@@ -104,7 +90,6 @@ end
 
 local function CustomComboPointSetup()
     local comboPoints = GetComboPoints("player", "target") or 0
-
     for i = 1, 5 do
         local comboPointFrame = _G["CustomComboPoint" .. i]
         if not comboPointFrame then
@@ -116,7 +101,7 @@ local function CustomComboPointSetup()
             comboPointFrame.texture:SetTexture("Interface/COMMON/Indicator-Yellow")
 
             if i == 1 then
-                comboPointFrame:SetPoint("TOP", ResourceDisplayContainer, "BOTTOM", -56, -16)
+                comboPointFrame:SetPoint("TOP", StatusBarContainer, "BOTTOM", -56, -16)
             else
                 local previousFrame = _G["CustomComboPoint" .. (i - 1)]
                 comboPointFrame:SetPoint("LEFT", previousFrame, "RIGHT", 4, 0)
@@ -139,10 +124,10 @@ local function CustomComboPointSetup()
     ComboFrame:Hide()
 end
 
-local ComboPointsListener = CreateFrame("Frame")
-ComboPointsListener:RegisterEvent("PLAYER_TARGET_CHANGED")
-ComboPointsListener:RegisterEvent("UNIT_POWER_UPDATE")
-ComboPointsListener:SetScript("OnEvent", function(self, event, ...)
+local CustomComboPointListener = CreateFrame("Frame")
+CustomComboPointListener:RegisterEvent("PLAYER_TARGET_CHANGED")
+CustomComboPointListener:RegisterEvent("UNIT_POWER_UPDATE")
+CustomComboPointListener:SetScript("OnEvent", function(self, event, ...)
     local unit = ...
     if event == "UNIT_POWER_UPDATE" and unit == "player" then
         CustomComboPointSetup()

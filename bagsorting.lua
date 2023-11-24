@@ -1,7 +1,7 @@
 local _G, _M = getfenv(0), {}
 setfenv(1, setmetatable(_M, {__index=_G}))
 
-CreateFrame('GameTooltip', 'SortBagsTooltip', nil, 'GameTooltipTemplate')
+CreateFrame("GameTooltip", "SortBagsTooltip", nil, "GameTooltipTemplate")
 
 BAG_CONTAINERS = {1, 2, 3, 4}
 
@@ -17,7 +17,7 @@ end
 
 local function set(...)
 	local t = {}
-	local n = select('#', ...)
+	local n = select("#", ...)
 	for i = 1, n do
 		t[select(i, ...)] = true
 	end
@@ -34,7 +34,7 @@ end
 
 local function union(...)
 	local t = {}
-	local n = select('#', ...)
+	local n = select("#", ...)
 	for i = 1, n do
 		for k in pairs(select(i, ...)) do
 			t[k] = true
@@ -100,416 +100,401 @@ local CLASSES = {
 		containers = {38307, 39489, 44446},
 		items = arrayToSet({954, 955, 1180, 1181, 1477, 1711, 1712, 2289, 2290, 3012, 3371, 3372, 4419, 4422, 4424, 4425, 4426, 8925, 10306, 10307, 10308, 10309, 10310, 18256, 19227, 19228, 19230, 19231, 19232, 19233, 19234, 19235, 19236, 19257, 19258, 19259, 19260, 19261, 19262, 19263, 19264, 19265, 19267, 19268, 19269, 19270, 19271, 19272, 19273, 19274, 19275, 19276, 19277, 19278, 19279, 19280, 19281, 19282, 19283, 19284, 27498, 27499, 27501, 27502, 27503, 31882, 31883, 31884, 31885, 31886, 31887, 31888, 31889, 31890, 31891, 31892, 31893, 31894, 31895, 31896, 31898, 31899, 31900, 31901, 31902, 31903, 31904, 31905, 31906, 31907, 31908, 31909, 31910, 31911, 31912, 31913, 31914, 31915, 31916, 31917, 31918, 33457, 33458, 33460, 33461, 33462, 34647, 37091, 37092, 37093, 37094, 37097, 37098, 37100, 37101, 37118, 37140, 37143, 37145, 37147, 37156, 37157, 37158, 37159, 37160, 37161, 37163, 37164, 38685, 39014, 39151, 39334, 39338, 39339, 39340, 39341, 39342, 39343, 39354, 39469, 39505, 39774, 40411, 40896, 40897, 40899, 40900, 40901, 40902, 40903, 40906, 40908, 40909, 40912, 40913, 40914, 40915, 40916, 40919, 40920, 40921, 40922, 40923, 40924, 41092, 41094, 41095, 41096, 41097, 41098, 41099, 41100, 41101, 41102, 41103, 41104, 41105, 41106, 41107, 41108, 41109, 41110, 41517, 41518, 41524, 41526, 41527, 41529, 41530, 41531, 41532, 41533, 41534, 41535, 41536, 41537, 41538, 41539, 41540, 41541, 41542, 41547, 41552, 42396, 42397, 42398, 42399, 42400, 42401, 42402, 42403, 42404, 42405, 42406, 42407, 42408, 42409, 42410, 42411, 42412, 42414, 42415, 42416, 42417, 42453, 42454, 42455, 42456, 42457, 42458, 42459, 42460, 42461, 42462, 42463, 42464, 42465, 42466, 42467, 42468, 42469, 42470, 42471, 42472, 42473, 42734, 42735, 42736, 42737, 42738, 42739, 42740, 42741, 42742, 42743, 42744, 42745, 42746, 42747, 42748, 42749, 42750, 42751, 42752, 42753, 42754, 42897, 42898, 42899, 42900, 42901, 42902, 42903, 42904, 42905, 42906, 42907, 42908, 42909, 42910, 42911, 42912, 42913, 42914, 42915, 42916, 42917, 42922, 42954, 42955, 42956, 42957, 42958, 42959, 42960, 42961, 42962, 42963, 42964, 42965, 42966, 42967, 42968, 42969, 42970, 42971, 42972, 42973, 42974, 42975, 42976, 42977, 42978, 42979, 42980, 42981, 42982, 42983, 43039, 43103, 43104, 43105, 43106, 43107, 43108, 43109, 43115, 43116, 43117, 43118, 43119, 43120, 43121, 43122, 43123, 43124, 43125, 43126, 43127, 43316, 43331, 43332, 43334, 43335, 43338, 43339, 43340, 43342, 43343, 43344, 43350, 43351, 43354, 43355, 43356, 43357, 43359, 43360, 43361, 43364, 43365, 43366, 43367, 43368, 43369, 43370, 43371, 43372, 43373, 43374, 43376, 43377, 43378, 43379, 43380, 43381, 43385, 43386, 43388, 43389, 43390, 43391, 43392, 43393, 43394, 43395, 43396, 43397, 43398, 43399, 43400, 43412, 43413, 43414, 43415, 43416, 43417, 43418, 43419, 43420, 43421, 43422, 43423, 43424, 43425, 43426, 43427, 43428, 43429, 43430, 43431, 43432, 43463, 43464, 43465, 43466, 43533, 43534, 43535, 43536, 43537, 43538, 43539, 43541, 43542, 43543, 43544, 43545, 43546, 43547, 43548, 43549, 43550, 43551, 43552, 43553, 43554, 43557, 43558, 43559, 43560, 43561, 43562, 43563, 43671, 43672, 43673, 43674, 43725, 43825, 43826, 43827, 43850, 43867, 43868, 43869, 44143, 44144, 44145, 44146, 44147, 44148, 44154, 44155, 44156, 44157, 44158, 44165, 44184, 44185, 44259, 44260, 44261, 44262, 44263, 44264, 44265, 44266, 44267, 44268, 44269, 44270, 44271, 44272, 44273, 44274, 44275, 44276, 44277, 44278, 44279, 44280, 44281, 44282, 44284, 44285, 44286, 44287, 44288, 44289, 44290, 44291, 44292, 44293, 44294, 44314, 44315, 44326, 44684, 44920, 44922, 44923, 44928, 44955, 45601, 45602, 45603, 45604, 45622, 45623, 45625, 45731, 45732, 45733, 45734, 45735, 45736, 45737, 45738, 45739, 45740, 45741, 45742, 45743, 45744, 45745, 45746, 45747, 45753, 45755, 45756, 45757, 45758, 45760, 45761, 45762, 45764, 45766, 45767, 45768, 45769, 45770, 45771, 45772, 45775, 45776, 45777, 45778, 45779, 45780, 45781, 45782, 45783, 45785, 45789, 45790, 45792, 45793, 45794, 45795, 45797, 45799, 45800, 45803, 45804, 45805, 45806, 45908, 45912, 46108, 46372, 48720, 49084, 49632, 49768, 50045, 50077, 50125, 50166, 50167, 50168, 199335, 199336, 199777, 199778, 200068, 37602, 38682, 39349, 39350, 43145, 43146, 10648, 39501, 39502}),
 	},
-}
 
-do
-	local f = CreateFrame'Frame'
-	local lastUpdate = 0
-	local function updateHandler()
-		if GetTime() - lastUpdate > 1 then
-			for _, container in pairs(BAG_CONTAINERS) do
-				for position = 1, C_Container.GetContainerNumSlots(container) do
-					SetScanTooltip(container, position)
+	}
+
+	do
+		local f = CreateFrame("Frame")
+		local lastUpdate = 0
+		local function updateHandler()
+			if GetTime() - lastUpdate > 1 then
+				for _, container in pairs(BAG_CONTAINERS) do
+					for position = 1, C_Container.GetContainerNumSlots(container) do
+						SetScanTooltip(container, position)
+					end
 				end
+				f:SetScript("OnUpdate", nil)
 			end
-			f:SetScript('OnUpdate', nil)
 		end
+		f:SetScript("OnEvent", function()
+			lastUpdate = GetTime()
+			f:SetScript("OnUpdate", updateHandler)
+		end)
+		f:RegisterEvent("BAG_UPDATE")
 	end
-	f:SetScript('OnEvent', function()
-		lastUpdate = GetTime()
-		f:SetScript('OnUpdate', updateHandler)
-	end)
-	f:RegisterEvent'BAG_UPDATE'
-end
 
-local model, itemStacks, itemClasses, itemSortKeys
+	local model, itemStacks, itemClasses, itemSortKeys
 
-do
-	local f = CreateFrame'Frame'
+	do
+		local f = CreateFrame("Frame")
 
-	local process = coroutine.create(function() end);
+		local process = coroutine.create(function() end);
 
-	local suspended
+		local suspended
 
-	function Start()
-		process = coroutine.create(function()
-			while not Initialize() do
-				coroutine.yield()
-			end
-			while true do
-				suspended = false
-				if InCombatLockdown() then
-					return
-				end
-				local complete = Sort()
-				if complete then
-					return
-				end
-				Stack()
-				if not suspended then
+		function Start()
+			process = coroutine.create(function()
+				while not Initialize() do
 					coroutine.yield()
 				end
-			end
-		end)
-		f:Show()
-	end
-
-	f:SetScript('OnUpdate', function(_, arg1)
-		if coroutine.status(process) == 'suspended' then
-			suspended = true
-			coroutine.resume(process)
-		end
-		if coroutine.status(process) == 'dead' then
-			f:Hide()
-		end
-	end)
-end
-
-function LT(a, b)
-	local i = 1
-	while true do
-		if a[i] and b[i] and a[i] ~= b[i] then
-			return a[i] < b[i]
-		elseif not a[i] and b[i] then
-			return true
-		elseif not b[i] then
-			return false
-		end
-		i = i + 1
-	end
-end
-
-function Move(src, dst)
-	local srcContainerInfo = C_Container.GetContainerItemInfo(src.container, src.position)
-	local dstContainerInfo = C_Container.GetContainerItemInfo(dst.container, dst.position)
-
-	if srcContainerInfo and not srcContainerInfo.isLocked and (not dstContainerInfo or not dstContainerInfo.isLocked) then
-		ClearCursor()
-		C_Container.PickupContainerItem(src.container, src.position)
-		C_Container.PickupContainerItem(dst.container, dst.position)
-
-		if src.item == dst.item then
-			local count = min(src.count, itemStacks[dst.item] - dst.count)
-			src.count = src.count - count
-			dst.count = dst.count + count
-			if src.count == 0 then
-				src.item = nil
-			end
-		else
-			src.item, dst.item = dst.item, src.item
-			src.count, dst.count = dst.count, src.count
-		end
-
-		coroutine.yield()
-		return true
-	end
-end
-
-do
-	local patterns = {}
-	for i = 1, 10 do
-		local text = gsub(format(ITEM_SPELL_CHARGES, i), '(-?%d+)(.-)|4([^;]-);', function(numberString, gap, numberForms)
-			local singular, dual, plural
-			_, _, singular, dual, plural = strfind(numberForms, '(.+):(.+):(.+)');
-			if not singular then
-				_, _, singular, plural = strfind(numberForms, '(.+):(.+)')
-			end
-			local i = abs(tonumber(numberString))
-			local numberForm
-			if i == 1 then
-				numberForm = singular
-			elseif i == 2 then
-				numberForm = dual or plural
-			else
-				numberForm = plural
-			end
-			return numberString .. gap .. numberForm
-		end)
-		patterns[text] = i
-	end
-
-	function itemCharges(text)
-		return patterns[text]
-	end
-end
-
-function TooltipInfo(container, position)
-	SetScanTooltip(container, position)
-
-	local charges, usable, soulbound, conjured
-	for i = 1, SortBagsTooltip:NumLines() do
-		local text = getglobal('SortBagsTooltipTextLeft' .. i):GetText()
-
-		local extractedCharges = itemCharges(text)
-		if extractedCharges then
-			charges = extractedCharges
-		elseif strfind(text, '^' .. ITEM_SPELL_TRIGGER_ONUSE) then
-			usable = true
-		elseif text == ITEM_SOULBOUND then
-			soulbound = true
-		elseif text == ITEM_CONJURED then
-			conjured = true
-		end
-	end
-
-	return charges or 1, usable, soulbound, conjured
-end
-
-function SetScanTooltip(container, position)
-	SortBagsTooltip:SetOwner(UIParent, 'ANCHOR_NONE')
-	SortBagsTooltip:ClearLines()
-	SortBagsTooltip:SetBagItem(container, position)
-end
-
-function Sort()
-	local complete, moved
-	repeat
-		complete, moved = true, false
-		for _, dst in ipairs(model) do
-			if dst.targetItem and (dst.item ~= dst.targetItem or dst.count < dst.targetCount) then
-				complete = false
-
-				local sources, rank = {}, {}
-
-				for _, src in ipairs(model) do
-					if src.item == dst.targetItem
-						and src ~= dst
-						and not (dst.item and src.class and not itemClasses[dst.item][src.class])
-						and not (src.targetItem and src.item == src.targetItem and src.count <= src.targetCount)
-					then
-						rank[src] = abs(src.count - dst.targetCount + (dst.item == dst.targetItem and dst.count or 0))
-						tinsert(sources, src)
-					end
-				end
-
-				sort(sources, function(a, b) return rank[a] < rank[b] end)
-
-				for _, src in ipairs(sources) do
-					if Move(src, dst) then
-						moved = true
-						break
-					end
-				end
-			end
-		end
-	until complete or not moved
-	return complete
-end
-
-function Stack()
-	for _, src in ipairs(model) do
-		if src.item and src.count < itemStacks[src.item] and src.item ~= src.targetItem then
-			for _, dst in ipairs(model) do
-				if dst ~= src and dst.item and dst.item == src.item and dst.count < itemStacks[dst.item] and dst.item ~= dst.targetItem then
-					if Move(src, dst) then
+				while true do
+					suspended = false
+					if InCombatLockdown() then
 						return
 					end
+					local complete = Sort()
+					if complete then
+						return
+					end
+					Stack()
+					if not suspended then
+						coroutine.yield()
+					end
 				end
+			end)
+			f:Show()
+		end
+
+		f:SetScript("OnUpdate", function(_, arg1)
+			if coroutine.status(process) == "suspended" then
+				suspended = true
+				coroutine.resume(process)
 			end
-		end
-	end
-end
-
-do
-	local counts
-
-	local function insert(t, v)
-		if SortBagsRightToLeft then
-			tinsert(t, v)
-		else
-			tinsert(t, 1, v)
-		end
+			if coroutine.status(process) == "dead" then
+				f:Hide()
+			end
+		end)
 	end
 
-	local function assign(slot, item)
-		if counts[item] > 0 then
-			local count
-			if SortBagsRightToLeft and mod(counts[item], itemStacks[item]) ~= 0 then
-				count = mod(counts[item], itemStacks[item])
+	function LT(a, b)
+		local i = 1
+		while true do
+			if a[i] and b[i] and a[i] ~= b[i] then
+				return a[i] < b[i]
+			elseif not a[i] and b[i] then
+				return true
+			elseif not b[i] then
+				return false
+			end
+			i = i + 1
+		end
+	end
+
+	function Move(src, dst)
+		local srcContainerInfo = C_Container.GetContainerItemInfo(src.container, src.position)
+		local dstContainerInfo = C_Container.GetContainerItemInfo(dst.container, dst.position)
+
+		if srcContainerInfo and not srcContainerInfo.isLocked and (not dstContainerInfo or not dstContainerInfo.isLocked) then
+			ClearCursor()
+			C_Container.PickupContainerItem(src.container, src.position)
+			C_Container.PickupContainerItem(dst.container, dst.position)
+
+			if src.item == dst.item then
+				local count = min(src.count, itemStacks[dst.item] - dst.count)
+				src.count = src.count - count
+				dst.count = dst.count + count
+				if src.count == 0 then
+					src.item = nil
+				end
 			else
-				count = min(counts[item], itemStacks[item])
+				src.item, dst.item = dst.item, src.item
+				src.count, dst.count = dst.count, src.count
 			end
-			slot.targetItem = item
-			slot.targetCount = count
-			counts[item] = counts[item] - count
+
+			coroutine.yield()
 			return true
 		end
 	end
 
-	function Initialize()
-		model, counts, itemStacks, itemClasses, itemSortKeys = {}, {}, {}, {}, {}
-
-		for _, container in ipairs(CONTAINERS) do
-			local class = ContainerClass(container)
-			for position = 1, C_Container.GetContainerNumSlots(container) do
-				local slot = {container=container, position=position, class=class}
-				local item = Item(container, position)
-				if item then
-					local containerInfo = C_Container.GetContainerItemInfo(container, position)
-					if containerInfo and containerInfo.isLocked then
-						return false
-					end
-					slot.item = item
-					slot.count = containerInfo.stackCount
-					counts[item] = (counts[item] or 0) + containerInfo.stackCount
+	do
+		local patterns = {}
+		for i = 1, 10 do
+			local text = gsub(format(ITEM_SPELL_CHARGES, i), "(-?%d+)(.-)|4([^;]-);", function(numberString, gap, numberForms)
+				local singular, dual, plural
+				_, _, singular, dual, plural = strfind(numberForms, "(.+):(.+):(.+)");
+				if not singular then
+					_, _, singular, plural = strfind(numberForms, "(.+):(.+)")
 				end
-				insert(model, slot)
-			end
+				local i = abs(tonumber(numberString))
+				local numberForm
+				if i == 1 then
+					numberForm = singular
+				elseif i == 2 then
+					numberForm = dual or plural
+				else
+					numberForm = plural
+				end
+				return numberString .. gap .. numberForm
+			end)
+			patterns[text] = i
 		end
 
-		local items = {}
-		for item in pairs(counts) do
-			tinsert(items, item)
+		function itemCharges(text)
+			return patterns[text]
 		end
-		sort(items, function(a, b) return LT(itemSortKeys[a], itemSortKeys[b]) end)
-
-		for _, slot in ipairs(model) do
-			if slot.class then
-				for _, item in ipairs(items) do
-					if itemClasses[item][slot.class] and assign(slot, item) then
-						break
-					end
-				end
-			end
-		end
-		for _, slot in ipairs(model) do
-			if not slot.class then
-				for _, item in ipairs(items) do
-					if assign(slot, item) then
-						break
-					end
-				end
-			end
-		end
-		return true
 	end
-end
+
+	function TooltipInfo(container, position)
+		SetScanTooltip(container, position)
+
+		local charges, usable, soulbound, conjured
+		for i = 1, SortBagsTooltip:NumLines() do
+			local text = getglobal("SortBagsTooltipTextLeft" .. i):GetText()
+
+			local extractedCharges = itemCharges(text)
+			if extractedCharges then
+				charges = extractedCharges
+			elseif strfind(text, "^" .. ITEM_SPELL_TRIGGER_ONUSE) then
+				usable = true
+			elseif text == ITEM_SOULBOUND then
+				soulbound = true
+			elseif text == ITEM_CONJURED then
+				conjured = true
+			end
+		end
+
+		return charges or 1, usable, soulbound, conjured
+	end
+
+	function SetScanTooltip(container, position)
+		SortBagsTooltip:SetOwner(UIParent, "ANCHOR_NONE")
+		SortBagsTooltip:ClearLines()
+		SortBagsTooltip:SetBagItem(container, position)
+	end
+
+	function Sort()
+		local complete, moved
+		repeat
+			complete, moved = true, false
+			for _, dst in ipairs(model) do
+				if dst.targetItem and (dst.item ~= dst.targetItem or dst.count < dst.targetCount) then
+					complete = false
+
+					local sources, rank = {}, {}
+
+					for _, src in ipairs(model) do
+						if src.item == dst.targetItem
+							and src ~= dst
+							and not (dst.item and src.class and not itemClasses[dst.item][src.class])
+							and not (src.targetItem and src.item == src.targetItem and src.count <= src.targetCount)
+						then
+							rank[src] = abs(src.count - dst.targetCount + (dst.item == dst.targetItem and dst.count or 0))
+							tinsert(sources, src)
+						end
+					end
+
+					sort(sources, function(a, b) return rank[a] < rank[b] end)
+
+					for _, src in ipairs(sources) do
+						if Move(src, dst) then
+							moved = true
+							break
+						end
+					end
+				end
+			end
+		until complete or not moved
+		return complete
+	end
+
+	function Stack()
+		for _, src in ipairs(model) do
+			if src.item and src.count < itemStacks[src.item] and src.item ~= src.targetItem then
+				for _, dst in ipairs(model) do
+					if dst ~= src and dst.item and dst.item == src.item and dst.count < itemStacks[dst.item] and dst.item ~= dst.targetItem then
+						if Move(src, dst) then
+							return
+						end
+					end
+				end
+			end
+		end
+	end
+
+	do
+		local counts
+
+		local function insert(t, v)
+			if SortBagsRightToLeft then
+				tinsert(t, v)
+			else
+				tinsert(t, 1, v)
+			end
+		end
+
+		local function assign(slot, item)
+			if counts[item] > 0 then
+				local count
+				if SortBagsRightToLeft and mod(counts[item], itemStacks[item]) ~= 0 then
+					count = mod(counts[item], itemStacks[item])
+				else
+					count = min(counts[item], itemStacks[item])
+				end
+				slot.targetItem = item
+				slot.targetCount = count
+				counts[item] = counts[item] - count
+				return true
+			end
+		end
+
+		function Initialize()
+			model, counts, itemStacks, itemClasses, itemSortKeys = {}, {}, {}, {}, {}
+
+			for _, container in ipairs(CONTAINERS) do
+				local class = ContainerClass(container)
+				for position = 1, C_Container.GetContainerNumSlots(container) do
+					local slot = {container=container, position=position, class=class}
+					local item = Item(container, position)
+					if item then
+						local containerInfo = C_Container.GetContainerItemInfo(container, position)
+						if containerInfo and containerInfo.isLocked then
+							return false
+						end
+						slot.item = item
+						slot.count = containerInfo.stackCount
+						counts[item] = (counts[item] or 0) + containerInfo.stackCount
+					end
+					insert(model, slot)
+				end
+			end
+
+			local items = {}
+			for item in pairs(counts) do
+				tinsert(items, item)
+			end
+			sort(items, function(a, b) return LT(itemSortKeys[a], itemSortKeys[b]) end)
+
+			for _, slot in ipairs(model) do
+				if slot.class then
+					for _, item in ipairs(items) do
+						if itemClasses[item][slot.class] and assign(slot, item) then
+							break
+						end
+					end
+				end
+			end
+			for _, slot in ipairs(model) do
+				if not slot.class then
+					for _, item in ipairs(items) do
+						if assign(slot, item) then
+							break
+						end
+					end
+				end
+			end
+			return true
+		end
+	end
 
 
-function ContainerClass(container)
-	if container ~= 0 and container ~= BANK_CONTAINER then
-		local name = C_Container.GetBagName(container)
-		if name then
+	function ContainerClass(container)
+		if container ~= 0 and container ~= BANK_CONTAINER then
+			local name = C_Container.GetBagName(container)
+			if name then
+				for class, info in pairs(CLASSES) do
+					for _, itemID in pairs(info.containers) do
+						if name == GetItemInfo(itemID) then
+							return class
+						end
+					end
+				end
+			end
+		end
+	end
+
+	function Item(container, position)
+		local link = C_Container.GetContainerItemLink(container, position)
+		if link then
+			local _, _, itemID, enchantID, suffixID, uniqueID = strfind(link, "item:(%d+):(%d*):%d*:%d*:%d*:%d*:(%-?%d*):(%-?%d*)")
+			itemID = tonumber(itemID)
+			local itemName, _, quality, _, _, _, _, stack, slot, _, sellPrice, classId, subClassId, bindType = GetItemInfo("item:" .. itemID)
+			local charges, usable, soulbound, conjured = TooltipInfo(container, position)
+			local sortKey = {}
+
+			-- hearthstone
+			if itemID == 6948 or itemID == 184871 then
+				tinsert(sortKey, 1)
+
+			-- special items
+			elseif SPECIAL[itemID] then
+				tinsert(sortKey, 2)
+
+			-- key items
+			elseif KEYS[itemID] then
+				tinsert(sortKey, 3)
+
+			-- tools
+			elseif TOOLS[itemID] then
+				tinsert(sortKey, 4)
+
+			-- soul shards
+			elseif itemID == 6265 then
+				tinsert(sortKey, 13)
+
+			-- conjured items
+			elseif conjured then
+				tinsert(sortKey, 14)
+
+			-- soulbound items
+			elseif soulbound then
+				tinsert(sortKey, 5)
+
+			-- heirlooms
+			elseif quality == 7 then
+				tinsert(sortKey, 6)
+
+			-- reagents
+			elseif classId == 9 then
+				tinsert(sortKey, 7)
+
+			-- quest items
+			elseif bindType == 4 then
+				tinsert(sortKey, 9)
+
+			-- consumables
+			elseif usable and classId ~= 1 and classId ~= 2 and classId ~= 8 or classId == 4 then
+				tinsert(sortKey, 8)
+
+			-- higher quality
+			elseif quality > 1 then
+				tinsert(sortKey, 10)
+
+			-- common quality
+			elseif quality == 1 then
+				tinsert(sortKey, 11)
+				tinsert(sortKey, -sellPrice)
+
+			-- junk
+			elseif quality == 0 then
+				tinsert(sortKey, 12)
+				tinsert(sortKey, sellPrice)
+			end
+
+			tinsert(sortKey, classId)
+			tinsert(sortKey, slot)
+			tinsert(sortKey, subClassId)
+			tinsert(sortKey, -quality)
+			tinsert(sortKey, itemName)
+			tinsert(sortKey, itemID)
+			tinsert(sortKey, (SortBagsRightToLeft and 1 or -1) * charges)
+			tinsert(sortKey, suffixID)
+			tinsert(sortKey, enchantID)
+			tinsert(sortKey, uniqueID)
+
+			local key = format("%s:%s:%s:%s:%s:%s", itemID, enchantID, suffixID, uniqueID, charges, (soulbound and 1 or 0))
+
+			itemStacks[key] = stack
+			itemSortKeys[key] = sortKey
+
+			itemClasses[key] = {}
 			for class, info in pairs(CLASSES) do
-				for _, itemID in pairs(info.containers) do
-					if name == GetItemInfo(itemID) then
-						return class
-					end
+				if info.items[itemID] then
+					itemClasses[key][class] = true
 				end
 			end
+			return key
 		end
 	end
-end
-
-function Item(container, position)
-	local link = C_Container.GetContainerItemLink(container, position)
-	if link then
-		local _, _, itemID, enchantID, suffixID, uniqueID = strfind(link, 'item:(%d+):(%d*):%d*:%d*:%d*:%d*:(%-?%d*):(%-?%d*)')
-		itemID = tonumber(itemID)
-		local itemName, _, quality, _, _, _, _, stack, slot, _, sellPrice, classId, subClassId, bindType = GetItemInfo('item:' .. itemID)
-		local charges, usable, soulbound, conjured = TooltipInfo(container, position)
-		local sortKey = {}
-
-		-- hearthstone
-		if itemID == 6948 or itemID == 184871 then
-			tinsert(sortKey, 1)
-
-		-- special items
-		elseif SPECIAL[itemID] then
-			tinsert(sortKey, 2)
-
-		-- key items
-		elseif KEYS[itemID] then
-			tinsert(sortKey, 3)
-
-		-- tools
-		elseif TOOLS[itemID] then
-			tinsert(sortKey, 4)
-
-		-- soul shards
-		elseif itemID == 6265 then
-			tinsert(sortKey, 13)
-
-		-- conjured items
-		elseif conjured then
-			tinsert(sortKey, 14)
-
-		-- soulbound items
-		elseif soulbound then
-			tinsert(sortKey, 5)
-
-		-- heirlooms
-		elseif quality == 7 then
-			tinsert(sortKey, 6)
-
-		-- reagents
-		elseif classId == 9 then
-			tinsert(sortKey, 7)
-
-		-- quest items
-		elseif bindType == 4 then
-			tinsert(sortKey, 9)
-
-		-- consumables
-		elseif usable and classId ~= 1 and classId ~= 2 and classId ~= 8 or classId == 4 then
-			tinsert(sortKey, 8)
-
-		-- higher quality
-		elseif quality > 1 then
-			tinsert(sortKey, 10)
-
-		-- common quality
-		elseif quality == 1 then
-			tinsert(sortKey, 11)
-			tinsert(sortKey, -sellPrice)
-
-		-- junk
-		elseif quality == 0 then
-			tinsert(sortKey, 12)
-			tinsert(sortKey, sellPrice)
-		end
-
-		tinsert(sortKey, classId)
-		tinsert(sortKey, slot)
-		tinsert(sortKey, subClassId)
-		tinsert(sortKey, -quality)
-		tinsert(sortKey, itemName)
-		tinsert(sortKey, itemID)
-		tinsert(sortKey, (SortBagsRightToLeft and 1 or -1) * charges)
-		tinsert(sortKey, suffixID)
-		tinsert(sortKey, enchantID)
-		tinsert(sortKey, uniqueID)
-
-		local key = format('%s:%s:%s:%s:%s:%s', itemID, enchantID, suffixID, uniqueID, charges, (soulbound and 1 or 0))
-
-		itemStacks[key] = stack
-		itemSortKeys[key] = sortKey
-
-		itemClasses[key] = {}
-		for class, info in pairs(CLASSES) do
-			if info.items[itemID] then
-				itemClasses[key][class] = true
-			end
-		end
-
-		return key
-	end
-end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -519,7 +504,6 @@ SortBagsButton:SetPoint("TOP", ContainerFrame1Name, "TOP", 0, -16)
 SortBagsButton:SetWidth(80)
 SortBagsButton:SetHeight(20)
 SortBagsButton:SetFrameStrata("HIGH")
-
 SortBagsButton:SetNormalFontObject("GameFontNormal")
 SortBagsButton:SetText("Sort Items")
 
@@ -542,15 +526,15 @@ ptex:SetAllPoints()
 SortBagsButton:SetPushedTexture(ptex)
 
 SortBagsButton:SetScript("OnEnter", function(self)
-    GameTooltip:SetOwner(self, "ANCHOR_CURSOR_BOTTOMRIGHT")
-    GameTooltip:SetText("Sort all items across all bags except for the items in your main bag. Leave the more persistent, manually sorted items like mounts, reagents, consumables, etc. in there.", 1, 1, 1, 1, true)
-    GameTooltip:Show()
+	GameTooltip:SetOwner(self, "ANCHOR_CURSOR_BOTTOMRIGHT")
+	GameTooltip:SetText("Sort all items across all bags except for the items in your main bag. Leave the more persistent, manually sorted items like mounts, reagents, consumables, etc. in there.", 1, 1, 1, 1, true)
+	GameTooltip:Show()
 end)
 
 SortBagsButton:SetScript("OnLeave", function(self)
-    GameTooltip:Hide()
+	GameTooltip:Hide()
 end)
 
 SortBagsButton:SetScript("OnClick", function(self, arg1)
-    SortBags()
+	SortBags()
 end)

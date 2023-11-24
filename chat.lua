@@ -56,12 +56,11 @@ ChatEventFrame:SetScript("OnEvent", function(self, event)
 end)
 
 
-
-
 local function ScrollToBottom(chatFrame)
     if not chatFrame then return end
     chatFrame:ScrollToBottom()
 end
+
 
 local function HookChatTab(tab)
     if not tab then return end
@@ -69,6 +68,7 @@ local function HookChatTab(tab)
         ScrollToBottom(SELECTED_DOCK_FRAME) 
     end)
 end
+
 
 local function CustomizeAndHookChatTabs()
     for i = 1, NUM_CHAT_WINDOWS do
@@ -89,9 +89,21 @@ local function CustomizeAndHookChatTabs()
     end)
 end
 
+
 CustomizeAndHookChatTabs()
 
 
+local function ChatConfig()
+    SetCVar("chatClassColorOverride", "0")
+    if ChatFrame2 then
+        FCF_Close(ChatFrame2)
+    end
+end
+
+
+local ChatConfigEventFrame = CreateFrame("Frame")
+ChatConfigEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+ChatConfigEventFrame:SetScript("OnEvent", ChatConfig)
 
 
 local FilterKeywords = {}
@@ -132,8 +144,6 @@ ChatFilter:SetScript("OnEvent", function(self, event, msg, playerName, languageN
 end)
 
 
-
-
 local function PostChannel(msg)
     if msg ~= "" then
         for i = 2, 10 do
@@ -144,8 +154,6 @@ end
 
 SLASH_POST1 = "/post"
 SlashCmdList["POST"] = PostChannel
-
-
 
 
 local function WhoWhisper(msg)
@@ -162,8 +170,6 @@ end
 
 SLASH_SPAM1 = "/spam"
 SlashCmdList["SPAM"] = WhoWhisper
-
-
 
 
 local function WhisperGuildinvite(msg)
@@ -183,8 +189,6 @@ SLASH_RECRUIT1 = "/recruit"
 SlashCmdList["RECRUIT"] = WhisperGuildinvite
 
 
-
-
 function LeaveGroup()
     if IsInGroup() or IsInRaid() then
         LeaveParty()
@@ -193,17 +197,3 @@ end
 
 SLASH_LEAVEPARTY1 = "/leave"
 SlashCmdList["LEAVEPARTY"] = LeaveGroup
-
-
-
-
-local function ChatConfigUpdate()
-    SetCVar("chatClassColorOverride", "0")
-    if ChatFrame2 then
-        FCF_Close(ChatFrame2)
-    end
-end
-
-local ChatConfigFrame = CreateFrame("Frame")
-ChatConfigFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-ChatConfigFrame:SetScript("OnEvent", ChatConfigUpdate)

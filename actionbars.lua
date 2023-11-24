@@ -1,5 +1,4 @@
 local function ActionbarsUpdate()
-
     MainMenuBar:SetWidth(512)
     MainMenuBar:ClearAllPoints()
     MainMenuBar:SetPoint("BOTTOM", UIParent, "BOTTOM", -2, 68)
@@ -72,16 +71,13 @@ local function ActionbarsUpdate()
 
     PetActionBarFrame:Hide()
     PetActionBarFrame.Show = PetActionBarFrame.Hide
-
 end
 
 local ActionbarsEventFrame = CreateFrame("Frame")
 ActionbarsEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 ActionbarsEventFrame:SetScript("OnEvent", ActionbarsUpdate)
 
-
-
-function ActionButtonrangeColor(self)
+function ActionbarsRangeCheck(self)
     if self.action then
         local inRange = IsActionInRange(self.action)
         if inRange == false then
@@ -92,4 +88,4 @@ function ActionButtonrangeColor(self)
     end
 end
 
-hooksecurefunc("ActionButton_OnUpdate", ActionButtonrangeColor)
+hooksecurefunc("ActionButton_OnUpdate", ActionbarsRangeCheck)

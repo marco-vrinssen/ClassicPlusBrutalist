@@ -1,9 +1,7 @@
 local function PlayerAurasUpdate()
-    
     BuffFrame:ClearAllPoints()
     BuffFrame:SetPoint("TOP", UIParent, "TOP", 0, -16)
-    BuffFrame:SetHeight(16)
-
+    BuffFrame:SetHeight(8)
 end
 
 local PlayerAurasEventFrame = CreateFrame("FRAME")

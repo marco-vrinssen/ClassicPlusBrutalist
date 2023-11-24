@@ -14,7 +14,6 @@ PlayerPortraitBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
 PlayerPortraitBackdrop:SetFrameStrata("HIGH")
 
 local function PlayerFrameUpdate()
-
     PlayerFrame:ClearAllPoints()
     PlayerFrame:SetPoint("TOPLEFT", PlayerPortraitBackdrop, "TOPLEFT", 0, 0)
     PlayerFrame:SetPoint("BOTTOMRIGHT", PlayerFrameBackdrop, "BOTTOMRIGHT", 0, 0)
@@ -82,6 +81,7 @@ local function PlayerFrameUpdate()
     end
 end
 
+
 hooksecurefunc("PlayerFrame_Update", PlayerFrameUpdate)
 
 local PlayerFrameEventFrame = CreateFrame("Frame")
@@ -92,12 +92,6 @@ PlayerFrameEventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
 PlayerFrameEventFrame:SetScript("OnEvent", PlayerFrameUpdate)
 
 
-
-
-
-
-
-
 local PetFrameBackdrop = CreateFrame("Frame", nil, PetFrame, "BackdropTemplate")
 PetFrameBackdrop:SetPoint("BOTTOMRIGHT", PlayerPortraitBackdrop, "BOTTOMLEFT", -4, 0)
 PetFrameBackdrop:SetSize(48, 24)
@@ -105,8 +99,8 @@ PetFrameBackdrop:SetBackdrop({edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
 PetFrameBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
 PetFrameBackdrop:SetFrameStrata("HIGH")
 
+
 local function PetFrameUpdate()
-    
     PetFrame:ClearAllPoints()
     PetFrame:SetPoint("CENTER", PetFrameBackdrop, "CENTER", 0, 0)
 
@@ -142,8 +136,8 @@ local function PetFrameUpdate()
 
     PetFrameHappiness:ClearAllPoints()
     PetFrameHappiness:SetPoint("RIGHT", PetFrameBackdrop, "LEFT", 0, 0)
-    
 end
+
 
 hooksecurefunc("PetFrame_Update", PetFrameUpdate)
 

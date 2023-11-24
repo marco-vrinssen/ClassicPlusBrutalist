@@ -1,4 +1,4 @@
-local function SystemUpdate()
+local function ConfigUpdate()
     SetCVar("scriptErrors", 1)
     SetCVar("rawMouseEnable", 1)
     SetCVar("cursorSizePreferred", 0)
@@ -30,6 +30,7 @@ local function SystemUpdate()
     end
 end
 
-local SystemEventFrame = CreateFrame("Frame")
-SystemEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-SystemEventFrame:SetScript("OnEvent", SystemUpdate)
+
+local ConfigEventFrame = CreateFrame("Frame")
+ConfigEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+ConfigEventFrame:SetScript("OnEvent", ConfigUpdate)

@@ -5,10 +5,8 @@ CustomMinimapBackdrop:SetBackdrop({edgeFile = "Interface/Tooltips/UI-Tooltip-Bor
 CustomMinimapBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
 CustomMinimapBackdrop:SetFrameStrata("HIGH")
 
---Minimap:SetMaskTexture("Interface/ChatFrame/ChatFrameBackground")
 
 local function MinimapUpdate()
-
     Minimap:ClearAllPoints()
     Minimap:SetClampedToScreen(false)
     Minimap:SetMaskTexture("Interface/BUTTONS/WHITE8X8")
@@ -45,8 +43,8 @@ local function MinimapUpdate()
     MiniMapBattlefieldBorder:Hide()
     MiniMapBattlefieldFrame:ClearAllPoints()
     MiniMapBattlefieldFrame:SetPoint("RIGHT", TimeManagerClockTicker, "LEFT", -4, 0)
-
 end
+
 
 local MinimapEventFrame = CreateFrame("Frame")
 MinimapEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
