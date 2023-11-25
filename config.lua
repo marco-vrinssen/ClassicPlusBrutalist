@@ -28,9 +28,18 @@ local function ConfigUpdate()
     for _, message in ipairs(messages) do
         DEFAULT_CHAT_FRAME:AddMessage(string.format(style, message))
     end
-end
 
+    local myFontPath = "Interface\\AddOns\\ClassicPlusPro\\Fonts"
+
+    local function SetCustomFont(fontObject, fontPath, fontSize, fontStyle)
+        if fontObject then
+            fontObject:SetFont(fontPath, fontSize, fontStyle)
+        end
+    end
+end
 
 local ConfigEventFrame = CreateFrame("Frame")
 ConfigEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+ConfigEventFrame:RegisterEvent("PLAYER_LOGIN")
+ConfigEventFrame:RegisterEvent("ADDON_LOADED")
 ConfigEventFrame:SetScript("OnEvent", ConfigUpdate)

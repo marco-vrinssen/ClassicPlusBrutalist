@@ -28,4 +28,4 @@ Super lightweight (380kb memory) add-on that modifies the user interface for a m
 - /filter KEYWORD: Scans all active chats for a specified KEYWORD and shares matching messages in the main chat tab.
 
 ### Change the default in-game font
-Move the Fonts folder to your "classic" directory to enable a cleaner typographic style in the game.
+Move the "Fonts" folder to your "classic" directory to enable a cleaner typographic style in the game.
