@@ -2,9 +2,6 @@
 
 ## Addon for World of Warcraft Classic 1.15.0
 
-### Game Version Requirement
-1.15.0
-
 ### Overview
 - Resource-efficient add-on
 - Changes the user interface for a more modern, consistent look and feel, while maintaining the integrity of the overall art direction
