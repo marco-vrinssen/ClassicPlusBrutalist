@@ -34,7 +34,6 @@ local function MinimapUpdate()
     TimeManagerClockTicker:SetPoint("TOP", CustomMinimapBackdrop, "BOTTOM", 0, -8)
 
     SetCVar("timeMgrUseMilitaryTime", "1")
-    SetCVar("rotateMinimap", "1")
 
     MiniMapMailBorder:Hide()
     MiniMapMailFrame:ClearAllPoints()
@@ -48,4 +47,7 @@ end
 
 local MinimapEventFrame = CreateFrame("Frame")
 MinimapEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+MinimapEventFrame:RegisterEvent("ZONE_CHANGED")
+MinimapEventFrame:RegisterEvent("ZONE_CHANGED_INDOORS")
+MinimapEventFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 MinimapEventFrame:SetScript("OnEvent", MinimapUpdate)

@@ -56,6 +56,7 @@ end
 
 CharacterFrame:SetScript("OnShow", CharacterStatsUpdate)
 
+
 local CharacterStatsEventFrame = CreateFrame("Frame")
 CharacterStatsEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 CharacterStatsEventFrame:RegisterEvent("PLAYER_LEVEL_UP")

@@ -5,17 +5,20 @@ StatusBarContainer:SetBackdrop({edgeFile = "Interface/Tooltips/UI-Tooltip-Border
 StatusBarContainer:SetBackdropBorderColor(0.5, 0.5, 0.5)
 StatusBarContainer:SetAlpha(0)  -- Initially hidden
 
+
 local HealthStatusBar = CreateFrame("StatusBar", nil, StatusBarContainer)
 HealthStatusBar:SetSize(156, 12)
 HealthStatusBar:SetPoint("TOP", StatusBarContainer, "TOP", 0, -4)
 HealthStatusBar:SetStatusBarTexture("Interface/RaidFrame/Raid-Bar-HP-Fill.blp")
 HealthStatusBar:SetFrameStrata("LOW")
 
+
 local PowerStatusBar = CreateFrame("StatusBar", nil, StatusBarContainer)
 PowerStatusBar:SetSize(156, 10)
 PowerStatusBar:SetPoint("BOTTOM", StatusBarContainer, "BOTTOM", 0, 2)
 PowerStatusBar:SetStatusBarTexture("Interface/RaidFrame/Raid-Bar-HP-Fill.blp")
 PowerStatusBar:SetFrameStrata("LOW")
+
 
 local function SetContainerVisibility(isVisible)
     local alpha = isVisible and 1 or 0
@@ -25,6 +28,7 @@ local function SetContainerVisibility(isVisible)
         UIFrameFadeOut(StatusBarContainer, 0.25, StatusBarContainer:GetAlpha(), alpha)
     end
 end
+
 
 local fadeOutTimer = nil
 
@@ -36,6 +40,7 @@ local function DelayedFadeOut()
         SetContainerVisibility(false)
     end)
 end
+
 
 local function ResourceDisplayUpdate()
     local health = UnitHealth("player")
@@ -64,6 +69,7 @@ local function ResourceDisplayUpdate()
     end
 end
 
+
 local ResourceDisplayEventFrame = CreateFrame("Frame")
 ResourceDisplayEventFrame:RegisterUnitEvent("UNIT_HEALTH", "player")
 ResourceDisplayEventFrame:RegisterUnitEvent("UNIT_POWER_UPDATE", "player")
@@ -81,12 +87,15 @@ ResourceDisplayEventFrame:SetScript("OnEvent", function(self, event, arg1)
     end
 end)
 
+
 ResourceDisplayUpdate()
+
 
 local _, playerClass = UnitClass("player")
 if playerClass ~= "ROGUE" and playerClass ~= "DRUID" then
     return
 end
+
 
 local function CustomComboPointSetup()
     local comboPoints = GetComboPoints("player", "target") or 0
@@ -123,6 +132,7 @@ local function CustomComboPointSetup()
     ComboFrame:UnregisterAllEvents()
     ComboFrame:Hide()
 end
+
 
 local CustomComboPointListener = CreateFrame("Frame")
 CustomComboPointListener:RegisterEvent("PLAYER_TARGET_CHANGED")

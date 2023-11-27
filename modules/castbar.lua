@@ -1,12 +1,10 @@
 local CastingBarBackdrop = CreateFrame("Frame", nil, CastingBarFrame, "BackdropTemplate")
 CastingBarBackdrop:SetPoint("TOPLEFT", CastingBarFrame, "TOPLEFT", -2, 4)
 CastingBarBackdrop:SetPoint("BOTTOMRIGHT", CastingBarFrame, "BOTTOMRIGHT", 2, -4)
-CastingBarBackdrop:SetBackdrop({
-    edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
-    edgeSize = 14
-})
+CastingBarBackdrop:SetBackdrop({edgeFile = "Interface/Tooltips/UI-Tooltip-Border", edgeSize = 14})
 CastingBarBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
 CastingBarBackdrop:SetFrameStrata("HIGH")
+
 
 local function CastingBarUpdate()
     CastingBarFrame:ClearAllPoints()
@@ -24,6 +22,7 @@ local function CastingBarUpdate()
     CastingBarFrame.Text:SetPoint("CENTER", CastingBarFrame, "CENTER", 0, 0)
     CastingBarFrame.Text:SetFont(STANDARD_TEXT_FONT, 10)
 end
+
 
 local CastingBarEventFrame = CreateFrame("Frame")
 CastingBarEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")

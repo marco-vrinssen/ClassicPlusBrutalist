@@ -4,6 +4,7 @@ local function PlayerAurasUpdate()
     BuffFrame:SetHeight(8)
 end
 
+
 local PlayerAurasEventFrame = CreateFrame("Frame")
 PlayerAurasEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 PlayerAurasEventFrame:RegisterEvent("ZONE_CHANGED")

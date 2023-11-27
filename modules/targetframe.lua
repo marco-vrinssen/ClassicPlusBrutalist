@@ -6,12 +6,14 @@ TargetFrameBackdrop:SetBackdrop({edgeFile = "Interface/Tooltips/UI-Tooltip-Borde
 TargetFrameBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
 TargetFrameBackdrop:SetFrameStrata("HIGH")
 
+
 local TargetPortraitBackdrop = CreateFrame("Frame", nil, TargetFrame, "BackdropTemplate")
 TargetPortraitBackdrop:SetPoint("LEFT", TargetFrameBackdrop, "RIGHT", 4, 0)
 TargetPortraitBackdrop:SetSize(48 ,48)
 TargetPortraitBackdrop:SetBackdrop({edgeFile = "Interface/Tooltips/UI-Tooltip-Border", edgeSize = 14})
 TargetPortraitBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
 TargetPortraitBackdrop:SetFrameStrata("HIGH")
+
 
 local function TargetFrameUpdate()
     TargetFrame:ClearAllPoints()
@@ -60,19 +62,22 @@ local function TargetFrameUpdate()
     end
 end
 
+
 hooksecurefunc("TargetFrame_Update", TargetFrameUpdate)
+
 
 local TargetFrameEventFrame = CreateFrame("Frame")
 TargetFrameEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 TargetFrameEventFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
 TargetFrameEventFrame:SetScript("OnEvent", TargetFrameUpdate)
 
--- Target Frame Healthbar Text
+
 local TargetHealthOverlay = TargetFrameHealthBar:CreateFontString(nil, "OVERLAY", "GameFontNormal")
 TargetHealthOverlay:SetPoint("CENTER", TargetFrameHealthBar, "CENTER", 0, 0)
 TargetHealthOverlay:SetFont(STANDARD_TEXT_FONT, 12, "OUTLINE")
 TargetHealthOverlay:SetTextColor(1, 1, 1, 1)
 TargetHealthOverlay:SetShadowOffset(0, 0)
+
 
 local function UpdateHealthDisplay()
     if UnitExists("target") then
@@ -84,12 +89,14 @@ local function UpdateHealthDisplay()
     end
 end
 
+
 local TargetHealthEventFrame = CreateFrame("Frame")
 TargetHealthEventFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
 TargetHealthEventFrame:RegisterEvent("UNIT_HEALTH")
 TargetHealthEventFrame:RegisterEvent("UNIT_HEALTH_FREQUENT")
 TargetHealthEventFrame:RegisterEvent("UNIT_MAXHEALTH")
 TargetHealthEventFrame:SetScript("OnEvent", UpdateHealthDisplay)
+
 
 local function TargetFramePlayerPortraitUpdate(frame)
     if frame.unit == "target" and frame.portrait then
@@ -111,7 +118,12 @@ local function TargetFramePlayerPortraitUpdate(frame)
     end
 end
 
+
 hooksecurefunc("UnitFramePortrait_Update", TargetFramePlayerPortraitUpdate)
+
+
+
+
 
 local function TargetFrameAuraUpdate()
     local buffCount = 0
@@ -140,11 +152,17 @@ local function TargetFrameAuraUpdate()
     end
 end
 
+
+
+
+
+
 local TargetFrameAuraEventFrame = CreateFrame("Frame")
 TargetFrameAuraEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 TargetFrameAuraEventFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
 hooksecurefunc("TargetFrame_Update", TargetFrameAuraUpdate)
 hooksecurefunc("TargetFrame_UpdateAuras", TargetFrameAuraUpdate)
+
 
 local TargetFrameSpellBarBackdrop = CreateFrame("Frame", nil, TargetFrameSpellBar, "BackdropTemplate")
 TargetFrameSpellBarBackdrop:SetPoint("TOPLEFT", TargetFrameBackdrop, "BOTTOMLEFT", 0, -2)
@@ -153,6 +171,7 @@ TargetFrameSpellBarBackdrop:SetHeight(24)
 TargetFrameSpellBarBackdrop:SetBackdrop({ edgeFile = "Interface/Tooltips/UI-Tooltip-Border", edgeSize = 14 })
 TargetFrameSpellBarBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
 TargetFrameSpellBarBackdrop:SetFrameStrata("HIGH")
+
 
 local function TargetFrameSpellBarUpdate()
     TargetFrameSpellBar:ClearAllPoints()
@@ -171,16 +190,20 @@ local function TargetFrameSpellBarUpdate()
     TargetFrameSpellBar.Text:SetFont(STANDARD_TEXT_FONT, 10)
 end
 
+
 TargetFrameSpellBar:HookScript("OnShow", TargetFrameSpellBarUpdate)
 TargetFrameSpellBar:HookScript("OnUpdate", TargetFrameSpellBarUpdate)
+
 
 local TargetFrameSpellBarFrame = CreateFrame("Frame")
 TargetFrameSpellBarFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 TargetFrameSpellBarFrame:SetScript("OnEvent", TargetFrameSpellBarUpdate)
 
+
 local ClassificationText = TargetFrame:CreateFontString(nil, "OVERLAY")
 ClassificationText:SetFont(STANDARD_TEXT_FONT, 12, "OUTLINE")
 ClassificationText:SetPoint("BOTTOM", TargetPortraitBackdrop, "TOP", 0, 4)
+
 
 local function TargetFrameClassification()
     local classification = UnitClassification("target")
@@ -208,16 +231,20 @@ local function TargetFrameClassification()
     end
 end
 
+
 hooksecurefunc("TargetFrame_Update", TargetFrameClassification)
+
 
 local TargetFrameClassificationEventFrame = CreateFrame("Frame")
 TargetFrameClassificationEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 TargetFrameClassificationEventFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
 TargetFrameClassificationEventFrame:SetScript("OnEvent", TargetFrameClassification)
 
+
 local ThreatText = ThreatText or TargetFrame:CreateFontString(nil, "OVERLAY")
 ThreatText:SetFont(STANDARD_TEXT_FONT, 12, "OUTLINE")
 ThreatText:SetPoint("BOTTOM", ClassificationText, "TOP", 0, 4)
+
 
 local function UpdateThreatText()
     if not UnitExists("target") or UnitIsDead("target") or not UnitCanAttack("player", "target") then
@@ -241,11 +268,13 @@ local function UpdateThreatText()
     end
 end
 
+
 TargetFrame:HookScript("OnShow", UpdateThreatText)
 TargetFrame:HookScript("OnEvent", UpdateThreatText)
 TargetFrame:RegisterEvent("UNIT_THREAT_SITUATION_UPDATE")
 TargetFrame:RegisterEvent("UNIT_THREAT_LIST_UPDATE")
 TargetFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
+
 
 local TargetFrameConfigFrame = CreateFrame("Frame")
 TargetFrameConfigFrame:RegisterEvent("PLAYER_ENTERING_WORLD")

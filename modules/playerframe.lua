@@ -6,12 +6,14 @@ PlayerFrameBackdrop:SetBackdrop({edgeFile = "Interface/Tooltips/UI-Tooltip-Borde
 PlayerFrameBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
 PlayerFrameBackdrop:SetFrameStrata("HIGH")
 
+
 local PlayerPortraitBackdrop = CreateFrame("Frame", nil, PlayerFrame, "BackdropTemplate")
 PlayerPortraitBackdrop:SetPoint("RIGHT", PlayerFrameBackdrop, "LEFT", -4, 0)
 PlayerPortraitBackdrop:SetSize(48 ,48)
 PlayerPortraitBackdrop:SetBackdrop({edgeFile = "Interface/Tooltips/UI-Tooltip-Border", edgeSize = 14})
 PlayerPortraitBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
 PlayerPortraitBackdrop:SetFrameStrata("HIGH")
+
 
 local function PlayerFrameUpdate()
     PlayerFrame:ClearAllPoints()
@@ -31,7 +33,8 @@ local function PlayerFrameUpdate()
     PlayerAttackIcon:SetTexture(nil)
     PlayerRestGlow:SetTexture(nil)
     PlayerRestIcon:SetTexture(nil)
-    PlayerPVPIcon:SetTexture(nil)
+    PlayerPVPIcon:SetAlpha(0)
+    PlayerPVPTimerText:Hide()
 
     PlayerLeaderIcon:ClearAllPoints()
     PlayerLeaderIcon:SetPoint("BOTTOM", PlayerPortraitBackdrop, "TOP", 0, 0)
@@ -86,6 +89,7 @@ end
 
 
 hooksecurefunc("PlayerFrame_Update", PlayerFrameUpdate)
+
 
 local PlayerFrameEventFrame = CreateFrame("Frame")
 PlayerFrameEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
@@ -143,6 +147,7 @@ end
 
 
 hooksecurefunc("PetFrame_Update", PetFrameUpdate)
+
 
 local PetFrameEventFrame = CreateFrame("Frame")
 PetFrameEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")

@@ -388,7 +388,7 @@ local CLASSES = {
 
 
 	function ContainerClass(container)
-		if container ~= 0 and container ~= BANK_CONTAINER then
+		if container ~= 0 then
 			local name = C_Container.GetBagName(container)
 			if name then
 				for class, info in pairs(CLASSES) do

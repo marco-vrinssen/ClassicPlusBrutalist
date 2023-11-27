@@ -41,7 +41,9 @@ local function BagsUpdate()
     C_Container.SetInsertItemsLeftToRight(true)
 end
 
+
 hooksecurefunc("UpdateContainerFrameAnchors", BagsUpdate)
+
 
 local BagsEventFrame = CreateFrame("Frame")
 BagsEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
