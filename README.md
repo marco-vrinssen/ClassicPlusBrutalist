@@ -1,4 +1,6 @@
-## **Classic+ Pro**
+# **Classic+ Pro**
+
+## Addon for World of Warcraft Classic 1.15.0
 
 ### Game Version Requirement
 1.15.0
