@@ -123,6 +123,7 @@ hooksecurefunc("UnitFramePortrait_Update", TargetFramePlayerPortraitUpdate)
 
 
 
+
 --[[
 local function TargetFrameAuraUpdate()
     local buffCount = 0
@@ -193,6 +194,34 @@ local function TargetFrameAuraUpdate()
         end
     end
 
+    local visibleDebuffCount = 0
+
+    for i = 1, MAX_DEBUFFS do
+        local name, icon, _, _, _, _, caster = UnitDebuff("target", i)
+        local debuffFrame = _G["TargetFrameDebuff"..i]
+    
+        if debuffFrame then
+            local debuffTexture = debuffFrame:GetRegions() -- Assuming the texture is the first region of the frame
+            if debuffTexture and debuffTexture.SetTexture then
+                if name and caster == "player" then
+                    debuffFrame:Hide()
+                else
+                    if name then  -- Make sure there is a debuff to show
+                        debuffTexture:SetTexture(icon)  -- Set the correct texture
+                        debuffFrame:ClearAllPoints()
+                        debuffFrame:SetPoint("BOTTOMLEFT", TargetFrameBackdrop, "TOPLEFT", visibleDebuffCount * 24, 4)
+                        debuffFrame:Show()
+                        visibleDebuffCount = visibleDebuffCount + 1
+                    else
+                        debuffFrame:Hide()
+                    end
+                end
+            end
+        end
+    end
+    
+
+    --[[
     for i = 1, MAX_DEBUFFS do
         local debuff = _G["TargetFrameDebuff"..i]
         if debuff then
@@ -200,6 +229,8 @@ local function TargetFrameAuraUpdate()
             debuff:SetPoint("BOTTOMLEFT", TargetFrameBackdrop, "TOPLEFT", (i - 1) * 24, 4) -- 32 = 4 (offset) + 28 (icon size)
         end
     end
+    ]]
+        
 
     local debuffCount = 0
     for i = 1, MAX_DEBUFFS do
@@ -210,7 +241,6 @@ local function TargetFrameAuraUpdate()
         end
     end
 
-    -- Hide unused custom debuff icons
     for i = debuffCount + 1, MAX_DEBUFFS do
         local icon = myDebuffFrame["debuff" .. i]
         if icon then
@@ -219,11 +249,14 @@ local function TargetFrameAuraUpdate()
     end
 end
 
+
+hooksecurefunc("TargetFrame_Update", TargetFrameAuraUpdate)
+hooksecurefunc("TargetFrame_UpdateAuras", TargetFrameAuraUpdate)
+
 local TargetFrameAuraEventFrame = CreateFrame("Frame")
 TargetFrameAuraEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 TargetFrameAuraEventFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
-hooksecurefunc("TargetFrame_Update", TargetFrameAuraUpdate)
-hooksecurefunc("TargetFrame_UpdateAuras", TargetFrameAuraUpdate)
+TargetFrameAuraEventFrame:SetScript("OnEvent", TargetFrameAuraUpdate)
 
 
 
@@ -331,6 +364,8 @@ local function UpdateThreatText()
         ThreatText:Hide()
     end
 end
+
+
 
 
 TargetFrame:HookScript("OnShow", UpdateThreatText)

@@ -1,5 +1,5 @@
 local function ConfigValueUpdate()
-    SetCVar("scriptErrors", 0)
+    SetCVar("scriptErrors", 1)
     SetCVar("rawMouseEnable", 1)
     SetCVar("cursorSizePreferred", 0)
     SetCVar("WorldTextScale", 1.5)
