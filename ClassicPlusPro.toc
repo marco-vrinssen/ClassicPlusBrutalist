@@ -20,6 +20,5 @@ Modules/micromenu.lua
 Modules/nameplates.lua
 Modules/playerframe.lua
 Modules/resourcedisplay.lua
-Modules/stats.lua
 Modules/targetframe.lua
 Modules/tooltips.lua
