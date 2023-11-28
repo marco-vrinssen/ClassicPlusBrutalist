@@ -9,6 +9,7 @@ Modules/auras.lua
 Modules/bags.lua
 Modules/bagsorting.lua
 Modules/castbar.lua
+Modules/characterstats.lua
 Modules/chat.lua
 Modules/commands.lua
 Modules/config.lua

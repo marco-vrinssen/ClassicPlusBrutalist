@@ -85,7 +85,7 @@ CharacterStatsEventFrame:RegisterEvent("UPDATE_EXHAUSTION")
 CharacterStatsEventFrame:RegisterEvent("UNIT_INVENTORY_CHANGED")
 CharacterStatsEventFrame:SetScript("OnEvent", function(self, event, unit)
     if event == "UNIT_INVENTORY_CHANGED" and unit == "player" then
-        C_Timer.After(0.1, CharacterStatsUpdate)
+        C_Timer.After(0.25, CharacterStatsUpdate)
     elseif event ~= "UNIT_INVENTORY_CHANGED" then
         CharacterStatsUpdate()
     end
