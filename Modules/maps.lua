@@ -1,17 +1,15 @@
-local CustomMinimapBackdrop = CreateFrame("Frame", nil, UIParent, "BackdropTemplate")
-CustomMinimapBackdrop:SetSize(140, 140)
-CustomMinimapBackdrop:SetPoint("TOPRIGHT", UIParent, "TOPRIGHT", -16, -16)
+local CustomMinimapBackdrop = CreateFrame("Frame", nil, Minimap, "BackdropTemplate")
+CustomMinimapBackdrop:SetPoint("TOPLEFT", Minimap, "TOPLEFT", -4, 4)
+CustomMinimapBackdrop:SetPoint("BOTTOMRIGHT", Minimap, "BOTTOMRIGHT", 4, -4)
 CustomMinimapBackdrop:SetBackdrop({edgeFile = "Interface/Tooltips/UI-Tooltip-Border", edgeSize = 14})
 CustomMinimapBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
-CustomMinimapBackdrop:SetFrameStrata("HIGH")
-
+CustomMinimapBackdrop:SetFrameStrata("LOW")
 
 local function MinimapUpdate()
     Minimap:ClearAllPoints()
-    Minimap:SetClampedToScreen(false)
-    Minimap:SetMaskTexture("Interface/BUTTONS/WHITE8X8")
-    Minimap:SetPoint("TOPLEFT", CustomMinimapBackdrop, "TOPLEFT", 4, -4)
-    Minimap:SetPoint("BOTTOMRIGHT", CustomMinimapBackdrop, "BOTTOMRIGHT", -4, 4)
+    Minimap:SetPoint("TOPRIGHT", UIParent, "TOPRIGHT", -16, -16)
+    Minimap:SetSize(140, 140)
+    Minimap:SetMaskTexture("Interface/ChatFrame/ChatFrameBackground") 
 
     function GetMinimapShape()
         return "SQUARE"
@@ -43,7 +41,6 @@ local function MinimapUpdate()
     MiniMapBattlefieldFrame:ClearAllPoints()
     MiniMapBattlefieldFrame:SetPoint("RIGHT", TimeManagerClockTicker, "LEFT", -4, 0)
 end
-
 
 local MinimapEventFrame = CreateFrame("Frame")
 MinimapEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")

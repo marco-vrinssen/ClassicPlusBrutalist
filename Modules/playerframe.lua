@@ -17,8 +17,8 @@ PlayerPortraitBackdrop:SetFrameStrata("HIGH")
 
 local function PlayerFrameUpdate()
     PlayerFrame:ClearAllPoints()
-    PlayerFrame:SetPoint("TOPLEFT", PlayerPortraitBackdrop, "TOPLEFT", 0, 0)
-    PlayerFrame:SetPoint("BOTTOMRIGHT", PlayerFrameBackdrop, "BOTTOMRIGHT", 0, 0)
+    PlayerFrame:SetPoint("BOTTOMLEFT", PlayerPortraitBackdrop, "BOTTOMLEFT", -16, -16)
+    PlayerFrame:SetPoint("TOPRIGHT", PlayerFrameBackdrop, "TOPRIGHT", 16, 16)
 
     PlayerFrameBackground:ClearAllPoints()
     PlayerFrameBackground:SetPoint("TOPLEFT", PlayerFrameBackdrop, "TOPLEFT", 2, -2)

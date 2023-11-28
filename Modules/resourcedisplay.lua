@@ -3,7 +3,7 @@ StatusBarContainer:SetSize(160, 28)
 StatusBarContainer:SetPoint("CENTER", UIParent, "CENTER", 0, -160)
 StatusBarContainer:SetBackdrop({edgeFile = "Interface/Tooltips/UI-Tooltip-Border", edgeSize = 14})
 StatusBarContainer:SetBackdropBorderColor(0.5, 0.5, 0.5)
-StatusBarContainer:SetAlpha(0)  -- Initially hidden
+StatusBarContainer:SetAlpha(0)
 
 
 local HealthStatusBar = CreateFrame("StatusBar", nil, StatusBarContainer)
@@ -79,14 +79,13 @@ ResourceDisplayEventFrame:SetScript("OnEvent", function(self, event, arg1)
     if event == "PLAYER_REGEN_DISABLED" then
         SetContainerVisibility(true)
     elseif event == "PLAYER_REGEN_ENABLED" then
-        DelayedFadeOut()
+        SetContainerVisibility(false)  -- Hide immediately when exiting combat
     elseif event == "UNIT_POWER_UPDATE" and arg1 == "player" then
         ResourceDisplayUpdate()
     elseif event == "UNIT_HEALTH" and arg1 == "player" then
         ResourceDisplayUpdate()
     end
 end)
-
 
 ResourceDisplayUpdate()
 

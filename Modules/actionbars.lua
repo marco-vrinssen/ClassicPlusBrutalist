@@ -33,14 +33,6 @@ local function ActionbarsUpdate()
     MainMenuBarMaxLevelBar:Hide()
     MainMenuBarOverlayFrame:Hide()
 
-    CharacterMicroButton:Hide()
-    SpellbookMicroButton:Hide()
-    QuestLogMicroButton:Hide()
-    SocialsMicroButton:Hide()
-    WorldMapMicroButton:Hide()
-    MainMenuMicroButton:Hide()
-    HelpMicroButton:Hide()
-
     TalentMicroButton:UnregisterAllEvents()
     TalentMicroButton:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMRIGHT", 10000, 0)
 

@@ -17,8 +17,8 @@ TargetPortraitBackdrop:SetFrameStrata("HIGH")
 
 local function TargetFrameUpdate()
     TargetFrame:ClearAllPoints()
-    TargetFrame:SetPoint("TOPLEFT", TargetFrameBackdrop, "TOPLEFT", 0, 0)
-    TargetFrame:SetPoint("BOTTOMRIGHT", TargetPortraitBackdrop, "BOTTOMRIGHT", 0, 0)
+    TargetFrame:SetPoint("BOTTOMLEFT", TargetFrameBackdrop, "BOTTOMLEFT", -16, -16)
+    TargetFrame:SetPoint("TOPRIGHT", TargetPortraitBackdrop, "TOPRIGHT", 16, 16)
 
     TargetFrameBackground:ClearAllPoints()
     TargetFrameBackground:SetPoint("TOPLEFT", TargetFrameBackdrop, "TOPLEFT", 2, -2)
@@ -123,8 +123,7 @@ hooksecurefunc("UnitFramePortrait_Update", TargetFramePlayerPortraitUpdate)
 
 
 
-
-
+--[[
 local function TargetFrameAuraUpdate()
     local buffCount = 0
     local debuffCount = 0
@@ -151,17 +150,82 @@ local function TargetFrameAuraUpdate()
         end
     end
 end
+]]
 
 
 
 
+local myDebuffFrame = CreateFrame("Frame", "MyDebuffFrame", UIParent)
+myDebuffFrame:SetSize(40, 40) -- Width, Height
+myDebuffFrame:SetPoint("BOTTOMLEFT", TargetFrameBackdrop, "TOPLEFT", 0, 84) -- Adjusted Position
 
+local function CreateOrUpdateDebuffIcon(index, debuff)
+    local icon = myDebuffFrame["debuff" .. index]
+    
+    if not icon then
+        icon = CreateFrame("Frame", nil, myDebuffFrame)
+        icon:SetSize(32, 32) -- Width, Height of the icon
+        icon.texture = icon:CreateTexture(nil, "BACKGROUND")
+        icon.texture:SetAllPoints(icon)
+        icon.cooldown = CreateFrame("Cooldown", nil, icon, "CooldownFrameTemplate")
+        icon.cooldown:SetAllPoints(icon)
+        icon.cooldown:SetDrawSwipe(false) -- Optional: Set to false if you don't want the swipe effect
+        myDebuffFrame["debuff" .. index] = icon
+    end
+
+    icon.texture:SetTexture(debuff.icon)
+    icon:SetPoint("LEFT", myDebuffFrame, "LEFT", (index - 1) * 36, 0)
+    icon.cooldown:SetCooldown(debuff.expirationTime - debuff.duration, debuff.duration)
+    icon:Show()
+end
+
+
+local function TargetFrameAuraUpdate()
+
+    local MAX_BUFFS = 32
+    local MAX_DEBUFFS = 32
+
+    for i = 1, MAX_BUFFS do
+        local buff = _G["TargetFrameBuff"..i]
+        if buff then
+            buff:ClearAllPoints()
+            buff:SetPoint("BOTTOMLEFT", TargetFrameBackdrop, "TOPLEFT", (i - 1) * 24, 4) -- Using direct values for offset
+        end
+    end
+
+    for i = 1, MAX_DEBUFFS do
+        local debuff = _G["TargetFrameDebuff"..i]
+        if debuff then
+            debuff:ClearAllPoints()
+            debuff:SetPoint("BOTTOMLEFT", TargetFrameBackdrop, "TOPLEFT", (i - 1) * 24, 4) -- 32 = 4 (offset) + 28 (icon size)
+        end
+    end
+
+    local debuffCount = 0
+    for i = 1, MAX_DEBUFFS do
+        local name, icon, count, debuffType, duration, expirationTime, unitCaster = UnitDebuff("target", i)
+        if name and unitCaster == "player" then
+            CreateOrUpdateDebuffIcon(debuffCount + 1, {name = name, icon = icon, duration = duration, expirationTime = expirationTime})
+            debuffCount = debuffCount + 1
+        end
+    end
+
+    -- Hide unused custom debuff icons
+    for i = debuffCount + 1, MAX_DEBUFFS do
+        local icon = myDebuffFrame["debuff" .. i]
+        if icon then
+            icon:Hide()
+        end
+    end
+end
 
 local TargetFrameAuraEventFrame = CreateFrame("Frame")
 TargetFrameAuraEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 TargetFrameAuraEventFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
 hooksecurefunc("TargetFrame_Update", TargetFrameAuraUpdate)
 hooksecurefunc("TargetFrame_UpdateAuras", TargetFrameAuraUpdate)
+
+
 
 
 local TargetFrameSpellBarBackdrop = CreateFrame("Frame", nil, TargetFrameSpellBar, "BackdropTemplate")
