@@ -116,7 +116,6 @@ local function NameplateReactionUpdate(nameplate, unitID)
 
     if threatStatus and threatStatus >= 2 then
         healthBar:SetStatusBarColor(1, 0.5, 0) -- Bright orange for aggro
-        healthBar.backdrop:SetBackdropBorderColor(1, 0.5, 0) -- Bright orange border
     else
         if reaction then
             if reaction >= 5 then

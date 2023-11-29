@@ -11,7 +11,7 @@ Modules/bagsorting.lua
 Modules/castbar.lua
 Modules/characterstats.lua
 Modules/chat.lua
-Modules/chatcommands.lua
+Modules/commands.lua
 Modules/config.lua
 Modules/healthcheck.lua
 Modules/items.lua
