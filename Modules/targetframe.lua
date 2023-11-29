@@ -28,7 +28,7 @@ local function TargetFrameUpdate()
     TargetFrameTextureFramePVPIcon:SetAlpha(0)
     TargetFrameTextureFrameLeaderIcon:ClearAllPoints()
     TargetFrameTextureFrameLeaderIcon:SetPoint("BOTTOM", TargetPortraitBackdrop, "TOP", 0, 0)
-    TargetFrameTextureFrameRaidTargetIcon:SetPoint("LEFT", TargetPortraitBackdrop, "RIGHT", 8, 0)
+    TargetFrameTextureFrameRaidTargetIcon:SetPoint("CENTER", TargetPortraitBackdrop, "CENTER", 0, 0)
     TargetFrameTextureFrameDeadText:Hide()
 
     TargetFrameTextureFrameName:ClearAllPoints()
@@ -123,6 +123,19 @@ end
 
 
 hooksecurefunc("UnitFramePortrait_Update", TargetPortraitUpdate)
+
+
+
+
+local function ToTFrameUpdate()
+    TargetFrameToT:Hide()
+end
+
+
+local ToTFrameEventFrame = CreateFrame("Frame")
+ToTFrameEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+ToTFrameEventFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
+ToTFrameEventFrame:SetScript("OnEvent", ToTFrameUpdate)
 
 
 
@@ -224,6 +237,8 @@ local function TargetFrameAuraUpdate()
     end
     
 
+
+
     --[[
     for i = 1, MAX_DEBUFFS do
         local debuff = _G["TargetFrameDebuff"..i]
@@ -233,7 +248,9 @@ local function TargetFrameAuraUpdate()
         end
     end
     ]]
-        
+
+
+
 
     local debuffCount = 0
     for i = 1, MAX_DEBUFFS do

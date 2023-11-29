@@ -11,10 +11,7 @@ local function NameplateCastbarSetup(namePlate)
     namePlate.castBar.backdrop = CreateFrame("Frame", nil, namePlate.castBar, "BackdropTemplate")
     namePlate.castBar.backdrop:SetPoint("TOPLEFT", namePlate.castBar, -2, 2)
     namePlate.castBar.backdrop:SetPoint("BOTTOMRIGHT", namePlate.castBar, 2, -2)
-    namePlate.castBar.backdrop:SetBackdrop({
-        edgeFile = "Interface/Tooltips/UI-Tooltip-Border", 
-        edgeSize = 10, 
-    })
+    namePlate.castBar.backdrop:SetBackdrop({edgeFile = "Interface/Tooltips/UI-Tooltip-Border", edgeSize = 10})
     namePlate.castBar.backdrop:SetBackdropBorderColor(0.5, 0.5, 0.5)
     namePlate.castBar.backdrop:SetFrameLevel(namePlate.castBar:GetFrameLevel() + 1)
 
