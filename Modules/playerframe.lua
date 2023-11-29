@@ -16,8 +16,8 @@ PlayerPortraitBackdrop:SetFrameStrata("HIGH")
 
 local function PlayerFrameUpdate()
     PlayerFrame:ClearAllPoints()
-    PlayerFrame:SetPoint("BOTTOMLEFT", PlayerPortraitBackdrop, "BOTTOMLEFT", -16, -16)
-    PlayerFrame:SetPoint("TOPRIGHT", PlayerFrameBackdrop, "TOPRIGHT", 16, 16)
+    PlayerFrame:SetPoint("BOTTOMLEFT", PlayerPortraitBackdrop, "BOTTOMLEFT", -8, -8)
+    PlayerFrame:SetPoint("TOPRIGHT", PlayerFrameBackdrop, "TOPRIGHT", 8, 8)
 
     PlayerFrameBackground:ClearAllPoints()
     PlayerFrameBackground:SetPoint("TOPLEFT", PlayerFrameBackdrop, "TOPLEFT", 2, -2)
@@ -101,7 +101,7 @@ PlayerFrameEventFrame:SetScript("OnEvent", PlayerFrameUpdate)
 
 
 local PetFrameBackdrop = CreateFrame("Frame", nil, PetFrame, "BackdropTemplate")
-PetFrameBackdrop:SetPoint("BOTTOMRIGHT", PlayerPortraitBackdrop, "BOTTOMLEFT", -4, 0)
+PetFrameBackdrop:SetPoint("BOTTOMRIGHT", PlayerPortraitBackdrop, "BOTTOMLEFT", 0, 0)
 PetFrameBackdrop:SetSize(48, 24)
 PetFrameBackdrop:SetBackdrop({edgeFile = "Interface/Tooltips/UI-Tooltip-Border", tile = true, edgeSize = 12})
 PetFrameBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
@@ -144,6 +144,12 @@ local function PetFrameUpdate()
 
     PetFrameHappiness:ClearAllPoints()
     PetFrameHappiness:SetPoint("RIGHT", PetFrameBackdrop, "LEFT", 0, 0)
+
+    local i = 1
+    while _G["PetFrameBuff" .. i .. "Icon"] do
+        _G["PetFrameBuff" .. i .. "Icon"]:Hide()
+        i = i + 1
+    end
 end
 
 

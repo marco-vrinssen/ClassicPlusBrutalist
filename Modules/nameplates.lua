@@ -30,7 +30,7 @@ local function NameplateCastbarSetup(namePlate)
                 self.backdrop:Hide()
             else
                 self:SetValue(currentTime)
-                self.backdrop:Show() -- Show the backdrop while casting
+                self.backdrop:Show()
             end
         end
     end)
@@ -53,7 +53,7 @@ local function NameplateCastbarUpdate(namePlate, unit)
         castBar:SetValue(current)
 
         if notInterruptible then
-            castBar:SetStatusBarColor(0.5, 0.5, 0.5) -- Grey for non-interruptible
+            castBar:SetStatusBarColor(0.5, 0.5, 0.5)
         else
             castBar:SetStatusBarColor(0, 1, 0)
         end
@@ -63,7 +63,7 @@ local function NameplateCastbarUpdate(namePlate, unit)
         castBar.maxValue = duration
         castBar.text:SetText(name or channelName)
         castBar:Show()
-        castBar.backdrop:Show() -- Show the backdrop when the cast bar is updated
+        castBar.backdrop:Show()
     else
         namePlate.castBar:Hide()
         namePlate.castBar.backdrop:Hide()
@@ -116,19 +116,19 @@ local function NameplateReactionUpdate(nameplate, unitID)
     local threatStatus = UnitThreatSituation("player", unitID)
 
     if threatStatus and threatStatus >= 2 then
-        healthBar:SetStatusBarColor(1, 0.5, 0) -- Bright orange for aggro
-        healthBar.backdrop:SetBackdropBorderColor(1, 0.5, 0) -- Bright orange for aggro
+        healthBar:SetStatusBarColor(1, 0.5, 0)
+        healthBar.backdrop:SetBackdropBorderColor(1, 0.5, 0)
     else
         if reaction then
             if reaction >= 5 then
-                healthBar:SetStatusBarColor(0, 1, 0) -- Friendly NPC or player: Green
+                healthBar:SetStatusBarColor(0, 1, 0)
             elseif reaction == 4 then
-                healthBar:SetStatusBarColor(1, 1, 0) -- Neutral NPC: Yellow
+                healthBar:SetStatusBarColor(1, 1, 0)
             else
-                healthBar:SetStatusBarColor(1, 0, 0) -- Hostile NPC or player: Red
+                healthBar:SetStatusBarColor(1, 0, 0)
             end
         end
-        healthBar.backdrop:SetBackdropBorderColor(0.5, 0.5, 0.5) -- Default border color
+        healthBar.backdrop:SetBackdropBorderColor(0.5, 0.5, 0.5)
     end
 end
 
@@ -139,7 +139,7 @@ local function NameplateDebuffsUpdate(nameplate, unitID)
     
     local MAX_DEBUFFS = 12
 
-    if not nameplate then return end  -- Ensure nameplate is not nil
+    if not nameplate then return end
 
     if not nameplate.debuffIcons then
         nameplate.debuffIcons = {}

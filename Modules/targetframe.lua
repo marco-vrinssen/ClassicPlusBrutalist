@@ -16,8 +16,8 @@ TargetPortraitBackdrop:SetFrameStrata("HIGH")
 
 local function TargetFrameUpdate()
     TargetFrame:ClearAllPoints()
-    TargetFrame:SetPoint("BOTTOMLEFT", TargetFrameBackdrop, "BOTTOMLEFT", -16, -16)
-    TargetFrame:SetPoint("TOPRIGHT", TargetPortraitBackdrop, "TOPRIGHT", 16, 16)
+    TargetFrame:SetPoint("BOTTOMLEFT", TargetFrameBackdrop, "BOTTOMLEFT", -8, -8)
+    TargetFrame:SetPoint("TOPRIGHT", TargetPortraitBackdrop, "TOPRIGHT", 8, 8)
 
     TargetFrameBackground:ClearAllPoints()
     TargetFrameBackground:SetPoint("TOPLEFT", TargetFrameBackdrop, "TOPLEFT", 2, -2)
