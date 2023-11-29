@@ -73,6 +73,7 @@ end
 
 
 
+
 local function NameplateTextureUpdate(nameplate)
     local unitFrame = nameplate and nameplate.UnitFrame
     if not unitFrame then return end
@@ -116,6 +117,7 @@ local function NameplateReactionUpdate(nameplate, unitID)
 
     if threatStatus and threatStatus >= 2 then
         healthBar:SetStatusBarColor(1, 0.5, 0) -- Bright orange for aggro
+        healthBar.backdrop:SetBackdropBorderColor(1, 0.5, 0) -- Bright orange for aggro
     else
         if reaction then
             if reaction >= 5 then
