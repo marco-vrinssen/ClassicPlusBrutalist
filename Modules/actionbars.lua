@@ -1,17 +1,17 @@
 local function ActionbarsUpdate()
     MainMenuBar:SetWidth(512)
     MainMenuBar:ClearAllPoints()
-    MainMenuBar:SetPoint("BOTTOM", UIParent, "BOTTOM", -2, 68)
+    MainMenuBar:SetPoint("BOTTOM", UIParent, "BOTTOM", -2, 64)
     MainMenuBar:SetMovable(true)
     MainMenuBar:SetUserPlaced(true)
 
     MultiBarBottomLeft:ClearAllPoints()
-    MultiBarBottomLeft:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, 116)
+    MultiBarBottomLeft:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, 110)
     MultiBarBottomLeft:SetMovable(true)
     MultiBarBottomLeft:SetUserPlaced(true)
 
     MultiBarBottomRight:ClearAllPoints()
-    MultiBarBottomRight:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, 20)
+    MultiBarBottomRight:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, 24)
     MultiBarBottomRight:SetMovable(true)
     MultiBarBottomRight:SetUserPlaced(true)
     MultiBarBottomRight:SetScale(0.8)
@@ -33,9 +33,6 @@ local function ActionbarsUpdate()
     MainMenuBarMaxLevelBar:Hide()
     MainMenuBarOverlayFrame:Hide()
 
-    TalentMicroButton:UnregisterAllEvents()
-    TalentMicroButton:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMRIGHT", 10000, 0)
-
     MainMenuBarPerformanceBarFrame:Hide()
     MainMenuBarPerformanceBarFrameButton:Hide()
 
@@ -50,10 +47,8 @@ local function ActionbarsUpdate()
     ReputationWatchBar:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMRIGHT", 10000, 0)
 
     StanceBarFrame:ClearAllPoints()
-    StanceBarFrame:SetPoint("BOTTOMLEFT", MultiBarBottomLeft, "TOPLEFT", 0, 8)
+    StanceBarFrame:SetPoint("TOPLEFT", MainMenuBar, "TOPLEFT", 0, 72)
     StanceBarFrame:SetScale(0.8)    
-    StanceBarFrame:SetMovable(true)
-    StanceBarFrame:SetUserPlaced(true)
 
     PossessBarFrame:Hide()
     PossessBarFrame.Show = PossessBarFrame.Hide
@@ -77,7 +72,7 @@ function ActionbarsRangeCheck(self)
     if self.action then
         local inRange = IsActionInRange(self.action)
         if inRange == false then
-            self.icon:SetVertexColor(0.5, 0.5, 0.5, 1)
+            self.icon:SetVertexColor(0.25, 0.25, 0.25, 1)
         else
             self.icon:SetVertexColor(1, 1, 1, 1)
         end

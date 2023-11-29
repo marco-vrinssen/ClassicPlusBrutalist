@@ -1,7 +1,7 @@
 ## Interface: 11500
 ## Title: Classic+ Pro
 ## Notes: Lightweight, native user interface and experience enhancements.
-## Version: 0.1
+## Version: 0.1 BETA
 ## Author: MIYANKO
 
 Modules/actionbars.lua
@@ -11,7 +11,7 @@ Modules/bagsorting.lua
 Modules/castbar.lua
 Modules/characterstats.lua
 Modules/chat.lua
-Modules/commands.lua
+Modules/chatcommands.lua
 Modules/config.lua
 Modules/healthcheck.lua
 Modules/items.lua

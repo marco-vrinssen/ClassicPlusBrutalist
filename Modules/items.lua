@@ -12,12 +12,19 @@ AutoLootEventFrame:RegisterEvent("LOOT_READY")
 AutoLootEventFrame:SetScript("OnEvent", AutoLootUpdate)
 
 
-local LootConfigEventFrame = CreateFrame("Frame")
-LootConfigEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-LootConfigEventFrame:SetScript("OnEvent", function()
+
+
+local function LootConfigUpdate()
     SetCVar("autoLootDefault", 1)
     SetCVar("lootUnderMouse", 0)
-end)
+end
+
+
+local LootConfigEventFrame = CreateFrame("Frame")
+LootConfigEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+LootConfigEventFrame:SetScript("OnEvent", LootConfigUpdate)
+
+
 
 
 local function MerchantUpdate()

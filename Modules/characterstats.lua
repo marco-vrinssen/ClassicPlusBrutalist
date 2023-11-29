@@ -72,20 +72,21 @@ local function CharacterStatsUpdate()
 
     CharacterRangedDamageFrameLabel:SetText("Spell Hit")
     CharacterRangedDamageFrameStatText:SetText(string.format("%d%%", GetSpellHitModifier()))
-    
 end
+
 
 CharacterFrame:SetScript("OnShow", CharacterStatsUpdate)
 
-local CharacterStatsEventFrame = CreateFrame("Frame")
-CharacterStatsEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-CharacterStatsEventFrame:RegisterEvent("PLAYER_LEVEL_UP")
-CharacterStatsEventFrame:RegisterEvent("PLAYER_XP_UPDATE")
-CharacterStatsEventFrame:RegisterEvent("UPDATE_EXHAUSTION")
-CharacterStatsEventFrame:RegisterEvent("UNIT_INVENTORY_CHANGED")
-CharacterStatsEventFrame:SetScript("OnEvent", function(self, event, unit)
+
+local StatsEventFrame = CreateFrame("Frame")
+StatsEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+StatsEventFrame:RegisterEvent("PLAYER_LEVEL_UP")
+StatsEventFrame:RegisterEvent("PLAYER_XP_UPDATE")
+StatsEventFrame:RegisterEvent("UPDATE_EXHAUSTION")
+StatsEventFrame:RegisterEvent("UNIT_INVENTORY_CHANGED")
+StatsEventFrame:SetScript("OnEvent", function(self, event, unit)
     if event == "UNIT_INVENTORY_CHANGED" and unit == "player" then
-        C_Timer.After(0.25, CharacterStatsUpdate)
+        C_Timer.After(0.2, CharacterStatsUpdate)
     elseif event ~= "UNIT_INVENTORY_CHANGED" then
         CharacterStatsUpdate()
     end

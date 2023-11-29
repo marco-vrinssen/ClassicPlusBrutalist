@@ -1,3 +1,37 @@
+local function CommandInfo()
+    DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFFFF Classic+ Pro loaded.|r")
+    DEFAULT_CHAT_FRAME:AddMessage("|cFFE6CCCC Type /proinfo to learn about chat commands.|r") 
+    DEFAULT_CHAT_FRAME:AddMessage("|cFFE6CCCC Press B to open all Bags.|r") 
+    DEFAULT_CHAT_FRAME:AddMessage("|cFFE6CCCC Autolooting enabled.|r")
+end
+
+
+local CommandEventFrame = CreateFrame("Frame")
+CommandEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+CommandEventFrame:SetScript("OnEvent", CommandInfo)
+
+
+
+
+local commandMessages = {
+    "/healthcheck: To toggle the health check reminder for the current session.",
+    "/post MESSAGE: Broadcasts MESSAGE in all joined and active chat channels.",
+    "/spam MESSAGE: Sends MESSAGE to all players currently visible in the active /who list.",
+    "/filter KEYWORD: Scans all active chats for a specified KEYWORD and shares matching messages in the main chat tab.",
+    "/recruit MESSAGE: Delivers MESSAGE and a guild invitation to unaffiliated players listed in the active /who list.",
+    "/leave: Enables quick exit from the current party or raid."
+}
+
+
+SLASH_PROINFO1 = "/proinfo"
+SlashCmdList["PROINFO"] = function()
+    for _, message in ipairs(commandMessages) do
+        DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFFFF" .. message .. "|r") -- Your original style
+    end
+end
+
+
+
 
 local FilterKeywords = {}
 SlashCmdList["FILTER"] = function(msg)
@@ -16,15 +50,14 @@ SlashCmdList["FILTER"] = function(msg)
 end
 SLASH_FILTER1 = "/filter"
 
-local ChatFilter = CreateFrame("FRAME")
-ChatFilter:RegisterEvent("CHAT_MSG_CHANNEL")
-ChatFilter:SetScript("OnEvent", function(self, event, msg, playerName, languageName, channelName, ...)
+local ChatFilterEventFrame = CreateFrame("FRAME")
+ChatFilterEventFrame:RegisterEvent("CHAT_MSG_CHANNEL")
+ChatFilterEventFrame:SetScript("OnEvent", function(self, event, msg, playerName, languageName, channelName, ...)
     if next(FilterKeywords) ~= nil and strmatch(channelName, "%d+") then
         local channelNumber = tonumber(strmatch(channelName, "%d+"))
         if channelNumber and channelNumber >= 1 and channelNumber <= 5 then
             for _, keyword in ipairs(FilterKeywords) do
                 if strfind(strlower(msg), strlower(keyword)) then
-                    -- Format the player name as a clickable hyperlink with color
                     local playerLink = "|Hplayer:" .. playerName .. "|h|cffffff00[" .. playerName .. "]|h|r"
                     local filteredMsg = playerLink .. ": |cffffffbf" .. msg .. "|r"
                     DEFAULT_CHAT_FRAME:AddMessage(filteredMsg)

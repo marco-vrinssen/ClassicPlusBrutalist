@@ -21,7 +21,7 @@ end
 local function ChatFrameCustomization(chatFrame)
     chatFrame:SetSize(320, 160)
     chatFrame:SetClampedToScreen(false)
-    chatFrame:SetPoint("BOTTOMLEFT", 24, 48)
+    chatFrame:SetPoint("BOTTOMLEFT", 16, 48)
     chatFrame:SetMovable(true)
     chatFrame:SetUserPlaced(true)
 
@@ -93,7 +93,9 @@ end
 CustomizeAndHookChatTabs()
 
 
-local function ChatConfig()
+
+
+local function ChatConfigUpdate()
     SetCVar("chatClassColorOverride", "0")
     if ChatFrame2 then
         FCF_Close(ChatFrame2)
@@ -103,4 +105,4 @@ end
 
 local ChatConfigEventFrame = CreateFrame("Frame")
 ChatConfigEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-ChatConfigEventFrame:SetScript("OnEvent", ChatConfig)
+ChatConfigEventFrame:SetScript("OnEvent", ChatConfigUpdate)

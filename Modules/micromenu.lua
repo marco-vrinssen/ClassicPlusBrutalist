@@ -1,4 +1,25 @@
-local function SetupMicroMenuButtons()
+local function MicroMenuButtonAlpha(buttons, targetAlpha)
+    for _, button in ipairs(buttons) do
+        UIFrameFadeIn(button, 0.25, button:GetAlpha(), targetAlpha)
+    end
+end
+
+
+local function MicroMenuButtonFrame(buttons)
+    for i, button in ipairs(buttons) do
+        button:ClearAllPoints()
+        button:SetParent(UIParent)
+        button:SetAlpha(0.25)
+        if i == 1 then
+            button:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -480, 16)
+        else
+            button:SetPoint("LEFT", buttons[i - 1], "RIGHT", 0, 0)
+        end
+    end
+end
+
+
+local function MicroMenuButtonUpdate()
     SocialsMicroButton:Hide()
     MainMenuMicroButton:Hide()
     HelpMicroButton:Hide()
@@ -11,47 +32,27 @@ local function SetupMicroMenuButtons()
         WorldMapMicroButton
     }
 
-    for _, button in ipairs(buttons) do
-        button:ClearAllPoints()
-        button:SetParent(UIParent)
-        button:SetAlpha(0.25)
-    end
+    MicroMenuButtonFrame(buttons)
 
-    buttons[1]:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -480, 12)
-
-    for i = 2, #buttons do
-        buttons[i]:SetPoint("LEFT", buttons[i - 1], "RIGHT", 0, 0)
-    end
-
-    local function ShowButtons()
-        for _, button in ipairs(buttons) do
-            UIFrameFadeIn(button, 0.25, button:GetAlpha(), 1)
-        end
-    end
-
-    local function HideButtons()
-        for _, button in ipairs(buttons) do
-            UIFrameFadeOut(button, 0.25, button:GetAlpha(), 0.25)
-        end
-    end
-
-    local hoverFrame = CreateFrame("Frame", nil, UIParent)
-    hoverFrame:SetFrameStrata("BACKGROUND")
-    hoverFrame:SetPoint("TOPLEFT", buttons[#buttons], "TOPLEFT")
-    hoverFrame:SetPoint("BOTTOMRIGHT", buttons[1], "BOTTOMRIGHT")
-    hoverFrame:SetScript("OnEnter", ShowButtons)
-    hoverFrame:SetScript("OnLeave", HideButtons)
+    local MicroHoverFrame = CreateFrame("Frame", nil, UIParent)
+    MicroHoverFrame:SetFrameStrata("BACKGROUND")
+    MicroHoverFrame:SetPoint("TOPLEFT", buttons[#buttons], "TOPLEFT")
+    MicroHoverFrame:SetPoint("BOTTOMRIGHT", buttons[1], "BOTTOMRIGHT")
+    
+    MicroHoverFrame:SetScript("OnEnter", function() MicroMenuButtonAlpha(buttons, 1) end)
+    MicroHoverFrame:SetScript("OnLeave", function() MicroMenuButtonAlpha(buttons, 0.25) end)
 
     for _, button in ipairs(buttons) do
-        button:SetScript("OnEnter", ShowButtons)
-        button:SetScript("OnLeave", HideButtons)
+        button:SetScript("OnEnter", function() MicroMenuButtonAlpha(buttons, 1) end)
+        button:SetScript("OnLeave", function() MicroMenuButtonAlpha(buttons, 0.25) end)
     end
 end
 
-local eventFrame = CreateFrame("Frame")
-eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-eventFrame:SetScript("OnEvent", function(self, event)
+
+local MicroMenuEventFrame = CreateFrame("Frame")
+MicroMenuEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+MicroMenuEventFrame:SetScript("OnEvent", function(self, event)
     if event == "PLAYER_ENTERING_WORLD" then
-        SetupMicroMenuButtons()
+        MicroMenuButtonUpdate()
     end
 end)

@@ -1,14 +1,13 @@
 local TargetFrameBackdrop = CreateFrame("Frame", nil, TargetFrame, "BackdropTemplate")
-TargetFrameBackdrop:SetPoint("BOTTOMLEFT", MultiBarBottomLeftButton10, "TOPLEFT", 0, 48)
-TargetFrameBackdrop:SetPoint("BOTTOMRIGHT", MultiBarBottomLeftButton12, "TOPRIGHT", 0, 48)
-TargetFrameBackdrop:SetHeight(48)
+TargetFrameBackdrop:SetPoint("BOTTOM", UIParent, "BOTTOM", 190, 190)
+TargetFrameBackdrop:SetSize(124, 48)
 TargetFrameBackdrop:SetBackdrop({edgeFile = "Interface/Tooltips/UI-Tooltip-Border", edgeSize = 14})
 TargetFrameBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
 TargetFrameBackdrop:SetFrameStrata("HIGH")
 
 
 local TargetPortraitBackdrop = CreateFrame("Frame", nil, TargetFrame, "BackdropTemplate")
-TargetPortraitBackdrop:SetPoint("LEFT", TargetFrameBackdrop, "RIGHT", 4, 0)
+TargetPortraitBackdrop:SetPoint("LEFT", TargetFrameBackdrop, "RIGHT", 0, 0)
 TargetPortraitBackdrop:SetSize(48 ,48)
 TargetPortraitBackdrop:SetBackdrop({edgeFile = "Interface/Tooltips/UI-Tooltip-Border", edgeSize = 14})
 TargetPortraitBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
@@ -22,13 +21,13 @@ local function TargetFrameUpdate()
 
     TargetFrameBackground:ClearAllPoints()
     TargetFrameBackground:SetPoint("TOPLEFT", TargetFrameBackdrop, "TOPLEFT", 2, -2)
-    TargetFrameBackground:SetPoint("BOTTOMRIGHT", TargetFrameBackdrop, "BOTTOMRIGHT", -2, 4)
+    TargetFrameBackground:SetPoint("BOTTOMRIGHT", TargetFrameBackdrop, "BOTTOMRIGHT", -2, 2)
 
     TargetFrameNameBackground:Hide()
     TargetFrameTextureFrameTexture:Hide()
     TargetFrameTextureFramePVPIcon:SetAlpha(0)
     TargetFrameTextureFrameLeaderIcon:ClearAllPoints()
-    TargetFrameTextureFrameLeaderIcon:SetPoint("BOTTOM", PlayerPortraitBackdrop, "TOP", 0, 0)
+    TargetFrameTextureFrameLeaderIcon:SetPoint("BOTTOM", TargetPortraitBackdrop, "TOP", 0, 0)
     TargetFrameTextureFrameRaidTargetIcon:SetPoint("LEFT", TargetPortraitBackdrop, "RIGHT", 8, 0)
     TargetFrameTextureFrameDeadText:Hide()
 
@@ -44,7 +43,7 @@ local function TargetFrameUpdate()
 
     TargetFrameManaBar:ClearAllPoints()
     TargetFrameManaBar:SetSize(TargetFrameBackground:GetWidth(), 8)
-    TargetFrameManaBar:SetPoint("BOTTOM", TargetFrameBackdrop, "BOTTOM", 0, 4)
+    TargetFrameManaBar:SetPoint("BOTTOM", TargetFrameBackdrop, "BOTTOM", 0, 2)
     TargetFrameManaBar:SetStatusBarTexture("Interface/RaidFrame/Raid-Bar-HP-Fill.blp")
 
     TargetFramePortrait:ClearAllPoints()
@@ -72,20 +71,22 @@ TargetFrameEventFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
 TargetFrameEventFrame:SetScript("OnEvent", TargetFrameUpdate)
 
 
-local TargetHealthOverlay = TargetFrameHealthBar:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-TargetHealthOverlay:SetPoint("CENTER", TargetFrameHealthBar, "CENTER", 0, 0)
-TargetHealthOverlay:SetFont(STANDARD_TEXT_FONT, 12, "OUTLINE")
-TargetHealthOverlay:SetTextColor(1, 1, 1, 1)
-TargetHealthOverlay:SetShadowOffset(0, 0)
 
 
-local function UpdateHealthDisplay()
+local TargetHealthText = TargetFrameHealthBar:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+TargetHealthText:SetPoint("CENTER", TargetFrameHealthBar, "CENTER", 0, 0)
+TargetHealthText:SetFont(STANDARD_TEXT_FONT, 12, "OUTLINE")
+TargetHealthText:SetTextColor(1, 1, 1, 1)
+TargetHealthText:SetShadowOffset(0, 0)
+
+
+local function TargetHealthUpdate()
     if UnitExists("target") then
         local currentHealth = UnitHealth("target")
         local maxHealth = UnitHealthMax("target")
-        TargetHealthOverlay:SetText(currentHealth .. " / " .. maxHealth)
+        TargetHealthText:SetText(currentHealth .. " / " .. maxHealth)
     else
-        TargetHealthOverlay:SetText("")
+        TargetHealthText:SetText("")
     end
 end
 
@@ -95,10 +96,12 @@ TargetHealthEventFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
 TargetHealthEventFrame:RegisterEvent("UNIT_HEALTH")
 TargetHealthEventFrame:RegisterEvent("UNIT_HEALTH_FREQUENT")
 TargetHealthEventFrame:RegisterEvent("UNIT_MAXHEALTH")
-TargetHealthEventFrame:SetScript("OnEvent", UpdateHealthDisplay)
+TargetHealthEventFrame:SetScript("OnEvent", TargetHealthUpdate)
 
 
-local function TargetFramePlayerPortraitUpdate(frame)
+
+
+local function TargetPortraitUpdate(frame)
     if frame.unit == "target" and frame.portrait then
         if UnitIsPlayer(frame.unit) then
             local t = CLASS_ICON_TCOORDS[select(2, UnitClass(frame.unit))]
@@ -119,7 +122,7 @@ local function TargetFramePlayerPortraitUpdate(frame)
 end
 
 
-hooksecurefunc("UnitFramePortrait_Update", TargetFramePlayerPortraitUpdate)
+hooksecurefunc("UnitFramePortrait_Update", TargetPortraitUpdate)
 
 
 
@@ -156,26 +159,26 @@ end
 
 
 
-local myDebuffFrame = CreateFrame("Frame", "MyDebuffFrame", UIParent)
-myDebuffFrame:SetSize(40, 40) -- Width, Height
-myDebuffFrame:SetPoint("BOTTOMLEFT", TargetFrameBackdrop, "TOPLEFT", 0, 84) -- Adjusted Position
+local TargetDebuffContainer = CreateFrame("Frame", "MyDebuffFrame", UIParent)
+TargetDebuffContainer:SetSize(40, 40)
+TargetDebuffContainer:SetPoint("BOTTOMLEFT", TargetFrameBackdrop, "TOPLEFT", 0, 92)
 
-local function CreateOrUpdateDebuffIcon(index, debuff)
-    local icon = myDebuffFrame["debuff" .. index]
+local function TargetDebuffUpdate(index, debuff)
+    local icon = TargetDebuffContainer["debuff" .. index]
     
     if not icon then
-        icon = CreateFrame("Frame", nil, myDebuffFrame)
-        icon:SetSize(32, 32) -- Width, Height of the icon
+        icon = CreateFrame("Frame", nil, TargetDebuffContainer)
+        icon:SetSize(32, 32)
         icon.texture = icon:CreateTexture(nil, "BACKGROUND")
         icon.texture:SetAllPoints(icon)
         icon.cooldown = CreateFrame("Cooldown", nil, icon, "CooldownFrameTemplate")
         icon.cooldown:SetAllPoints(icon)
-        icon.cooldown:SetDrawSwipe(false) -- Optional: Set to false if you don't want the swipe effect
-        myDebuffFrame["debuff" .. index] = icon
+        icon.cooldown:SetDrawSwipe(false)
+        TargetDebuffContainer["debuff" .. index] = icon
     end
 
     icon.texture:SetTexture(debuff.icon)
-    icon:SetPoint("LEFT", myDebuffFrame, "LEFT", (index - 1) * 36, 0)
+    icon:SetPoint("LEFT", TargetDebuffContainer, "LEFT", (index - 1) * 36, 0)
     icon.cooldown:SetCooldown(debuff.expirationTime - debuff.duration, debuff.duration)
     icon:Show()
 end
@@ -236,13 +239,13 @@ local function TargetFrameAuraUpdate()
     for i = 1, MAX_DEBUFFS do
         local name, icon, count, debuffType, duration, expirationTime, unitCaster = UnitDebuff("target", i)
         if name and unitCaster == "player" then
-            CreateOrUpdateDebuffIcon(debuffCount + 1, {name = name, icon = icon, duration = duration, expirationTime = expirationTime})
+            TargetDebuffUpdate(debuffCount + 1, {name = name, icon = icon, duration = duration, expirationTime = expirationTime})
             debuffCount = debuffCount + 1
         end
     end
 
     for i = debuffCount + 1, MAX_DEBUFFS do
-        local icon = myDebuffFrame["debuff" .. i]
+        local icon = TargetDebuffContainer["debuff" .. i]
         if icon then
             icon:Hide()
         end
@@ -261,118 +264,122 @@ TargetFrameAuraEventFrame:SetScript("OnEvent", TargetFrameAuraUpdate)
 
 
 
-local TargetFrameSpellBarBackdrop = CreateFrame("Frame", nil, TargetFrameSpellBar, "BackdropTemplate")
-TargetFrameSpellBarBackdrop:SetPoint("TOPLEFT", TargetFrameBackdrop, "BOTTOMLEFT", 0, -2)
-TargetFrameSpellBarBackdrop:SetPoint("TOPRIGHT", TargetFrameBackdrop, "BOTTOMRIGHT", 0, -2)
-TargetFrameSpellBarBackdrop:SetHeight(24)
-TargetFrameSpellBarBackdrop:SetBackdrop({ edgeFile = "Interface/Tooltips/UI-Tooltip-Border", edgeSize = 14 })
-TargetFrameSpellBarBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
-TargetFrameSpellBarBackdrop:SetFrameStrata("HIGH")
+local TargetFrameSpellbarBackdrop = CreateFrame("Frame", nil, TargetFrameSpellBar, "BackdropTemplate")
+TargetFrameSpellbarBackdrop:SetPoint("TOPLEFT", TargetFrameBackdrop, "BOTTOMLEFT", 0, -2)
+TargetFrameSpellbarBackdrop:SetPoint("TOPRIGHT", TargetFrameBackdrop, "BOTTOMRIGHT", 0, -2)
+TargetFrameSpellbarBackdrop:SetHeight(24)
+TargetFrameSpellbarBackdrop:SetBackdrop({ edgeFile = "Interface/Tooltips/UI-Tooltip-Border", edgeSize = 14 })
+TargetFrameSpellbarBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
+TargetFrameSpellbarBackdrop:SetFrameStrata("HIGH")
 
 
-local function TargetFrameSpellBarUpdate()
+local function TargetFrameSpellbarUpdate()
     TargetFrameSpellBar:ClearAllPoints()
-    TargetFrameSpellBar:SetPoint("TOPLEFT", TargetFrameSpellBarBackdrop, "TOPLEFT", 2, -4)
-    TargetFrameSpellBar:SetPoint("BOTTOMRIGHT", TargetFrameSpellBarBackdrop, "BOTTOMRIGHT", -2, 4)
+    TargetFrameSpellBar:SetPoint("TOPLEFT", TargetFrameSpellbarBackdrop, "TOPLEFT", 2, -4)
+    TargetFrameSpellBar:SetPoint("BOTTOMRIGHT", TargetFrameSpellbarBackdrop, "BOTTOMRIGHT", -2, 4)
     TargetFrameSpellBar:SetStatusBarTexture("Interface/RaidFrame/Raid-Bar-HP-Fill.blp")
 
     TargetFrameSpellBar.Border:SetTexture(nil)
     TargetFrameSpellBar.Flash:SetTexture(nil)
     TargetFrameSpellBar.Spark:SetTexture(nil)
 
-    TargetFrameSpellBar.Icon:SetSize(TargetFrameSpellBarBackdrop:GetHeight() - 4, TargetFrameSpellBarBackdrop:GetHeight() - 4)
+    TargetFrameSpellBar.Icon:SetSize(TargetFrameSpellbarBackdrop:GetHeight() - 4, TargetFrameSpellbarBackdrop:GetHeight() - 4)
 
     TargetFrameSpellBar.Text:ClearAllPoints()
-    TargetFrameSpellBar.Text:SetPoint("CENTER", TargetFrameSpellBarBackdrop, "CENTER", 0, 0)
+    TargetFrameSpellBar.Text:SetPoint("CENTER", TargetFrameSpellbarBackdrop, "CENTER", 0, 0)
     TargetFrameSpellBar.Text:SetFont(STANDARD_TEXT_FONT, 10)
 end
 
 
-TargetFrameSpellBar:HookScript("OnShow", TargetFrameSpellBarUpdate)
-TargetFrameSpellBar:HookScript("OnUpdate", TargetFrameSpellBarUpdate)
+TargetFrameSpellBar:HookScript("OnShow", TargetFrameSpellbarUpdate)
+TargetFrameSpellBar:HookScript("OnUpdate", TargetFrameSpellbarUpdate)
 
 
-local TargetFrameSpellBarFrame = CreateFrame("Frame")
-TargetFrameSpellBarFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-TargetFrameSpellBarFrame:SetScript("OnEvent", TargetFrameSpellBarUpdate)
+local TargetFrameSpellbarEventFrame = CreateFrame("Frame")
+TargetFrameSpellbarEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+TargetFrameSpellbarEventFrame:SetScript("OnEvent", TargetFrameSpellbarUpdate)
 
 
-local ClassificationText = TargetFrame:CreateFontString(nil, "OVERLAY")
-ClassificationText:SetFont(STANDARD_TEXT_FONT, 12, "OUTLINE")
-ClassificationText:SetPoint("BOTTOM", TargetPortraitBackdrop, "TOP", 0, 4)
 
 
-local function TargetFrameClassification()
+local TargetFrameClassificationText = TargetFrame:CreateFontString(nil, "OVERLAY")
+TargetFrameClassificationText:SetFont(STANDARD_TEXT_FONT, 12, "OUTLINE")
+TargetFrameClassificationText:SetPoint("BOTTOM", TargetPortraitBackdrop, "TOP", 0, 4)
+
+
+local function TargetFrameClassificationUpdate()
     local classification = UnitClassification("target")
     if classification == "worldboss" then
-        ClassificationText:SetText("Boss")
-        ClassificationText:SetTextColor(1, 0.5, 0, 1)
+        TargetFrameClassificationText:SetText("Boss")
+        TargetFrameClassificationText:SetTextColor(1, 0.5, 0, 1)
         TargetFrameBackdrop:SetBackdropBorderColor(1, 0.5, 0, 1)
         TargetPortraitBackdrop:SetBackdropBorderColor(1, 0.5, 0, 1)
         TargetFrameTextureFrameName:SetTextColor(1, 0.5, 0, 1)
     elseif classification == "elite" then
-        ClassificationText:SetText("Elite")
-        ClassificationText:SetTextColor(1, 0.8, 0, 1)
+        TargetFrameClassificationText:SetText("Elite")
+        TargetFrameClassificationText:SetTextColor(1, 0.8, 0, 1)
         TargetFrameBackdrop:SetBackdropBorderColor(1, 0.8, 0, 1)
         TargetPortraitBackdrop:SetBackdropBorderColor(1, 0.8, 0, 1)
         TargetFrameTextureFrameName:SetTextColor(1, 0.8, 0, 1)
     elseif classification == "rare" then
-        ClassificationText:SetText("Rare")
-        ClassificationText:SetTextColor(1, 0.5, 0, 1)
+        TargetFrameClassificationText:SetText("Rare")
+        TargetFrameClassificationText:SetTextColor(1, 0.5, 0, 1)
         TargetFrameBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
         TargetPortraitBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
     else
-        ClassificationText:SetText("")
+        TargetFrameClassificationText:SetText("")
         TargetFrameBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
         TargetPortraitBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
     end
 end
 
 
-hooksecurefunc("TargetFrame_Update", TargetFrameClassification)
+hooksecurefunc("TargetFrame_Update", TargetFrameClassificationUpdate)
 
 
 local TargetFrameClassificationEventFrame = CreateFrame("Frame")
 TargetFrameClassificationEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 TargetFrameClassificationEventFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
-TargetFrameClassificationEventFrame:SetScript("OnEvent", TargetFrameClassification)
+TargetFrameClassificationEventFrame:SetScript("OnEvent", TargetFrameClassificationUpdate)
 
 
-local ThreatText = ThreatText or TargetFrame:CreateFontString(nil, "OVERLAY")
-ThreatText:SetFont(STANDARD_TEXT_FONT, 12, "OUTLINE")
-ThreatText:SetPoint("BOTTOM", ClassificationText, "TOP", 0, 4)
 
 
-local function UpdateThreatText()
+local TargetFrameThreatText = TargetFrameThreatText or TargetFrame:CreateFontString(nil, "OVERLAY")
+TargetFrameThreatText:SetFont(STANDARD_TEXT_FONT, 12, "OUTLINE")
+TargetFrameThreatText:SetPoint("BOTTOM", TargetFrameClassificationText, "TOP", 0, 4)
+
+
+local function TargetFrameThreatTextUpdate()
     if not UnitExists("target") or UnitIsDead("target") or not UnitCanAttack("player", "target") then
-        ThreatText:Hide()
+        TargetFrameThreatText:Hide()
         return
     end
 
     local isTanking, status, threatPercentage = UnitDetailedThreatSituation("player", "target")
     if threatPercentage then
-        ThreatText:SetText(string.format("%.0f%%", threatPercentage))
-        ThreatText:Show()
+        TargetFrameThreatText:SetText(string.format("%.0f%%", threatPercentage))
+        TargetFrameThreatText:Show()
         if isTanking or (status and status >= 2) then
-            ThreatText:SetTextColor(1, 0.5, 0)
+            TargetFrameThreatText:SetTextColor(1, 0.5, 0)
         elseif status == 1 then
-            ThreatText:SetTextColor(1, 1, 0)
+            TargetFrameThreatText:SetTextColor(1, 1, 0)
         else
-            ThreatText:SetTextColor(0.5, 0.5, 0.5)
+            TargetFrameThreatText:SetTextColor(0.5, 0.5, 0.5)
         end
     else
-        ThreatText:Hide()
+        TargetFrameThreatText:Hide()
     end
 end
 
 
-
-
-TargetFrame:HookScript("OnShow", UpdateThreatText)
-TargetFrame:HookScript("OnEvent", UpdateThreatText)
+TargetFrame:HookScript("OnShow", TargetFrameThreatTextUpdate)
+TargetFrame:HookScript("OnEvent", TargetFrameThreatTextUpdate)
 TargetFrame:RegisterEvent("UNIT_THREAT_SITUATION_UPDATE")
 TargetFrame:RegisterEvent("UNIT_THREAT_LIST_UPDATE")
 TargetFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
+
+
 
 
 local TargetFrameConfigFrame = CreateFrame("Frame")

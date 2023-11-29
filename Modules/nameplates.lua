@@ -1,4 +1,4 @@
-local function CreateCastBar(namePlate)
+local function NameplateCastbarSetup(namePlate)
     local healthBar = namePlate.UnitFrame.healthBar
 
     namePlate.castBar = CreateFrame("StatusBar", nil, namePlate)
@@ -38,16 +38,12 @@ local function CreateCastBar(namePlate)
         end
     end)
 
-    -- Initially hide the cast bar and its backdrop
     namePlate.castBar:Hide()
     namePlate.castBar.backdrop:Hide()
 end
 
 
-
-
-
-local function UpdateCastBar(namePlate, unit)
+local function NameplateCastbarUpdate(namePlate, unit)
     local name, _, texture, startTime, endTime, _, _, notInterruptible = UnitCastingInfo(unit)
     local channelName, _, _, channelStartTime, channelEndTime = UnitChannelInfo(unit)
 
@@ -205,9 +201,9 @@ local function NameplateSpecificUpdate(unitID)
         NameplateReactionUpdate(nameplate, unitID)
         NameplateDebuffsUpdate(nameplate, unitID)
         if not nameplate.castBar then
-            CreateCastBar(nameplate)
+            NameplateCastbarSetup(nameplate)
         end
-        UpdateCastBar(nameplate, unitID)
+        NameplateCastbarUpdate(nameplate, unitID)
     end
 end
 

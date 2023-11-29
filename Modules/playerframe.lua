@@ -1,14 +1,13 @@
 local PlayerFrameBackdrop = CreateFrame("Frame", nil, PlayerFrame, "BackdropTemplate")
-PlayerFrameBackdrop:SetPoint("BOTTOMLEFT", MultiBarBottomLeftButton1, "TOPLEFT", 0, 48)
-PlayerFrameBackdrop:SetPoint("BOTTOMRIGHT", MultiBarBottomLeftButton3, "TOPRIGHT", 0, 48)
-PlayerFrameBackdrop:SetHeight(48)
+PlayerFrameBackdrop:SetPoint("BOTTOM", UIParent, "BOTTOM", -190, 190)
+PlayerFrameBackdrop:SetSize(124, 48)
 PlayerFrameBackdrop:SetBackdrop({edgeFile = "Interface/Tooltips/UI-Tooltip-Border", edgeSize = 14})
 PlayerFrameBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
 PlayerFrameBackdrop:SetFrameStrata("HIGH")
 
 
 local PlayerPortraitBackdrop = CreateFrame("Frame", nil, PlayerFrame, "BackdropTemplate")
-PlayerPortraitBackdrop:SetPoint("RIGHT", PlayerFrameBackdrop, "LEFT", -4, 0)
+PlayerPortraitBackdrop:SetPoint("RIGHT", PlayerFrameBackdrop, "LEFT", 0, 0)
 PlayerPortraitBackdrop:SetSize(48 ,48)
 PlayerPortraitBackdrop:SetBackdrop({edgeFile = "Interface/Tooltips/UI-Tooltip-Border", edgeSize = 14})
 PlayerPortraitBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
@@ -22,7 +21,7 @@ local function PlayerFrameUpdate()
 
     PlayerFrameBackground:ClearAllPoints()
     PlayerFrameBackground:SetPoint("TOPLEFT", PlayerFrameBackdrop, "TOPLEFT", 2, -2)
-    PlayerFrameBackground:SetPoint("BOTTOMRIGHT", PlayerFrameBackdrop, "BOTTOMRIGHT", -2, 4)
+    PlayerFrameBackground:SetPoint("BOTTOMRIGHT", PlayerFrameBackdrop, "BOTTOMRIGHT", -2, 2)
 
     PlayerFrameTexture:SetTexture(nil)
     PlayerStatusGlow:SetAlpha(0)
@@ -53,7 +52,7 @@ local function PlayerFrameUpdate()
     PlayerFrameHealthBar:SetStatusBarTexture("Interface/RaidFrame/Raid-Bar-HP-Fill.blp")
 
     PlayerFrameManaBar:ClearAllPoints()
-    PlayerFrameManaBar:SetPoint("BOTTOM", PlayerFrameBackdrop, "BOTTOM", 0, 4)
+    PlayerFrameManaBar:SetPoint("BOTTOM", PlayerFrameBackdrop, "BOTTOM", 0, 2)
     PlayerFrameManaBar:SetSize(PlayerFrameBackground:GetWidth(), 8)
     PlayerFrameManaBar:SetStatusBarTexture("Interface/RaidFrame/Raid-Bar-HP-Fill.blp")
 
@@ -97,6 +96,8 @@ PlayerFrameEventFrame:RegisterEvent("PLAYER_LOGIN")
 PlayerFrameEventFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
 PlayerFrameEventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
 PlayerFrameEventFrame:SetScript("OnEvent", PlayerFrameUpdate)
+
+
 
 
 local PetFrameBackdrop = CreateFrame("Frame", nil, PetFrame, "BackdropTemplate")

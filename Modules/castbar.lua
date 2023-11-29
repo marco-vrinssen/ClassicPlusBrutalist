@@ -1,17 +1,17 @@
-local CastingBarBackdrop = CreateFrame("Frame", nil, CastingBarFrame, "BackdropTemplate")
-CastingBarBackdrop:SetPoint("TOPLEFT", CastingBarFrame, "TOPLEFT", -2, 4)
-CastingBarBackdrop:SetPoint("BOTTOMRIGHT", CastingBarFrame, "BOTTOMRIGHT", 2, -4)
-CastingBarBackdrop:SetBackdrop({edgeFile = "Interface/Tooltips/UI-Tooltip-Border", edgeSize = 14})
-CastingBarBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
-CastingBarBackdrop:SetFrameStrata("HIGH")
+local CastbarBackdrop = CreateFrame("Frame", nil, CastingBarFrame, "BackdropTemplate")
+CastbarBackdrop:SetPoint("TOPLEFT", CastingBarFrame, "TOPLEFT", -2, 3)
+CastbarBackdrop:SetPoint("BOTTOMRIGHT", CastingBarFrame, "BOTTOMRIGHT", 2, -2)
+CastbarBackdrop:SetBackdrop({edgeFile = "Interface/Tooltips/UI-Tooltip-Border", edgeSize = 14})
+CastbarBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
+CastbarBackdrop:SetFrameStrata("HIGH")
 
 
-local function CastingBarUpdate()
+local function CastbarUpdate()
     CastingBarFrame:ClearAllPoints()
-    CastingBarFrame:SetSize(160, 20)
+    CastingBarFrame:SetSize(160, 24)
     CastingBarFrame:SetMovable(true)
     CastingBarFrame:SetUserPlaced(true)
-    CastingBarFrame:SetPoint("BOTTOM", MultiBarBottomLeft, "TOP", 0, 50)
+    CastingBarFrame:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, 192)
     CastingBarFrame:SetStatusBarTexture("Interface/RaidFrame/Raid-Bar-HP-Fill.blp")
 
     CastingBarFrame.Border:Hide()
@@ -24,6 +24,6 @@ local function CastingBarUpdate()
 end
 
 
-local CastingBarEventFrame = CreateFrame("Frame")
-CastingBarEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-CastingBarEventFrame:SetScript("OnEvent", CastingBarUpdate)
+local CastbarEventFrame = CreateFrame("Frame")
+CastbarEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+CastbarEventFrame:SetScript("OnEvent", CastbarUpdate)

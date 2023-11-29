@@ -17,28 +17,30 @@ local function BagsUpdate()
     CharacterBag3Slot:SetPoint("RIGHT", CharacterBag2Slot, "LEFT", -8, 0)
     CharacterBag3Slot:SetParent(ContainerFrame1)
 
-    ContainerFrame1:ClearAllPoints()
-    ContainerFrame2:ClearAllPoints()
-    ContainerFrame3:ClearAllPoints()
-    ContainerFrame4:ClearAllPoints()
-    ContainerFrame5:ClearAllPoints()
-    ContainerFrame6:ClearAllPoints()
+    KeyRingButton:ClearAllPoints()
+    KeyRingButton:SetPoint("RIGHT", CharacterBag3Slot, "LEFT", -8, -1)
+    KeyRingButton:SetParent(ContainerFrame1)
 
+    ContainerFrame1:ClearAllPoints()
     ContainerFrame1:SetPoint("BOTTOMRIGHT", CharacterBag0Slot, "TOPRIGHT", 6, 8)
+
+    ContainerFrame2:ClearAllPoints()
     ContainerFrame2:SetPoint("TOPRIGHT", ContainerFrame1, "TOPLEFT", 0, 0)
+
+    ContainerFrame3:ClearAllPoints()
     ContainerFrame3:SetPoint("TOPRIGHT", ContainerFrame2, "TOPLEFT", 0, 0)
+
+    ContainerFrame4:ClearAllPoints()
     ContainerFrame4:SetPoint("BOTTOM", ContainerFrame2, "TOP", 0, 8)
+
+    ContainerFrame5:ClearAllPoints()
     ContainerFrame5:SetPoint("BOTTOM", ContainerFrame3, "TOP", 0, 8)
-    
+
+    ContainerFrame6:ClearAllPoints()
+    ContainerFrame6:SetPoint("BOTTOMRIGHT", CharacterBag0Slot, "TOPRIGHT", 6, 152)
+
     ContainerFrame1AddSlotsButton:Hide()
     ContainerFrame1AddSlotsButton.Show = ContainerFrame1AddSlotsButton.Hide
-    ContainerFrame1AddSlotsButton.SetShown = ContainerFrame1AddSlotsButton.Hide
-
-    KeyRingButton:Hide()
-    KeyRingButton.Show = KeyRingButton.Hide
-    KeyRingButton.SetShown = KeyRingButton.Hide
-
-    C_Container.SetInsertItemsLeftToRight(true)
 end
 
 
@@ -50,3 +52,17 @@ BagsEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 BagsEventFrame:RegisterEvent("MERCHANT_SHOW")
 BagsEventFrame:RegisterEvent("MERCHANT_CLOSED")
 BagsEventFrame:SetScript("OnEvent", BagsUpdate)
+
+
+
+
+local function BagsConfigUpdate()
+    C_Container.SetInsertItemsLeftToRight(true)
+    SetBinding("B", "OPENALLBAGS")
+    SaveBindings(2)
+end
+
+
+local BagsConfigEventFrame = CreateFrame("Frame")
+BagsConfigEventFrame:RegisterEvent("PLAYER_LOGIN")
+BagsConfigEventFrame:SetScript("OnEvent", BagsConfigUpdate)
