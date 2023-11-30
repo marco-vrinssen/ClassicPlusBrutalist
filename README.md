@@ -22,4 +22,4 @@ Addon for World of Warcraft Classic
 - Enhanced Chat Commands: Broadens in-game communication options with new chat commands.
 
 ### Global Font Change
-Moving the "Fonts" folder to the "classic_" directory changes the overall in-game font.
+Moving the "fonts" folder to the "classic_" directory changes the overall in-game font.
