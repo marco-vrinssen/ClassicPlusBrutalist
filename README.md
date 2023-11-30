@@ -1,6 +1,6 @@
-# **Classic+ Pro 0.1 BETA**
+# **Classic+ Pro Beta 1.0**
 
-## Addon for World of Warcraft Classic 1.15.0
+## Addon for World of Warcraft Classic
 
 ### Overview
 - Resource-efficient add-on
@@ -21,3 +21,6 @@
 - Merchant Interaction Automation: Automatically sells gray items and performs repairs (if funds are available) when interacting with merchants.
 - Advanced Bag Sorting: Adds a sorting feature in the main bag for organizing items across all bags, except the primary bag designated for manually sorted, frequently used items.
 - Enhanced Chat Commands: Broadens in-game communication options with new chat commands.
+
+### Global Font Change
+Moving the "Fonts" folder to the "classic_" directory changes the overall in-game font.

@@ -14,15 +14,15 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Create Zip Archive
-      run: zip -r Classic-Plus-Pro-1.0.zip *
+      run: zip -r ClassicPlusPro.zip *
 
     - name: Upload to CurseForge
       uses: itsmeow/curseforge-upload@3.1.1
       with:
-        file_path: "./Classic-Plus-Pro-1.0.zip"
-        display_name: "Classic Plus Pro 1.0"
-        game_endpoint: "wow"  # For World of Warcraft
-        project_id: 941941  # Your CurseForge project ID
-        token: ${{ secrets.CURSEFORGE }}  # Your CurseForge API key
-        game_versions: "1.15.0"  # WoW Classic version
+        file_path: "./ClassicPlusPro.zip"
+        display_name: "Classic+ Pro"
+        game_endpoint: "wow"
+        project_id: 941941
+        token: ${{ secrets.CURSEFORGE }}
+        game_versions: "1.15.0"
         release_type: "beta"  # Can be 'alpha', 'beta', or 'release'

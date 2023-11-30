@@ -1,7 +1,7 @@
 ## Interface: 11500
 ## Title: Classic+ Pro
 ## Notes: Lightweight, native user interface and experience enhancements.
-## Version: 0.1 BETA
+## Version: 0.1 Beta
 ## Author: MIYANKO
 
 Modules/actionbars.lua
