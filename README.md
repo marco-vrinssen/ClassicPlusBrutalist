@@ -1,5 +1,6 @@
-# **Classic+ Pro Beta 1.0**
-Addon for World of Warcraft Classic
+# Classic+ Pro Beta 1.0
+
+## Addon for World of Warcraft Classic
 
 ### Overview
 - Resource-efficient add-on
