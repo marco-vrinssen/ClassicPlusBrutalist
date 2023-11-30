@@ -20,7 +20,7 @@ jobs:
       uses: itsmeow/curseforge-upload@3.1.1
       with:
         file_path: "./ClassicPlusPro.zip"
-        display_name: "ClassicPlusPro"
+        display_name: "Classic+ Pro"
         game_endpoint: "wow"
         project_id: 941941
         token: ${{ secrets.CURSEFORGE }}
