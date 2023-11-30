@@ -73,6 +73,10 @@ TargetFrameEventFrame:SetScript("OnEvent", TargetFrameUpdate)
 
 
 
+
+
+
+
 local TargetHealthText = TargetFrameHealthBar:CreateFontString(nil, "OVERLAY", "GameFontNormal")
 TargetHealthText:SetPoint("CENTER", TargetFrameHealthBar, "CENTER", 0, 0)
 TargetHealthText:SetFont(STANDARD_TEXT_FONT, 12, "OUTLINE")
@@ -97,6 +101,10 @@ TargetHealthEventFrame:RegisterEvent("UNIT_HEALTH")
 TargetHealthEventFrame:RegisterEvent("UNIT_HEALTH_FREQUENT")
 TargetHealthEventFrame:RegisterEvent("UNIT_MAXHEALTH")
 TargetHealthEventFrame:SetScript("OnEvent", TargetHealthUpdate)
+
+
+
+
 
 
 
@@ -127,6 +135,10 @@ hooksecurefunc("UnitFramePortrait_Update", TargetPortraitUpdate)
 
 
 
+
+
+
+
 local function ToTFrameUpdate()
     TargetFrameToT:Hide()
 end
@@ -138,6 +150,36 @@ ToTFrameEventFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
 ToTFrameEventFrame:SetScript("OnEvent", ToTFrameUpdate)
 
 
+
+
+
+
+
+
+local TargetDebuffContainer = CreateFrame("Frame", "MyDebuffFrame", UIParent)
+TargetDebuffContainer:SetSize(40, 40)
+TargetDebuffContainer:SetPoint("BOTTOMLEFT", TargetFrameBackdrop, "TOPLEFT", 0, 68)
+
+
+local function TargetDebuffUpdate(index, debuff)
+    local icon = TargetDebuffContainer["debuff" .. index]
+    
+    if not icon then
+        icon = CreateFrame("Frame", nil, TargetDebuffContainer)
+        icon:SetSize(32, 32)
+        icon.texture = icon:CreateTexture(nil, "BACKGROUND")
+        icon.texture:SetAllPoints(icon)
+        icon.cooldown = CreateFrame("Cooldown", nil, icon, "CooldownFrameTemplate")
+        icon.cooldown:SetAllPoints(icon)
+        icon.cooldown:SetDrawSwipe(false)
+        TargetDebuffContainer["debuff" .. index] = icon
+    end
+
+    icon.texture:SetTexture(debuff.icon)
+    icon:SetPoint("LEFT", TargetDebuffContainer, "LEFT", (index - 1) * 36, 0)
+    icon.cooldown:SetCooldown(debuff.expirationTime - debuff.duration, debuff.duration)
+    icon:Show()
+end
 
 
 --[[
@@ -168,33 +210,6 @@ local function TargetFrameAuraUpdate()
     end
 end
 ]]
-
-
-
-
-local TargetDebuffContainer = CreateFrame("Frame", "MyDebuffFrame", UIParent)
-TargetDebuffContainer:SetSize(40, 40)
-TargetDebuffContainer:SetPoint("BOTTOMLEFT", TargetFrameBackdrop, "TOPLEFT", 0, 92)
-
-local function TargetDebuffUpdate(index, debuff)
-    local icon = TargetDebuffContainer["debuff" .. index]
-    
-    if not icon then
-        icon = CreateFrame("Frame", nil, TargetDebuffContainer)
-        icon:SetSize(32, 32)
-        icon.texture = icon:CreateTexture(nil, "BACKGROUND")
-        icon.texture:SetAllPoints(icon)
-        icon.cooldown = CreateFrame("Cooldown", nil, icon, "CooldownFrameTemplate")
-        icon.cooldown:SetAllPoints(icon)
-        icon.cooldown:SetDrawSwipe(false)
-        TargetDebuffContainer["debuff" .. index] = icon
-    end
-
-    icon.texture:SetTexture(debuff.icon)
-    icon:SetPoint("LEFT", TargetDebuffContainer, "LEFT", (index - 1) * 36, 0)
-    icon.cooldown:SetCooldown(debuff.expirationTime - debuff.duration, debuff.duration)
-    icon:Show()
-end
 
 
 local function TargetFrameAuraUpdate()
@@ -237,8 +252,6 @@ local function TargetFrameAuraUpdate()
     end
     
 
-
-
     --[[
     for i = 1, MAX_DEBUFFS do
         local debuff = _G["TargetFrameDebuff"..i]
@@ -248,8 +261,6 @@ local function TargetFrameAuraUpdate()
         end
     end
     ]]
-
-
 
 
     local debuffCount = 0
@@ -273,10 +284,15 @@ end
 hooksecurefunc("TargetFrame_Update", TargetFrameAuraUpdate)
 hooksecurefunc("TargetFrame_UpdateAuras", TargetFrameAuraUpdate)
 
+
 local TargetFrameAuraEventFrame = CreateFrame("Frame")
 TargetFrameAuraEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 TargetFrameAuraEventFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
 TargetFrameAuraEventFrame:SetScript("OnEvent", TargetFrameAuraUpdate)
+
+
+
+
 
 
 
@@ -315,6 +331,10 @@ TargetFrameSpellBar:HookScript("OnUpdate", TargetFrameSpellbarUpdate)
 local TargetFrameSpellbarEventFrame = CreateFrame("Frame")
 TargetFrameSpellbarEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 TargetFrameSpellbarEventFrame:SetScript("OnEvent", TargetFrameSpellbarUpdate)
+
+
+
+
 
 
 
@@ -362,6 +382,10 @@ TargetFrameClassificationEventFrame:SetScript("OnEvent", TargetFrameClassificati
 
 
 
+
+
+
+
 local TargetFrameThreatText = TargetFrameThreatText or TargetFrame:CreateFontString(nil, "OVERLAY")
 TargetFrameThreatText:SetFont(STANDARD_TEXT_FONT, 12, "OUTLINE")
 TargetFrameThreatText:SetPoint("BOTTOM", TargetFrameClassificationText, "TOP", 0, 4)
@@ -395,6 +419,10 @@ TargetFrame:HookScript("OnEvent", TargetFrameThreatTextUpdate)
 TargetFrame:RegisterEvent("UNIT_THREAT_SITUATION_UPDATE")
 TargetFrame:RegisterEvent("UNIT_THREAT_LIST_UPDATE")
 TargetFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
+
+
+
+
 
 
 

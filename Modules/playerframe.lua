@@ -100,6 +100,81 @@ PlayerFrameEventFrame:SetScript("OnEvent", PlayerFrameUpdate)
 
 
 
+
+
+
+
+local PlayerBuffContainer = CreateFrame("Frame", "MyBuffFrame", UIParent)
+PlayerBuffContainer:SetSize(40, 40)
+PlayerBuffContainer:SetPoint("BOTTOMRIGHT", PlayerFrameBackdrop, "TOPRIGHT", 0, 68)
+
+
+local function PlayerBuffUpdate(index, buff)
+    local icon = PlayerBuffContainer["buff" .. index]
+    
+    if not icon then
+        icon = CreateFrame("Frame", nil, PlayerBuffContainer)
+        icon:SetSize(32, 32)
+        icon.texture = icon:CreateTexture(nil, "BACKGROUND")
+        icon.texture:SetAllPoints(icon)
+        icon.cooldown = CreateFrame("Cooldown", nil, icon, "CooldownFrameTemplate")
+        icon.cooldown:SetAllPoints(icon)
+        icon.cooldown:SetDrawSwipe(false)
+        PlayerBuffContainer["buff" .. index] = icon
+    end
+
+    icon.texture:SetTexture(buff.icon)
+    if index == 1 then
+        icon:SetPoint("RIGHT", PlayerBuffContainer, "RIGHT", 0, 0)
+    else
+        icon:SetPoint("RIGHT", PlayerBuffContainer["buff" .. (index - 1)], "LEFT", -4, 0)
+    end
+    icon.cooldown:SetCooldown(buff.expirationTime - buff.duration, buff.duration)
+    icon:Show()
+end
+
+
+local function PlayerFrameBuffUpdate()
+    local MAX_BUFFS = 32
+    local visibleBuffCount = 0
+
+    for i = 1, MAX_BUFFS do
+        local name, icon, _, _, duration, expirationTime, caster = UnitBuff("player", i)
+        
+        if name and caster == "player" and duration and duration > 0 and duration <= 60 then
+            visibleBuffCount = visibleBuffCount + 1
+            local buff = { icon = icon, duration = duration, expirationTime = expirationTime }
+            PlayerBuffUpdate(visibleBuffCount, buff)
+        end
+    end
+
+    for i = visibleBuffCount + 1, MAX_BUFFS do
+        local icon = PlayerBuffContainer["buff" .. i]
+        if icon then
+            icon:Hide()
+        end
+    end
+end
+
+
+local PlayerFrameAuraEventFrame = CreateFrame("Frame")
+PlayerFrameAuraEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+PlayerFrameAuraEventFrame:RegisterEvent("UNIT_AURA")
+PlayerFrameAuraEventFrame:SetScript("OnEvent", function(self, event, arg1)
+    if event == "UNIT_AURA" and arg1 == "player" then
+        PlayerFrameBuffUpdate()
+    elseif event == "PLAYER_ENTERING_WORLD" then
+        PlayerFrameBuffUpdate()
+    end
+end)
+
+
+
+
+
+
+
+
 local PetFrameBackdrop = CreateFrame("Frame", nil, PetFrame, "BackdropTemplate")
 PetFrameBackdrop:SetPoint("BOTTOMRIGHT", PlayerPortraitBackdrop, "BOTTOMLEFT", 0, 0)
 PetFrameBackdrop:SetSize(48, 24)

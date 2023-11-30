@@ -48,6 +48,10 @@ MinimapEventFrame:SetScript("OnEvent", MinimapUpdate)
 
 
 
+
+
+
+
 local function MinimapZoom(self, delta)
     if delta > 0 then
         Minimap_ZoomIn()
@@ -61,6 +65,10 @@ local MinimapZoomEventFrame = CreateFrame("Frame", nil, Minimap)
 MinimapZoomEventFrame:SetAllPoints(Minimap)
 MinimapZoomEventFrame:EnableMouseWheel(true)
 MinimapZoomEventFrame:SetScript("OnMouseWheel", MinimapZoom)
+
+
+
+
 
 
 

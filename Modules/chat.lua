@@ -95,6 +95,10 @@ CustomizeAndHookChatTabs()
 
 
 
+
+
+
+
 local function ChatConfigUpdate()
     SetCVar("chatClassColorOverride", "0")
     if ChatFrame2 then

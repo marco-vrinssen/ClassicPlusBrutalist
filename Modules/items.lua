@@ -14,6 +14,10 @@ AutoLootEventFrame:SetScript("OnEvent", AutoLootUpdate)
 
 
 
+
+
+
+
 local function LootConfigUpdate()
     SetCVar("autoLootDefault", 1)
     SetCVar("lootUnderMouse", 0)
@@ -23,6 +27,10 @@ end
 local LootConfigEventFrame = CreateFrame("Frame")
 LootConfigEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 LootConfigEventFrame:SetScript("OnEvent", LootConfigUpdate)
+
+
+
+
 
 
 

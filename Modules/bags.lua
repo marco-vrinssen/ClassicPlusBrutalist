@@ -56,6 +56,10 @@ BagsEventFrame:SetScript("OnEvent", BagsUpdate)
 
 
 
+
+
+
+
 local function BagsConfigUpdate()
     C_Container.SetInsertItemsLeftToRight(true)
     SetBinding("B", "OPENALLBAGS")

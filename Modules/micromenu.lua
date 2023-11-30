@@ -9,7 +9,7 @@ local function MicroMenuButtonFrame(buttons)
     for i, button in ipairs(buttons) do
         button:ClearAllPoints()
         button:SetParent(UIParent)
-        button:SetAlpha(0.25)
+        button:SetAlpha(0.2)
         if i == 1 then
             button:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -480, 16)
         else

@@ -1,46 +1,47 @@
-local function UpdateBuffPosition()
-    local BUFF_SIZE = 30
-    local BUFF_SPACING = 2
+local function PlayerAuraUpdate(auraType, size, spacing, yOffset)
+    local numAuras = 0
+    local actualDisplay = auraType == "Buff" and BUFF_ACTUAL_DISPLAY or DEBUFF_ACTUAL_DISPLAY
 
-    local numBuffs = 0
-    for i = 1, BUFF_ACTUAL_DISPLAY do
-        local buff = _G["BuffButton" .. i]
-        if buff and buff:IsShown() then
-            numBuffs = numBuffs + 1
+    for i = 1, actualDisplay do
+        local aura = _G[auraType .. "Button" .. i]
+        if aura and aura:IsShown() then
+            numAuras = numAuras + 1
         end
     end
 
-    local totalWidth = (BUFF_SIZE + BUFF_SPACING) * numBuffs - BUFF_SPACING
-
+    local totalWidth = (size + spacing) * numAuras - spacing
     local startX = -totalWidth / 2
 
-    for i = 1, numBuffs do
-        local buff = _G["BuffButton" .. i]
-        if buff and buff:IsShown() then
-            buff:ClearAllPoints()
+    for i = 1, numAuras do
+        local aura = _G[auraType .. "Button" .. i]
+        if aura and aura:IsShown() then
+            aura:ClearAllPoints()
             if i == 1 then
-                buff:SetPoint("TOP", UIParent, "TOP", startX, -10)
+                aura:SetPoint("TOP", UIParent, "TOP", startX, yOffset)
             else
-                buff:SetPoint("LEFT", _G["BuffButton" .. (i - 1)], "RIGHT", BUFF_SPACING, 0)
+                aura:SetPoint("LEFT", _G[auraType .. "Button" .. (i - 1)], "RIGHT", spacing, 0)
             end
         end
     end
 end
 
 
-local frame = CreateFrame("Frame")
-frame:RegisterEvent("PLAYER_LOGIN")
-frame:RegisterEvent("UNIT_AURA")
-frame:RegisterEvent("GROUP_ROSTER_UPDATE")  -- Add this event to handle group changes
+local function PlayerAuraUpdateAll()
+    PlayerAuraUpdate("Buff", 30, 2, -10)
+    PlayerAuraUpdate("Debuff", 30, 2, -120)
+end
 
-frame:SetScript("OnEvent", function(self, event, ...)
-    if event == "PLAYER_LOGIN" or event == "UNIT_AURA" or event == "GROUP_ROSTER_UPDATE" then
-        local unit = ...
-        if event == "UNIT_AURA" and unit ~= "player" then return end
 
-        UpdateBuffPosition()
-    end
+hooksecurefunc("BuffFrame_UpdateAllBuffAnchors", PlayerAuraUpdateAll)
+
+
+local PlayerAuraEventFrame = CreateFrame("Frame")
+PlayerAuraEventFrame:RegisterEvent("PLAYER_LOGIN")
+PlayerAuraEventFrame:RegisterEvent("UNIT_AURA")
+PlayerAuraEventFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
+PlayerAuraEventFrame:SetScript("OnEvent", function(self, event, ...)
+    local unit = ...
+    if event == "UNIT_AURA" and unit ~= "player" then return end
+    PlayerAuraUpdateAll()
 end)
 
-
-hooksecurefunc("BuffFrame_UpdateAllBuffAnchors", UpdateBuffPosition)

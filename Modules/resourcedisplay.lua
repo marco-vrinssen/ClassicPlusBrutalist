@@ -1,13 +1,13 @@
 local ResourceDisplayBackdrop = CreateFrame("Frame", nil, UIParent, "BackdropTemplate")
-ResourceDisplayBackdrop:SetSize(160, 28)
-ResourceDisplayBackdrop:SetPoint("CENTER", UIParent, "CENTER", 0, -160)
+ResourceDisplayBackdrop:SetSize(164, 32)
+ResourceDisplayBackdrop:SetPoint("CENTER", UIParent, "CENTER", 0, -184)
 ResourceDisplayBackdrop:SetBackdrop({edgeFile = "Interface/Tooltips/UI-Tooltip-Border", edgeSize = 14})
 ResourceDisplayBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5)
 ResourceDisplayBackdrop:SetAlpha(0)
 
 
 local ResourceHealthbar = CreateFrame("StatusBar", nil, ResourceDisplayBackdrop)
-ResourceHealthbar:SetSize(156, 12)
+ResourceHealthbar:SetSize(156, 16)
 ResourceHealthbar:SetPoint("TOP", ResourceDisplayBackdrop, "TOP", 0, -4)
 ResourceHealthbar:SetStatusBarTexture("Interface/RaidFrame/Raid-Bar-HP-Fill.blp")
 ResourceHealthbar:SetFrameStrata("LOW")
@@ -23,9 +23,9 @@ ResourcePowerbar:SetFrameStrata("LOW")
 local function ResourceDisplayToggle(isVisible)
     local alpha = isVisible and 1 or 0
     if isVisible then
-        UIFrameFadeIn(ResourceDisplayBackdrop, 0.5, ResourceDisplayBackdrop:GetAlpha(), alpha)
+        UIFrameFadeIn(ResourceDisplayBackdrop, 0.2, ResourceDisplayBackdrop:GetAlpha(), alpha)
     else
-        UIFrameFadeOut(ResourceDisplayBackdrop, 0.25, ResourceDisplayBackdrop:GetAlpha(), alpha)
+        UIFrameFadeOut(ResourceDisplayBackdrop, 4, ResourceDisplayBackdrop:GetAlpha(), alpha)
     end
 end
 
@@ -76,6 +76,10 @@ ResourceDisplayEventFrame:SetScript("OnEvent", function(self, event, arg1)
 end)
 
 ResourceDisplayUpdate()
+
+
+
+
 
 
 

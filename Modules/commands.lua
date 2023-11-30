@@ -13,6 +13,10 @@ CommandEventFrame:SetScript("OnEvent", CommandInfo)
 
 
 
+
+
+
+
 local commandMessages = {
     "/healthcheck: To toggle the health check reminder for the current session.",
     "/post MESSAGE: Broadcasts MESSAGE in all joined and active chat channels.",
@@ -29,6 +33,10 @@ SlashCmdList["PROINFO"] = function()
         DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFFFF" .. message .. "|r") -- Your original style
     end
 end
+
+
+
+
 
 
 
@@ -72,6 +80,10 @@ end)
 
 
 
+
+
+
+
 local function PostChannel(msg)
     if msg ~= "" then
         for i = 2, 10 do
@@ -82,6 +94,10 @@ end
 
 SLASH_POST1 = "/post"
 SlashCmdList["POST"] = PostChannel
+
+
+
+
 
 
 
@@ -104,6 +120,10 @@ SlashCmdList["SPAM"] = WhoWhisper
 
 
 
+
+
+
+
 local function WhisperGuildinvite(msg)
     if msg ~= "" then
         local numWhos, totalCount = C_FriendList.GetNumWhoResults()
@@ -119,6 +139,10 @@ end
 
 SLASH_RECRUIT1 = "/recruit"
 SlashCmdList["RECRUIT"] = WhisperGuildinvite
+
+
+
+
 
 
 

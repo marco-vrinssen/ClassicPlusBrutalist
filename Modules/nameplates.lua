@@ -74,6 +74,9 @@ end
 
 
 
+
+
+
 local function NameplateTextureUpdate(nameplate)
     local unitFrame = nameplate and nameplate.UnitFrame
     if not unitFrame then return end
@@ -108,6 +111,10 @@ end
 
 
 
+
+
+
+
 local function NameplateReactionUpdate(nameplate, unitID)
     local healthBar = nameplate.UnitFrame and nameplate.UnitFrame.healthBar
     if not healthBar then return end
@@ -131,6 +138,10 @@ local function NameplateReactionUpdate(nameplate, unitID)
         healthBar.backdrop:SetBackdropBorderColor(0.5, 0.5, 0.5)
     end
 end
+
+
+
+
 
 
 
@@ -192,6 +203,10 @@ end
 
 
 
+
+
+
+
 local function NameplateSpecificUpdate(unitID)
     local nameplate = C_NamePlate.GetNamePlateForUnit(unitID)
     if nameplate then
@@ -204,6 +219,10 @@ local function NameplateSpecificUpdate(unitID)
         NameplateCastbarUpdate(nameplate, unitID)
     end
 end
+
+
+
+
 
 
 
