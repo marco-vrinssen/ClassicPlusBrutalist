@@ -25,4 +25,4 @@ jobs:
         project_id: 941941  # Your CurseForge project ID
         token: ${{ secrets.CURSEFORGE }}  # Your CurseForge API key
         game_versions: "1.15.0"  # WoW Classic version
-        release_type: "release"  # Can be 'alpha', 'beta', or 'release'
+        release_type: "beta"  # Can be 'alpha', 'beta', or 'release'
