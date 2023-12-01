@@ -4,22 +4,22 @@
 ## Version: Beta 1.0
 ## Author: MIYANKO
 
-modules/actionbars.lua
-modules/auras.lua
-modules/bags.lua
-modules/bagsorting.lua
-modules/castbar.lua
-modules/characterstats.lua
-modules/chat.lua
-modules/commands.lua
-modules/config.lua
-modules/healthcheck.lua
-modules/items.lua
-modules/maps.lua
-modules/micromenu.lua
-modules/nameplates.lua
-modules/playerframe.lua
-modules/questieupdate.lua
-modules/resourcedisplay.lua
-modules/targetframe.lua
-modules/tooltips.lua
+actionbars.lua
+auras.lua
+bags.lua
+bagsorting.lua
+castbar.lua
+characterstats.lua
+chat.lua
+commands.lua
+config.lua
+healthcheck.lua
+items.lua
+maps.lua
+micromenu.lua
+nameplates.lua
+playerframe.lua
+questieupdate.lua
+resourcedisplay.lua
+targetframe.lua
+tooltips.lua
