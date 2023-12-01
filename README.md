@@ -24,6 +24,7 @@ The general intention for this addon is to avoid having to download a whole cata
 - Now have a simpler design.
 - Have a fixed position (To be changed).
 - Are aligned with the action buttons for a neat look and feel.
+- Adds a health text to units.
 
 #### Nameplates
 - Textures have been changed.
