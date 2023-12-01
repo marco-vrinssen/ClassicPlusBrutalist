@@ -77,7 +77,7 @@ The general intention for this addon is to avoid having to download a whole cata
 
 #### Auto Looting
 - Autolooting is enabled by default.
-- Makes autolooting instant.
+- Makes looting instant.
 
-#### Auto Sell and Repair
-- Automatically sells gray items and performs repairs (if funds are available) when interacting with merchants.
+#### Automatic Selling and Repair
+- Automatically sells gray items and repairs all gear when interacting with vendors.
