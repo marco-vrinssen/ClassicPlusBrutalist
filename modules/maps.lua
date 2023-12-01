@@ -76,6 +76,7 @@ MinimapZoomEventFrame:SetScript("OnMouseWheel", MinimapZoom)
 local function MinimapConfigUpdate()
     SetCVar("timeMgrUseMilitaryTime", "1")
     SetCVar("rotateMinimap", 0)
+    SetCVar("showServerTime", 1)
 
     function GetMinimapShape()
         return "SQUARE"

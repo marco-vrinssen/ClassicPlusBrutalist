@@ -124,34 +124,11 @@ SlashCmdList["SPAM"] = WhoWhisper
 
 
 
-local function WhisperGuildinvite(msg)
-    if msg ~= "" then
-        local numWhos, totalCount = C_FriendList.GetNumWhoResults()
-        for i = 1, numWhos do
-            local info = C_FriendList.GetWhoInfo(i)
-            if info and info.fullName and (not info.fullGuildName or info.fullGuildName == "") then
-                SendChatMessage(msg, "WHISPER", nil, info.fullName)
-                GuildInvite(info.fullName)
-            end
-        end
-    end
-end
-
-SLASH_RECRUIT1 = "/recruit"
-SlashCmdList["RECRUIT"] = WhisperGuildinvite
-
-
-
-
-
-
-
-
 function LeaveGroup()
     if IsInGroup() or IsInRaid() then
         LeaveParty()
     end
 end
 
-SLASH_LEAVEPARTY1 = "/leave"
-SlashCmdList["LEAVEPARTY"] = LeaveGroup
+SLASH_QUIT1 = "/q"
+SlashCmdList["QUIT"] = LeaveGroup
