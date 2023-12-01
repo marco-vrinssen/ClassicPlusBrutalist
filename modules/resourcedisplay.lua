@@ -1,6 +1,6 @@
 local ResourceDisplayBackdrop = CreateFrame("Frame", nil, UIParent, "BackdropTemplate")
 ResourceDisplayBackdrop:SetSize(164, 32)
-ResourceDisplayBackdrop:SetPoint("CENTER", UIParent, "CENTER", 0, -184)
+ResourceDisplayBackdrop:SetPoint("CENTER", UIParent, "CENTER", 0, -160)
 ResourceDisplayBackdrop:SetBackdrop({edgeFile = "Interface/Tooltips/UI-Tooltip-Border", edgeSize = 14})
 ResourceDisplayBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5)
 ResourceDisplayBackdrop:SetAlpha(0)

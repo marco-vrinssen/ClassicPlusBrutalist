@@ -139,6 +139,24 @@ hooksecurefunc("UnitFramePortrait_Update", TargetPortraitUpdate)
 
 
 
+local function QuestieIconUpdate()
+    if IsAddOnLoaded("Questie") then
+        Questie.db.profile.nameplateTargetFrameX = 24
+        Questie.db.profile.nameplateTargetFrameY = 0
+    end
+end
+
+local QuestieIconEventFrame = CreateFrame("Frame")
+QuestieIconEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+QuestieIconEventFrame:SetScript("OnEvent", QuestieIconUpdate)
+
+
+
+
+
+
+
+
 local function ToTFrameUpdate()
     TargetFrameToT:Hide()
 end
@@ -158,7 +176,7 @@ ToTFrameEventFrame:SetScript("OnEvent", ToTFrameUpdate)
 
 local TargetDebuffContainer = CreateFrame("Frame", "MyDebuffFrame", UIParent)
 TargetDebuffContainer:SetSize(40, 40)
-TargetDebuffContainer:SetPoint("BOTTOMLEFT", TargetFrameBackdrop, "TOPLEFT", 0, 68)
+TargetDebuffContainer:SetPoint("BOTTOMLEFT", TargetFrameBackdrop, "TOPLEFT", 0, 96)
 
 
 local function TargetDebuffUpdate(index, debuff)

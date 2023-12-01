@@ -22,7 +22,6 @@ local function ChatFrameCustomization(chatFrame)
     chatFrame:SetSize(320, 160)
     chatFrame:SetClampedToScreen(false)
     chatFrame:SetPoint("BOTTOMLEFT", 16, 40)
-    chatFrame:SetMovable(true)
     chatFrame:SetUserPlaced(true)
 
     ChatFrameHideElements(chatFrame, {"ButtonFrame", "EditBoxLeft", "EditBoxMid", "EditBoxRight"})
