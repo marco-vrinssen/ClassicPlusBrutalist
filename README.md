@@ -17,6 +17,22 @@
 - Default action bars are now centered at the bottom of the screen. 
 - Range check coloring lets you know when you are in range to use a particular action by recoloring the action button.
 
+#### Unitframes
+- Now have a simpler design
+- Have a fixed position (To be changed)
+- Are aligned with the action buttons for a neat look and feel.
+
+#### Nameplates
+- Textures have been changed.
+- The color of the respective nameplate turns orange as soon as the player has aggro.
+- An enemy castbar is displayed under the respective nameplate.
+- Player triggered debuffs are displayed above the respective nameplate.
+
+#### Personal Resource Display
+- A Personal Resouce display is now shown as soon as you are in combat.
+- Active debuffs triggered by the player on the current target are displayed to the right of the resource display
+- Active buffs on the player are displayed to the left of the resource display
+
 #### Bags
 - All bags open automatically with the "B" key.
 - You will see the container slots only when the main bag is open.
@@ -32,11 +48,9 @@
 - Is now rectangular
 - Always shows the server time
 
-#### Character Experience
-- Is now displayed at the top of the character pane
-
-#### Character Values
-- Will now be replaced by more relevant values for Melee and Spell properties.
+#### Character Pane
+- Experience-related properties are now displayed at the top of the character pane.
+- Replaced default character stats with more relevant values for melee and spell properties.
 
 #### Healthcheck Feature
 - Every 20 minutes there is a raid warning with a task to keep you fit.
