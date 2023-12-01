@@ -3,7 +3,7 @@
 ## Addon for World of Warcraft Classic
 
 ### Intro
-The general intention for this addon was to avoid having to download a whole catalog of addons, which are often bloated with features.
+The general intention for this addon is to avoid having to download a whole catalog of addons, which are often bloated with features.
 
 ### Overview
 - A resource-efficient add-on that uses only 380kb of memory to customize and enhance the native user interface and user experience.
