@@ -64,7 +64,7 @@ The general intention for this addon is to avoid having to download a whole cata
 #### Chat
 - Position changed.
 - Textures removed.
-- Combat log removed.
+- Combat log hidden.
 - Tab-click scrolls to bottom.
 
 #### Chat Commands
