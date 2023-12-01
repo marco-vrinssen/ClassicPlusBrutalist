@@ -1,6 +1,6 @@
 # Classic+ Pro Beta 1.0
 
-## Addon for World of Warcraft Classic 1.15.0
+### Addon for World of Warcraft Classic 1.15.0
 
 ### Intro
 The general intention for this addon is to avoid having to download a whole catalog of addons, which are often bloated with features.
