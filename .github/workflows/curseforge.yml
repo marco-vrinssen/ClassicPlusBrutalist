@@ -13,9 +13,14 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
+      - name: Create Folder and Copy Files
+        run: |
+          mkdir ClassicPlusPro
+          cp -a ./* ClassicPlusPro/
+
       - name: Create Zip Archive
         run: |
-          zip -r ClassicPlusPro.zip ClassicPlusPro/ * -x "*.git*" -x "*.github*"
+          zip -r ClassicPlusPro.zip ClassicPlusPro/ -x "*.git*" -x "*.github*" -x "ClassicPlusPro/ClassicPlusPro.zip"
 
       - name: Upload to CurseForge
         uses: itsmeow/curseforge-upload@3.1.1
