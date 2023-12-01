@@ -14,13 +14,13 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Create Zip Archive
-        run: zip -r ClassicPlusPro.zip * -x "*.git*" -x "*.github*"
+        run: zip -r ClassicPlusPro * -x "*.git*" -x "*.github*"
 
       - name: Upload to CurseForge
         uses: itsmeow/curseforge-upload@3.1.1
         with:
           file_path: "./ClassicPlusPro.zip"
-          display_name: "Classic+ Pro Beta 0.1"
+          display_name: "Classic+ Pro Beta 1.0"
           game_endpoint: "wow"
           project_id: 941941
           token: ${{ secrets.CURSEFORGE }}
