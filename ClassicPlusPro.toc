@@ -19,6 +19,7 @@ modules/maps.lua
 modules/micromenu.lua
 modules/nameplates.lua
 modules/playerframe.lua
+modules/questieupdate.lua
 modules/resourcedisplay.lua
 modules/targetframe.lua
 modules/tooltips.lua

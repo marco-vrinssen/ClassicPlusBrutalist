@@ -29,6 +29,7 @@ local function TargetFrameUpdate()
     TargetFrameTextureFrameLeaderIcon:ClearAllPoints()
     TargetFrameTextureFrameLeaderIcon:SetPoint("BOTTOM", TargetPortraitBackdrop, "TOP", 0, 0)
     TargetFrameTextureFrameRaidTargetIcon:SetPoint("CENTER", TargetPortraitBackdrop, "CENTER", 0, 0)
+    TargetFrameTextureFrameRaidTargetIcon:SetSize(32, 32)
     TargetFrameTextureFrameDeadText:Hide()
 
     TargetFrameTextureFrameName:ClearAllPoints()
@@ -131,24 +132,6 @@ end
 
 
 hooksecurefunc("UnitFramePortrait_Update", TargetPortraitUpdate)
-
-
-
-
-
-
-
-
-local function QuestieIconUpdate()
-    if IsAddOnLoaded("Questie") then
-        Questie.db.profile.nameplateTargetFrameX = 24
-        Questie.db.profile.nameplateTargetFrameY = 0
-    end
-end
-
-local QuestieIconEventFrame = CreateFrame("Frame")
-QuestieIconEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-QuestieIconEventFrame:SetScript("OnEvent", QuestieIconUpdate)
 
 
 
