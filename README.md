@@ -21,10 +21,11 @@ The general intention for this addon is to avoid having to download a whole cata
 - Range check coloring lets you know when you are in range to use a particular action by recoloring the action button.
 
 #### Unitframes
-- Now have a simpler design.
+- Now have a more minimalistic design.
 - Have a fixed position (To be changed).
 - Are aligned with the action buttons for a neat look and feel.
 - Adds a health text to units.
+- Displays threat percentage above the target frame.
 
 #### Nameplates
 - Textures have been changed.
