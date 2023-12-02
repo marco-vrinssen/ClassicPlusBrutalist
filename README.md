@@ -81,3 +81,8 @@ The general intention for this addon is to avoid having to download a whole cata
 
 #### Automatic Selling and Repair
 - Automatically sells gray items and repairs all gear when interacting with vendors.
+
+#### CVar Adjustments
+- Deactivation of glow and death effects.
+- Mute annoying sounds like bow pulling or mechastrider loops.
+- Increase the size of damage numbers by 50%.
