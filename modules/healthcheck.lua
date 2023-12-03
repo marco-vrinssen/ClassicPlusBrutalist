@@ -30,7 +30,7 @@ local messages = {
 
 
 local timeSinceLastUpdate = 0
-local interval = 900
+local interval = 1800
 
 
 local function GetRandomMessage()
