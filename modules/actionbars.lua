@@ -50,11 +50,12 @@ local function ActionbarsUpdate()
     StanceBarFrame:SetPoint("TOPLEFT", MainMenuBar, "TOPLEFT", 0, 72)
     StanceBarFrame:SetScale(0.8)    
 
+    PetActionBarFrame:ClearAllPoints()
+    PetActionBarFrame:SetPoint("BOTTOM", MainMenuBar, "TOP", 0, 16)
+    PetActionBarFrame:SetScale(0.8)  
+
     PossessBarFrame:Hide()
     PossessBarFrame.Show = PossessBarFrame.Hide
-
-    PetActionBarFrame:Hide()
-    PetActionBarFrame.Show = PetActionBarFrame.Hide
 
     MainMenuBarVehicleLeaveButton:Hide()
     MainMenuBarVehicleLeaveButton.Show = MainMenuBarVehicleLeaveButton.Hide
