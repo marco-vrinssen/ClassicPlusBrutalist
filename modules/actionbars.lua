@@ -51,7 +51,7 @@ local function ActionbarsUpdate()
     StanceBarFrame:SetScale(0.8)    
 
     PetActionBarFrame:ClearAllPoints()
-    PetActionBarFrame:SetPoint("BOTTOM", MainMenuBar, "TOP", 0, 16)
+    PetActionBarFrame:SetPoint("BOTTOM", MainMenuBar, "TOP", 0, 32)
     PetActionBarFrame:SetScale(0.8)  
 
     PossessBarFrame:Hide()
@@ -65,7 +65,6 @@ end
 local ActionbarsEventFrame = CreateFrame("Frame")
 ActionbarsEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 ActionbarsEventFrame:SetScript("OnEvent", ActionbarsUpdate)
-
 
 
 
