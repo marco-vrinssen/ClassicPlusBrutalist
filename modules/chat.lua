@@ -1,4 +1,4 @@
-local function ChatFrameHideElements(frame, elements)
+local function HideChatElements(frame, elements)
     for _, element in ipairs(elements) do
         local chatElement = _G[frame:GetName() .. element]
         if chatElement then
@@ -8,7 +8,7 @@ local function ChatFrameHideElements(frame, elements)
 end
 
 
-local function ChatFrameHideTextures(frame)
+local function HideChatTextures(frame)
     for i = 1, frame:GetNumRegions() do
         local region = select(i, frame:GetRegions())
         if region:IsObjectType("Texture") then
@@ -18,19 +18,20 @@ local function ChatFrameHideTextures(frame)
 end
 
 
-local function ChatFrameCustomization(chatFrame)
+local function ChatCustomization(chatFrame)
     chatFrame:SetSize(320, 160)
     chatFrame:SetClampedToScreen(false)
-    chatFrame:SetPoint("BOTTOMLEFT", 16, 40)
+    chatFrame:SetPoint("BOTTOMLEFT", 24, 48)
+    chatFrame:SetMovable(true)
     chatFrame:SetUserPlaced(true)
 
-    ChatFrameHideElements(chatFrame, {"ButtonFrame", "EditBoxLeft", "EditBoxMid", "EditBoxRight"})
-    ChatFrameHideTextures(chatFrame)
+    HideChatElements(chatFrame, {"ButtonFrame", "EditBoxLeft", "EditBoxMid", "EditBoxRight"})
+    HideChatTextures(chatFrame)
     ChatFrameMenuButton:Hide()
     ChatFrameChannelButton:Hide()
 
     local tab = _G[chatFrame:GetName() .. "Tab"]
-    ChatFrameHideTextures(tab)
+    HideChatTextures(tab)
     local tabFontString = tab:GetFontString()
     if tabFontString then
         tabFontString:SetFont(STANDARD_TEXT_FONT, 14)
@@ -38,9 +39,9 @@ local function ChatFrameCustomization(chatFrame)
 end
 
 
-local function ChatFrameUpdate()
+local function ChatUpdate()
     for i = 1, NUM_CHAT_WINDOWS do
-        ChatFrameCustomization(_G["ChatFrame" .. i])
+        ChatCustomization(_G["ChatFrame" .. i])
     end
 end
 
@@ -51,7 +52,7 @@ ChatEventFrame:RegisterEvent("PLAYER_LOGIN")
 ChatEventFrame:RegisterEvent("DISPLAY_SIZE_CHANGED")
 ChatEventFrame:RegisterEvent("UI_SCALE_CHANGED")
 ChatEventFrame:SetScript("OnEvent", function(self, event)
-    ChatFrameUpdate()
+    ChatUpdate()
 end)
 
 
@@ -73,7 +74,7 @@ local function CustomizeAndHookChatTabs()
     for i = 1, NUM_CHAT_WINDOWS do
         local chatFrame = _G["ChatFrame" .. i]
         if chatFrame then
-            ChatFrameCustomization(chatFrame)
+            ChatCustomization(chatFrame)
             HookChatTab(_G[chatFrame:GetName() .. "Tab"])
         end
     end
@@ -82,7 +83,7 @@ local function CustomizeAndHookChatTabs()
         if chatType ~= "WHISPER" and chatType ~= "BN_WHISPER" then return end
         local chatFrame = FCF_GetCurrentChatFrame()
         if chatFrame then
-            ChatFrameCustomization(chatFrame)
+            ChatCustomization(chatFrame)
             HookChatTab(_G[chatFrame:GetName() .. "Tab"])
         end
     end)
