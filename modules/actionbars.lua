@@ -51,7 +51,7 @@ local function ActionbarsUpdate()
     StanceBarFrame:SetScale(0.8)    
 
     PetActionBarFrame:ClearAllPoints()
-    PetActionBarFrame:SetPoint("BOTTOM", MainMenuBar, "TOP", 0, 32)
+    PetActionBarFrame:SetPoint("BOTTOM", MainMenuBar, "TOP", 0, 40)
     PetActionBarFrame:SetScale(0.8)  
 
     PossessBarFrame:Hide()
