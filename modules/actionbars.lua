@@ -1,4 +1,4 @@
-local function ActionbarsUpdate()
+local function ActionbarUpdate()
     MainMenuBar:SetWidth(512)
     MainMenuBar:ClearAllPoints()
     MainMenuBar:SetPoint("BOTTOM", UIParent, "BOTTOM", -2, 64)
@@ -46,17 +46,6 @@ local function ActionbarsUpdate()
     ReputationWatchBar:UnregisterAllEvents()
     ReputationWatchBar:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMRIGHT", 10000, 0)
 
-    StanceBarFrame:ClearAllPoints()
-    StanceBarFrame:SetPoint("TOPLEFT", MainMenuBar, "TOPLEFT", 0, 72)
-    StanceBarFrame:SetScale(0.8)    
-
-    PetActionBarFrame:ClearAllPoints()
-    PetActionBarFrame:SetPoint("BOTTOM", MainMenuBar, "TOP", 0, 40)
-    PetActionBarFrame:SetScale(0.8)  
-
-    PossessBarFrame:Hide()
-    PossessBarFrame.Show = PossessBarFrame.Hide
-
     MainMenuBarVehicleLeaveButton:Hide()
     MainMenuBarVehicleLeaveButton.Show = MainMenuBarVehicleLeaveButton.Hide
 end
@@ -64,7 +53,50 @@ end
 
 local ActionbarsEventFrame = CreateFrame("Frame")
 ActionbarsEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-ActionbarsEventFrame:SetScript("OnEvent", ActionbarsUpdate)
+ActionbarsEventFrame:SetScript("OnEvent", ActionbarUpdate)
+
+
+
+
+
+
+
+
+local function ClassActionbarUpdate()
+
+    StanceBarFrame:ClearAllPoints()
+    StanceBarFrame:SetMovable(true)
+    StanceBarFrame:SetUserPlaced(true)
+    StanceBarFrame:SetPoint("TOPLEFT", MainMenuBar, "TOPLEFT", 0, 72)
+    StanceBarFrame:SetScale(0.8)
+
+    SlidingActionBarTexture0:Hide()
+    SlidingActionBarTexture1:Hide()
+    PetActionBarFrame:ClearAllPoints()
+    PetActionBarFrame:SetMovable(true)
+    PetActionBarFrame:SetUserPlaced(true)
+    PetActionBarFrame:SetPoint("BOTTOM", MainMenuBar, "TOP", 34, 44)
+    PetActionBarFrame:SetScale(0.8)
+
+    PossessBarFrame:Hide()
+    PossessBarFrame.Show = PossessBarFrame.Hide
+end
+
+
+local function ClassActionbarDelay()
+    C_Timer.After(0.25, ClassActionbarUpdate)
+end
+
+
+local ClassActionbarEventFrame = CreateFrame("Frame")
+ClassActionbarEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+ClassActionbarEventFrame:RegisterEvent("PET_BAR_UPDATE")
+ClassActionbarEventFrame:RegisterEvent("UPDATE_BONUS_ACTIONBAR")
+ClassActionbarEventFrame:SetScript("OnEvent", ClassActionbarDelay)
+
+
+hooksecurefunc("PetActionBar_Update", ClassActionbarDelay)
+
 
 
 

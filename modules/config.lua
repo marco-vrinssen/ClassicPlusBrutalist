@@ -9,10 +9,15 @@ end
 
 
 local function SoundUpdate()
-    local soundFilesToMute = {555124, 567719, 567720, 567723, 567675, 567676, 567677}
-    for _, soundFile in ipairs(soundFilesToMute) do
-        MuteSoundFile(soundFile)
-    end
+    MuteSoundFile(555124) -- Mechastrider Loop
+    MuteSoundFile(567677) -- Bow Pullback 1
+    MuteSoundFile(567675) -- Bow Pullback 2
+    MuteSoundFile(567676) -- Bow Pullback 3
+    MuteSoundFile(567719) -- Gun Loading 1
+    MuteSoundFile(567720) -- Gun Loading 2
+    MuteSoundFile(567723) -- Gun Loading 3
+    MuteSoundFile(567462) -- Keyring Open
+    MuteSoundFile(567523) -- Keyring Close
 end
 
 

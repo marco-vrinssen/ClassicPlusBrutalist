@@ -5,7 +5,6 @@
 ## Author: MIYANKO
 
 modules/actionbars.lua
-modules/auras.lua
 modules/bags.lua
 modules/bagsorting.lua
 modules/castbar.lua
