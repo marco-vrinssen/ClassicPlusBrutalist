@@ -1,18 +1,13 @@
 local function CommandInfo()
     DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFFFF Classic+ Pro loaded.|r")
-    DEFAULT_CHAT_FRAME:AddMessage("|cFFE6CCCC Type /proinfo to learn about chat commands.|r") 
-    DEFAULT_CHAT_FRAME:AddMessage("|cFFE6CCCC Press B to open all Bags.|r") 
-    DEFAULT_CHAT_FRAME:AddMessage("|cFFE6CCCC Autolooting enabled.|r")
+    DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFFFF Type /procmd for chat commands.|r") 
+    DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFFFF Press B to open all Bags.|r") 
+    DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFFFF Autolooting enabled.|r")
 end
-
 
 local CommandEventFrame = CreateFrame("Frame")
 CommandEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 CommandEventFrame:SetScript("OnEvent", CommandInfo)
-
-
-
-
 
 
 
@@ -26,17 +21,12 @@ local commandMessages = {
     "/leave: Enables quick exit from the current party or raid."
 }
 
-
-SLASH_PROINFO1 = "/proinfo"
-SlashCmdList["PROINFO"] = function()
+SLASH_PROCMD1 = "/procmd"
+SlashCmdList["PROCMD"] = function()
     for _, message in ipairs(commandMessages) do
         DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFFFF" .. message .. "|r") -- Your original style
     end
 end
-
-
-
-
 
 
 
@@ -80,10 +70,6 @@ end)
 
 
 
-
-
-
-
 local function PostChannel(msg)
     if msg ~= "" then
         for i = 2, 10 do
@@ -94,10 +80,6 @@ end
 
 SLASH_POST1 = "/post"
 SlashCmdList["POST"] = PostChannel
-
-
-
-
 
 
 
@@ -116,10 +98,6 @@ end
 
 SLASH_SPAM1 = "/spam"
 SlashCmdList["SPAM"] = WhoWhisper
-
-
-
-
 
 
 

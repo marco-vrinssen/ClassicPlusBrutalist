@@ -7,7 +7,6 @@ local function ConfigUpdate()
     SetCVar("ffxGlow", 0)
 end
 
-
 local function SoundUpdate()
     MuteSoundFile(555124) -- Mechastrider Loop
     MuteSoundFile(567677) -- Bow Pullback 1
@@ -19,7 +18,6 @@ local function SoundUpdate()
     MuteSoundFile(567462) -- Keyring Open
     MuteSoundFile(567523) -- Keyring Close
 end
-
 
 local ConfigEventFrame = CreateFrame("Frame")
 ConfigEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")

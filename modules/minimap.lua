@@ -5,7 +5,6 @@ CustomMinimapBackdrop:SetBackdrop({edgeFile = "Interface/Tooltips/UI-Tooltip-Bor
 CustomMinimapBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
 CustomMinimapBackdrop:SetFrameStrata("LOW")
 
-
 local function MinimapUpdate()
     Minimap:ClearAllPoints()
     Minimap:SetPoint("TOPRIGHT", UIParent, "TOPRIGHT", -16, -16)
@@ -21,12 +20,16 @@ local function MinimapUpdate()
     MinimapZoomIn:Hide()
     MinimapZoomOut:Hide()
 
+    MinimapTrackingFrame:ClearAllPoints()
+    MinimapTrackingFrame:SetPoint("TOPLEFT", UIParent, "TOPLEFT", -8, 0)
+
     TimeManagerClockButton:Hide()
     TimeManagerClockButton.Show =  TimeManagerClockButton.Hide
  
     TimeManagerClockTicker:ClearAllPoints()
     TimeManagerClockTicker:SetParent(Minimap)
     TimeManagerClockTicker:SetPoint("TOP", CustomMinimapBackdrop, "BOTTOM", 0, -8)
+    TimeManagerClockTicker:SetScale(1.25)
 
     MiniMapMailBorder:Hide()
     MiniMapMailFrame:ClearAllPoints()
@@ -37,17 +40,12 @@ local function MinimapUpdate()
     MiniMapBattlefieldFrame:SetPoint("RIGHT", TimeManagerClockTicker, "LEFT", -4, 0)
 end
 
-
 local MinimapEventFrame = CreateFrame("Frame")
 MinimapEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 MinimapEventFrame:RegisterEvent("ZONE_CHANGED")
 MinimapEventFrame:RegisterEvent("ZONE_CHANGED_INDOORS")
 MinimapEventFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 MinimapEventFrame:SetScript("OnEvent", MinimapUpdate)
-
-
-
-
 
 
 
@@ -60,15 +58,10 @@ local function MinimapZoom(self, delta)
     end
 end
 
-
 local MinimapZoomEventFrame = CreateFrame("Frame", nil, Minimap)
 MinimapZoomEventFrame:SetAllPoints(Minimap)
 MinimapZoomEventFrame:EnableMouseWheel(true)
 MinimapZoomEventFrame:SetScript("OnMouseWheel", MinimapZoom)
-
-
-
-
 
 
 
@@ -82,7 +75,6 @@ local function MinimapConfigUpdate()
         return "SQUARE"
     end
 end
-
 
 local MinimapConfigEventFrame = CreateFrame("Frame")
 MinimapConfigEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")

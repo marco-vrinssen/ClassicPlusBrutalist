@@ -4,7 +4,6 @@ local function MicroMenuButtonAlpha(buttons, targetAlpha)
     end
 end
 
-
 local function MicroMenuButtonFrame(buttons)
     for i, button in ipairs(buttons) do
         button:ClearAllPoints()
@@ -17,7 +16,6 @@ local function MicroMenuButtonFrame(buttons)
         end
     end
 end
-
 
 local function MicroMenuButtonUpdate()
     SocialsMicroButton:Hide()
@@ -47,7 +45,6 @@ local function MicroMenuButtonUpdate()
         button:SetScript("OnLeave", function() MicroMenuButtonAlpha(buttons, 0.25) end)
     end
 end
-
 
 local MicroMenuEventFrame = CreateFrame("Frame")
 MicroMenuEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")

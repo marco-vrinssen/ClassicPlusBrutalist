@@ -6,14 +6,9 @@ local function AutoLootUpdate()
     end
 end
 
-
 local AutoLootEventFrame = CreateFrame("Frame")
 AutoLootEventFrame:RegisterEvent("LOOT_READY")
 AutoLootEventFrame:SetScript("OnEvent", AutoLootUpdate)
-
-
-
-
 
 
 
@@ -23,14 +18,9 @@ local function LootConfigUpdate()
     SetCVar("lootUnderMouse", 0)
 end
 
-
 local LootConfigEventFrame = CreateFrame("Frame")
 LootConfigEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 LootConfigEventFrame:SetScript("OnEvent", LootConfigUpdate)
-
-
-
-
 
 
 
@@ -66,7 +56,6 @@ local function MerchantUpdate()
         DEFAULT_CHAT_FRAME:AddMessage("Trash sold for " .. GetCoinTextureString(totalSold), 1, 1, 0)
     end
 end
-
 
 local MerchantEventFrame = CreateFrame("Frame")
 MerchantEventFrame:RegisterEvent("MERCHANT_SHOW")

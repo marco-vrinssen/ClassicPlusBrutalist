@@ -10,7 +10,6 @@ SlashCmdList["HEALTHCHECK"] = function()
     end
 end
 
-
 local messages = {
     "Smile and be grateful that you can game with the boys :)",
     "Do 10 jumping jacks.",
@@ -28,15 +27,12 @@ local messages = {
     "Stand and stretch arms overhead for 30 seconds."
 }
 
-
 local timeSinceLastUpdate = 0
 local interval = 1800
-
 
 local function GetRandomMessage()
     return messages[math.random(#messages)]
 end
-
 
 local function DisplayRaidWarningMessage()
     if healthCheckEnabled then
@@ -45,9 +41,7 @@ local function DisplayRaidWarningMessage()
     end
 end
 
-
 local HealthCheckEventFrame = CreateFrame("Frame")
-
 
 HealthCheckEventFrame:SetScript("OnUpdate", function(self, elapsed)
     if not healthCheckEnabled then return end
@@ -58,7 +52,6 @@ HealthCheckEventFrame:SetScript("OnUpdate", function(self, elapsed)
         timeSinceLastUpdate = 0
     end
 end)
-
 
 HealthCheckEventFrame:RegisterEvent("PLAYER_LOGIN")
 HealthCheckEventFrame:SetScript("OnEvent", function(self, event, ...)

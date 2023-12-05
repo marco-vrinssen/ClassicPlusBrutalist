@@ -6,6 +6,6 @@ local function TooltipUpdate(tooltip, parent)
     GameTooltipStatusBar:Hide()
 end
 
-
 hooksecurefunc("GameTooltip_SetDefaultAnchor", TooltipUpdate)
+
 GameTooltip:HookScript("OnTooltipSetUnit", TooltipUpdate)

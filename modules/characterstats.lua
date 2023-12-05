@@ -74,9 +74,7 @@ local function CharacterStatsUpdate()
     CharacterRangedDamageFrameStatText:SetText(string.format("%d%%", GetSpellHitModifier()))
 end
 
-
 CharacterFrame:SetScript("OnShow", CharacterStatsUpdate)
-
 
 local StatsEventFrame = CreateFrame("Frame")
 StatsEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")

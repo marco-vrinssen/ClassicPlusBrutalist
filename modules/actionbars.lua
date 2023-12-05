@@ -50,7 +50,6 @@ local function ActionbarUpdate()
     MainMenuBarVehicleLeaveButton.Show = MainMenuBarVehicleLeaveButton.Hide
 end
 
-
 local ActionbarsEventFrame = CreateFrame("Frame")
 ActionbarsEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 ActionbarsEventFrame:SetScript("OnEvent", ActionbarUpdate)
@@ -58,48 +57,42 @@ ActionbarsEventFrame:SetScript("OnEvent", ActionbarUpdate)
 
 
 
-
-
-
-
-local function ClassActionbarUpdate()
-
-    StanceBarFrame:ClearAllPoints()
-    StanceBarFrame:SetMovable(true)
-    StanceBarFrame:SetUserPlaced(true)
-    StanceBarFrame:SetPoint("TOPLEFT", MainMenuBar, "TOPLEFT", 0, 72)
-    StanceBarFrame:SetScale(0.8)
-
+local function StanceBarUpdate()
     SlidingActionBarTexture0:Hide()
     SlidingActionBarTexture1:Hide()
-    PetActionBarFrame:ClearAllPoints()
-    PetActionBarFrame:SetMovable(true)
-    PetActionBarFrame:SetUserPlaced(true)
-    PetActionBarFrame:SetPoint("BOTTOM", MainMenuBar, "TOP", 34, 44)
-    PetActionBarFrame:SetScale(0.8)
+
+    StanceBarFrame:ClearAllPoints()
+    StanceBarFrame:SetPoint("TOPLEFT", MainMenuBar, "TOPLEFT", 0, 72)
+    StanceBarFrame:SetScale(0.8)
 
     PossessBarFrame:Hide()
     PossessBarFrame.Show = PossessBarFrame.Hide
 end
 
+local function PetActionbarUpdate()
+    PetActionBarFrame:ClearAllPoints()
+    PetActionBarFrame:SetScale(0.8)
+    PetActionBarFrame:SetPoint("BOTTOM", MainMenuBar, "TOP", 32, 44)
 
-local function ClassActionbarDelay()
-    C_Timer.After(0.25, ClassActionbarUpdate)
+    local buttonsToHide = {1, 2, 3, 8, 9, 10}
+    for _, buttonID in ipairs(buttonsToHide) do
+        local button = _G["PetActionButton" .. buttonID]
+        if button then
+            button:SetAlpha(0)
+            button:Hide()
+        end
+    end
 end
 
+local function ClassActionbarUpdate()
+    StanceBarUpdate()
+    C_Timer.After(0.2, PetActionbarUpdate)
+end
 
 local ClassActionbarEventFrame = CreateFrame("Frame")
 ClassActionbarEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 ClassActionbarEventFrame:RegisterEvent("PET_BAR_UPDATE")
-ClassActionbarEventFrame:RegisterEvent("UPDATE_BONUS_ACTIONBAR")
-ClassActionbarEventFrame:SetScript("OnEvent", ClassActionbarDelay)
-
-
-hooksecurefunc("PetActionBar_Update", ClassActionbarDelay)
-
-
-
-
+ClassActionbarEventFrame:SetScript("OnEvent", ClassActionbarUpdate)
 
 
 
@@ -115,5 +108,27 @@ function ActionbarsRangeCheck(self)
     end
 end
 
-
 hooksecurefunc("ActionButton_OnUpdate", ActionbarsRangeCheck)
+
+
+
+
+local function ActionbarsConfig()
+    local interfaceOptions = "InterfaceOptionsActionBarsPanel"
+    local bottom = "Bottom"
+    local actionBars = {
+        _G[interfaceOptions .. bottom .. "Left"],
+        _G[interfaceOptions .. bottom .. "Right"]
+    }
+
+    for i, bar in ipairs(actionBars) do
+        if not bar:GetChecked() then
+            bar:SetChecked(true)
+            bar:GetScript("OnClick")(bar)
+        end
+    end
+end
+
+local ActionbarsConfigEventFrame = CreateFrame("Frame")
+ActionbarsConfigEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+ActionbarsConfigEventFrame:SetScript("OnEvent", ActionbarsConfig)

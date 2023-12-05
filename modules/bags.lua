@@ -52,10 +52,8 @@ local function BagsUpdate()
     end
 end
 
-
 hooksecurefunc("ToggleBackpack", BagsUpdate)
 hooksecurefunc("UpdateContainerFrameAnchors", BagsUpdate)
-
 
 local BagsEventFrame = CreateFrame("Frame")
 BagsEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
@@ -67,16 +65,11 @@ BagsEventFrame:SetScript("OnEvent", BagsUpdate)
 
 
 
-
-
-
-
 local function BagsConfigUpdate()
     C_Container.SetInsertItemsLeftToRight(true)
     SetBinding("B", "OPENALLBAGS")
     SaveBindings(2)
 end
-
 
 local BagsConfigEventFrame = CreateFrame("Frame")
 BagsConfigEventFrame:RegisterEvent("PLAYER_LOGIN")

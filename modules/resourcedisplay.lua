@@ -5,20 +5,17 @@ ResourceDisplayBackdrop:SetBackdrop({edgeFile = "Interface/Tooltips/UI-Tooltip-B
 ResourceDisplayBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5)
 ResourceDisplayBackdrop:SetAlpha(0)
 
-
 local ResourceHealthbar = CreateFrame("StatusBar", nil, ResourceDisplayBackdrop)
 ResourceHealthbar:SetSize(156, 16)
 ResourceHealthbar:SetPoint("TOP", ResourceDisplayBackdrop, "TOP", 0, -4)
 ResourceHealthbar:SetStatusBarTexture("Interface/RaidFrame/Raid-Bar-HP-Fill.blp")
 ResourceHealthbar:SetFrameStrata("LOW")
 
-
 local ResourcePowerbar = CreateFrame("StatusBar", nil, ResourceDisplayBackdrop)
 ResourcePowerbar:SetSize(156, 10)
 ResourcePowerbar:SetPoint("BOTTOM", ResourceDisplayBackdrop, "BOTTOM", 0, 2)
 ResourcePowerbar:SetStatusBarTexture("Interface/RaidFrame/Raid-Bar-HP-Fill.blp")
 ResourcePowerbar:SetFrameStrata("LOW")
-
 
 local function ResourceDisplayToggle(isVisible)
     local alpha = isVisible and 1 or 0
@@ -28,7 +25,6 @@ local function ResourceDisplayToggle(isVisible)
         UIFrameFadeOut(ResourceDisplayBackdrop, 4, ResourceDisplayBackdrop:GetAlpha(), alpha)
     end
 end
-
 
 local function ResourceDisplayUpdate()
     local health = UnitHealth("player")
@@ -57,7 +53,6 @@ local function ResourceDisplayUpdate()
     end
 end
 
-
 local ResourceDisplayEventFrame = CreateFrame("Frame")
 ResourceDisplayEventFrame:RegisterUnitEvent("UNIT_HEALTH", "player")
 ResourceDisplayEventFrame:RegisterUnitEvent("UNIT_POWER_UPDATE", "player")
@@ -80,15 +75,10 @@ ResourceDisplayUpdate()
 
 
 
-
-
-
-
 local _, playerClass = UnitClass("player")
 if playerClass ~= "ROGUE" and playerClass ~= "DRUID" then
     return
 end
-
 
 local function ComboPointDisplay()
     local comboPoints = GetComboPoints("player", "target") or 0
@@ -96,14 +86,19 @@ local function ComboPointDisplay()
         local comboPointFrame = _G["CustomComboPoint" .. i]
         if not comboPointFrame then
             comboPointFrame = CreateFrame("Frame", "CustomComboPoint" .. i, UIParent)
-            comboPointFrame:SetSize(24, 24)
+            comboPointFrame:SetSize(16, 16)
 
             comboPointFrame.texture = comboPointFrame:CreateTexture(nil, "ARTWORK")
             comboPointFrame.texture:SetAllPoints(comboPointFrame)
-            comboPointFrame.texture:SetTexture("Interface/COMMON/Indicator-Yellow")
+            comboPointFrame.texture:SetTexture("Interface/RaidFrame/Raid-Bar-HP-Fill.blp")
+
+            comboPointFrame.mask = comboPointFrame:CreateMaskTexture()
+            comboPointFrame.mask:SetTexture("Interface/CharacterFrame/TempPortraitAlphaMaskSmall")
+            comboPointFrame.mask:SetAllPoints(comboPointFrame.texture)
+            comboPointFrame.texture:AddMaskTexture(comboPointFrame.mask)
 
             if i == 1 then
-                comboPointFrame:SetPoint("TOP", ResourceDisplayBackdrop, "BOTTOM", -56, -16)
+                comboPointFrame:SetPoint("TOP", ResourceDisplayBackdrop, "BOTTOM", -40, -16)
             else
                 local previousFrame = _G["CustomComboPoint" .. (i - 1)]
                 comboPointFrame:SetPoint("LEFT", previousFrame, "RIGHT", 4, 0)
@@ -125,7 +120,6 @@ local function ComboPointDisplay()
     ComboFrame:UnregisterAllEvents()
     ComboFrame:Hide()
 end
-
 
 local ComboPointDisplayEventFrame = CreateFrame("Frame")
 ComboPointDisplayEventFrame:RegisterEvent("PLAYER_TARGET_CHANGED")

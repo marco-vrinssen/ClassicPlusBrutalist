@@ -1,23 +1,31 @@
-local PlayerFrameBackdrop = CreateFrame("Frame", nil, PlayerFrame, "BackdropTemplate")
-PlayerFrameBackdrop:SetPoint("BOTTOM", UIParent, "BOTTOM", -190, 190)
+local PlayerFrameBackdrop = CreateFrame("Button", nil, PlayerFrame, "SecureUnitButtonTemplate, BackdropTemplate")
+PlayerFrameBackdrop:SetPoint("BOTTOM", UIParent, "BOTTOM", -190, 200)
 PlayerFrameBackdrop:SetSize(124, 48)
 PlayerFrameBackdrop:SetBackdrop({edgeFile = "Interface/Tooltips/UI-Tooltip-Border", edgeSize = 14})
 PlayerFrameBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
 PlayerFrameBackdrop:SetFrameStrata("HIGH")
 
+PlayerFrameBackdrop:SetAttribute("unit", "player")
+PlayerFrameBackdrop:RegisterForClicks("AnyUp")
+PlayerFrameBackdrop:SetAttribute("type1", "target")
+PlayerFrameBackdrop:SetAttribute("type2", "togglemenu")
 
-local PlayerPortraitBackdrop = CreateFrame("Frame", nil, PlayerFrame, "BackdropTemplate")
+local PlayerPortraitBackdrop = CreateFrame("Button", nil, PlayerFrame, "SecureUnitButtonTemplate, BackdropTemplate")
 PlayerPortraitBackdrop:SetPoint("RIGHT", PlayerFrameBackdrop, "LEFT", 0, 0)
 PlayerPortraitBackdrop:SetSize(48 ,48)
 PlayerPortraitBackdrop:SetBackdrop({edgeFile = "Interface/Tooltips/UI-Tooltip-Border", edgeSize = 14})
 PlayerPortraitBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
 PlayerPortraitBackdrop:SetFrameStrata("HIGH")
 
+PlayerPortraitBackdrop:SetAttribute("unit", "player")
+PlayerPortraitBackdrop:RegisterForClicks("AnyUp")
+PlayerPortraitBackdrop:SetAttribute("type1", "target")
+PlayerPortraitBackdrop:SetAttribute("type2", "togglemenu")
 
 local function PlayerFrameUpdate()
     PlayerFrame:ClearAllPoints()
-    PlayerFrame:SetPoint("BOTTOMLEFT", PlayerPortraitBackdrop, "BOTTOMLEFT", -8, -8)
-    PlayerFrame:SetPoint("TOPRIGHT", PlayerFrameBackdrop, "TOPRIGHT", 8, 8)
+    PlayerFrame:SetPoint("TOPLEFT", PlayerPortraitBackdrop, "TOPLEFT", 0, 0)
+    PlayerFrame:SetPoint("BOTTOMRIGHT", PlayerFrameBackdrop, "BOTTOMRIGHT", 0, 0)
 
     PlayerFrameBackground:ClearAllPoints()
     PlayerFrameBackground:SetPoint("TOPLEFT", PlayerFrameBackdrop, "TOPLEFT", 2, -2)
@@ -86,9 +94,7 @@ local function PlayerFrameUpdate()
     end
 end
 
-
 hooksecurefunc("PlayerFrame_Update", PlayerFrameUpdate)
-
 
 local PlayerFrameEventFrame = CreateFrame("Frame")
 PlayerFrameEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
@@ -100,14 +106,9 @@ PlayerFrameEventFrame:SetScript("OnEvent", PlayerFrameUpdate)
 
 
 
-
-
-
-
 local PlayerBuffContainer = CreateFrame("Frame", "MyBuffFrame", UIParent)
 PlayerBuffContainer:SetSize(40, 40)
-PlayerBuffContainer:SetPoint("BOTTOMRIGHT", PlayerFrameBackdrop, "TOPRIGHT", 0, 68)
-
+PlayerBuffContainer:SetPoint("BOTTOMRIGHT", PlayerFrameBackdrop, "TOPRIGHT", 0, 84)
 
 local function PlayerBuffUpdate(index, buff)
     local icon = PlayerBuffContainer["buff" .. index]
@@ -133,7 +134,6 @@ local function PlayerBuffUpdate(index, buff)
     icon:Show()
 end
 
-
 local function PlayerFrameBuffUpdate()
     local MAX_BUFFS = 32
     local visibleBuffCount = 0
@@ -156,7 +156,6 @@ local function PlayerFrameBuffUpdate()
     end
 end
 
-
 local PlayerFrameAuraEventFrame = CreateFrame("Frame")
 PlayerFrameAuraEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 PlayerFrameAuraEventFrame:RegisterEvent("UNIT_AURA")
@@ -171,17 +170,17 @@ end)
 
 
 
-
-
-
-
-local PetFrameBackdrop = CreateFrame("Frame", nil, PetFrame, "BackdropTemplate")
+local PetFrameBackdrop = CreateFrame("Button", nil, PetFrame, "SecureUnitButtonTemplate, BackdropTemplate")
 PetFrameBackdrop:SetPoint("BOTTOMRIGHT", PlayerPortraitBackdrop, "BOTTOMLEFT", 0, 0)
-PetFrameBackdrop:SetSize(48, 24)
+PetFrameBackdrop:SetSize(64, 24)
 PetFrameBackdrop:SetBackdrop({edgeFile = "Interface/Tooltips/UI-Tooltip-Border", tile = true, edgeSize = 12})
 PetFrameBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
 PetFrameBackdrop:SetFrameStrata("HIGH")
 
+PetFrameBackdrop:SetAttribute("unit", "pet")
+PetFrameBackdrop:RegisterForClicks("AnyUp")
+PetFrameBackdrop:SetAttribute("type1", "target")
+PetFrameBackdrop:SetAttribute("type2", "togglemenu")
 
 local function PetFrameUpdate()
     PetFrame:ClearAllPoints()
@@ -197,15 +196,15 @@ local function PetFrameUpdate()
     PetFrameHealthBar:ClearAllPoints()
     PetFrameHealthBar:SetPoint("BOTTOM", PetFrameManaBar, "TOP", 0, 0)
     PetFrameHealthBar:SetPoint("TOP", PetFrameBackdrop, "TOP", 0, -2)
-    PetFrameHealthBar:SetWidth(PetFrameBackdrop:GetWidth()-6)
+    PetFrameHealthBar:SetWidth(PetFrameBackdrop:GetWidth()-4)
     PetFrameHealthBar:SetStatusBarTexture("Interface/RaidFrame/Raid-Bar-HP-Fill.blp")
 
     PetFrameManaBar:ClearAllPoints()
     PetFrameManaBar:SetPoint("BOTTOM", PetFrameBackdrop, "BOTTOM", 0, 2)
     PetFrameManaBar:SetHeight(8)
-    PetFrameManaBar:SetWidth(PetFrameBackdrop:GetWidth()-6)
+    PetFrameManaBar:SetWidth(PetFrameBackdrop:GetWidth()-4)
     PetFrameManaBar:SetStatusBarTexture("Interface/RaidFrame/Raid-Bar-HP-Fill.blp")
-    
+
     PetFrameHealthBarText:SetAlpha(0)
     PetFrameHealthBarTextLeft:SetAlpha(0)
     PetFrameHealthBarTextRight:SetAlpha(0)
@@ -219,17 +218,9 @@ local function PetFrameUpdate()
 
     PetFrameHappiness:ClearAllPoints()
     PetFrameHappiness:SetPoint("RIGHT", PetFrameBackdrop, "LEFT", 0, 0)
-
-    local i = 1
-    while _G["PetFrameBuff" .. i .. "Icon"] do
-        _G["PetFrameBuff" .. i .. "Icon"]:Hide()
-        i = i + 1
-    end
 end
 
-
 hooksecurefunc("PetFrame_Update", PetFrameUpdate)
-
 
 local PetFrameEventFrame = CreateFrame("Frame")
 PetFrameEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")

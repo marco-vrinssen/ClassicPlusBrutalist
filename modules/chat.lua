@@ -7,7 +7,6 @@ local function HideChatElements(frame, elements)
     end
 end
 
-
 local function HideChatTextures(frame)
     for i = 1, frame:GetNumRegions() do
         local region = select(i, frame:GetRegions())
@@ -17,11 +16,9 @@ local function HideChatTextures(frame)
     end
 end
 
-
-local function ChatCustomization(chatFrame)
+local function CustomizeChatFrame(chatFrame)
     chatFrame:SetSize(320, 160)
     chatFrame:SetClampedToScreen(false)
-    chatFrame:SetPoint("BOTTOMLEFT", 24, 48)
     chatFrame:SetMovable(true)
     chatFrame:SetUserPlaced(true)
 
@@ -38,29 +35,24 @@ local function ChatCustomization(chatFrame)
     end
 end
 
-
-local function ChatUpdate()
+local function UpdateAllChatFrames()
     for i = 1, NUM_CHAT_WINDOWS do
-        ChatCustomization(_G["ChatFrame" .. i])
+        CustomizeChatFrame(_G["ChatFrame" .. i])
     end
 end
 
-
-local ChatEventFrame = CreateFrame("Frame")
-ChatEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-ChatEventFrame:RegisterEvent("PLAYER_LOGIN")
-ChatEventFrame:RegisterEvent("DISPLAY_SIZE_CHANGED")
-ChatEventFrame:RegisterEvent("UI_SCALE_CHANGED")
-ChatEventFrame:SetScript("OnEvent", function(self, event)
-    ChatUpdate()
-end)
-
+local function RegisterEventListeners()
+    local ChatEventFrame = CreateFrame("Frame")
+    ChatEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+    ChatEventFrame:RegisterEvent("DISPLAY_SIZE_CHANGED")
+    ChatEventFrame:RegisterEvent("UI_SCALE_CHANGED")
+    ChatEventFrame:SetScript("OnEvent", UpdateAllChatFrames)
+end
 
 local function ScrollToBottom(chatFrame)
     if not chatFrame then return end
     chatFrame:ScrollToBottom()
 end
-
 
 local function HookChatTab(tab)
     if not tab then return end
@@ -69,32 +61,23 @@ local function HookChatTab(tab)
     end)
 end
 
-
 local function CustomizeAndHookChatTabs()
+    UpdateAllChatFrames()
+
     for i = 1, NUM_CHAT_WINDOWS do
-        local chatFrame = _G["ChatFrame" .. i]
-        if chatFrame then
-            ChatCustomization(chatFrame)
-            HookChatTab(_G[chatFrame:GetName() .. "Tab"])
-        end
+        HookChatTab(_G["ChatFrame" .. i .. "Tab"])
     end
 
     hooksecurefunc("FCF_OpenTemporaryWindow", function(chatType)
         if chatType ~= "WHISPER" and chatType ~= "BN_WHISPER" then return end
         local chatFrame = FCF_GetCurrentChatFrame()
-        if chatFrame then
-            ChatCustomization(chatFrame)
-            HookChatTab(_G[chatFrame:GetName() .. "Tab"])
-        end
+        CustomizeChatFrame(chatFrame)
+        HookChatTab(_G[chatFrame:GetName() .. "Tab"])
     end)
 end
 
-
+RegisterEventListeners()
 CustomizeAndHookChatTabs()
-
-
-
-
 
 
 
@@ -105,7 +88,6 @@ local function ChatConfigUpdate()
         FCF_Close(ChatFrame2)
     end
 end
-
 
 local ChatConfigEventFrame = CreateFrame("Frame")
 ChatConfigEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")

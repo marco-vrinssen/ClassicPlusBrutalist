@@ -1,82 +1,3 @@
-local function NameplateCastbarSetup(namePlate)
-    local healthBar = namePlate.UnitFrame.healthBar
-
-    namePlate.castBar = CreateFrame("StatusBar", nil, namePlate)
-    namePlate.castBar:SetStatusBarTexture("Interface/RaidFrame/Raid-Bar-HP-Fill")
-    namePlate.castBar:SetSize(healthBar:GetWidth(), 10)
-    namePlate.castBar:SetPoint("TOP", healthBar, "BOTTOM", 0, -5)
-    namePlate.castBar:SetMinMaxValues(0, 1)
-    namePlate.castBar:SetValue(0)
-
-    namePlate.castBar.backdrop = CreateFrame("Frame", nil, namePlate.castBar, "BackdropTemplate")
-    namePlate.castBar.backdrop:SetPoint("TOPLEFT", namePlate.castBar, -2, 2)
-    namePlate.castBar.backdrop:SetPoint("BOTTOMRIGHT", namePlate.castBar, 2, -2)
-    namePlate.castBar.backdrop:SetBackdrop({edgeFile = "Interface/Tooltips/UI-Tooltip-Border", edgeSize = 10})
-    namePlate.castBar.backdrop:SetBackdropBorderColor(0.5, 0.5, 0.5)
-    namePlate.castBar.backdrop:SetFrameLevel(namePlate.castBar:GetFrameLevel() + 1)
-
-    namePlate.castBar.text = namePlate.castBar:CreateFontString(nil, "OVERLAY")
-    namePlate.castBar.text:SetFont(STANDARD_TEXT_FONT, 8, "OUTLINE")
-    namePlate.castBar.text:SetPoint("CENTER", namePlate.castBar)
-
-    namePlate.castBar:SetScript("OnUpdate", function(self, elapsed)
-        if self.casting or self.channeling then
-            local currentTime = GetTime()
-            if currentTime > self.maxValue then
-                self:SetValue(self.maxValue)
-                self.casting = false
-                self.channeling = false
-                self:Hide()
-                self.backdrop:Hide()
-            else
-                self:SetValue(currentTime)
-                self.backdrop:Show()
-            end
-        end
-    end)
-
-    namePlate.castBar:Hide()
-    namePlate.castBar.backdrop:Hide()
-end
-
-
-local function NameplateCastbarUpdate(namePlate, unit)
-    local name, _, texture, startTime, endTime, _, _, notInterruptible = UnitCastingInfo(unit)
-    local channelName, _, _, channelStartTime, channelEndTime = UnitChannelInfo(unit)
-
-    if name or channelName then
-        local castBar = namePlate.castBar
-        local duration = (endTime or channelEndTime) / 1000
-        local current = GetTime()
-
-        castBar:SetMinMaxValues((startTime or channelStartTime) / 1000, duration)
-        castBar:SetValue(current)
-
-        if notInterruptible then
-            castBar:SetStatusBarColor(0.5, 0.5, 0.5)
-        else
-            castBar:SetStatusBarColor(0, 1, 0)
-        end
-
-        castBar.casting = name ~= nil
-        castBar.channeling = channelName ~= nil
-        castBar.maxValue = duration
-        castBar.text:SetText(name or channelName)
-        castBar:Show()
-        castBar.backdrop:Show()
-    else
-        namePlate.castBar:Hide()
-        namePlate.castBar.backdrop:Hide()
-    end
-end
-
-
-
-
-
-
-
-
 local function NameplateTextureUpdate(nameplate)
     local unitFrame = nameplate and nameplate.UnitFrame
     if not unitFrame then return end
@@ -111,43 +32,37 @@ end
 
 
 
+local function NameplateThreatUpdate(nameplate, unitID)
+    local unitFrame = nameplate.UnitFrame
+    if not unitFrame then return end
 
+    if not unitFrame.aggroIndicator then
+        unitFrame.aggroIndicator = CreateFrame("Frame", nil, unitFrame)
+        unitFrame.aggroIndicator:SetSize(12, 12)  -- Size of the indicator
+        unitFrame.aggroIndicator:SetPoint("LEFT", unitFrame.name, "RIGHT", 4, 0)
 
+        unitFrame.aggroIndicator.backdrop = unitFrame.aggroIndicator:CreateTexture(nil, "BACKGROUND")
+        unitFrame.aggroIndicator.backdrop:SetAllPoints(unitFrame.aggroIndicator)
+        unitFrame.aggroIndicator.backdrop:SetColorTexture(1, 0, 0)  -- Red color
 
+        unitFrame.aggroIndicator.mask = unitFrame.aggroIndicator:CreateMaskTexture()
+        unitFrame.aggroIndicator.mask:SetTexture("Interface/CharacterFrame/TempPortraitAlphaMaskSmall")
+        unitFrame.aggroIndicator.mask:SetAllPoints(unitFrame.aggroIndicator.backdrop)
+        unitFrame.aggroIndicator.backdrop:AddMaskTexture(unitFrame.aggroIndicator.mask)
+    end
 
-local function NameplateReactionUpdate(nameplate, unitID)
-    local healthBar = nameplate.UnitFrame and nameplate.UnitFrame.healthBar
-    if not healthBar then return end
-
-    local reaction = UnitReaction("player", unitID)
     local threatStatus = UnitThreatSituation("player", unitID)
-
     if threatStatus and threatStatus >= 2 then
-        healthBar:SetStatusBarColor(1, 0.5, 0)
-        healthBar.backdrop:SetBackdropBorderColor(1, 0.5, 0)
+        unitFrame.aggroIndicator:Show()
     else
-        if reaction then
-            if reaction >= 5 then
-                healthBar:SetStatusBarColor(0, 1, 0)
-            elseif reaction == 4 then
-                healthBar:SetStatusBarColor(1, 1, 0)
-            else
-                healthBar:SetStatusBarColor(1, 0, 0)
-            end
-        end
-        healthBar.backdrop:SetBackdropBorderColor(0.5, 0.5, 0.5)
+        unitFrame.aggroIndicator:Hide()
     end
 end
 
 
 
 
-
-
-
-
 local function NameplateDebuffsUpdate(nameplate, unitID)
-    
     local MAX_DEBUFFS = 12
 
     if not nameplate then return end
@@ -203,6 +118,76 @@ end
 
 
 
+local function NameplateCastbarSetup(namePlate)
+    local healthBar = namePlate.UnitFrame.healthBar
+
+    namePlate.castBar = CreateFrame("StatusBar", nil, namePlate)
+    namePlate.castBar:SetStatusBarTexture("Interface/RaidFrame/Raid-Bar-HP-Fill")
+    namePlate.castBar:SetSize(healthBar:GetWidth(), 10)
+    namePlate.castBar:SetPoint("TOP", healthBar, "BOTTOM", 0, -5)
+    namePlate.castBar:SetMinMaxValues(0, 1)
+    namePlate.castBar:SetValue(0)
+
+    namePlate.castBar.backdrop = CreateFrame("Frame", nil, namePlate.castBar, "BackdropTemplate")
+    namePlate.castBar.backdrop:SetPoint("TOPLEFT", namePlate.castBar, -2, 2)
+    namePlate.castBar.backdrop:SetPoint("BOTTOMRIGHT", namePlate.castBar, 2, -2)
+    namePlate.castBar.backdrop:SetBackdrop({edgeFile = "Interface/Tooltips/UI-Tooltip-Border", edgeSize = 10})
+    namePlate.castBar.backdrop:SetBackdropBorderColor(0.5, 0.5, 0.5)
+    namePlate.castBar.backdrop:SetFrameLevel(namePlate.castBar:GetFrameLevel() + 1)
+
+    namePlate.castBar.text = namePlate.castBar:CreateFontString(nil, "OVERLAY")
+    namePlate.castBar.text:SetFont(STANDARD_TEXT_FONT, 8, "OUTLINE")
+    namePlate.castBar.text:SetPoint("CENTER", namePlate.castBar)
+
+    namePlate.castBar:SetScript("OnUpdate", function(self, elapsed)
+        if self.casting or self.channeling then
+            local currentTime = GetTime()
+            if currentTime > self.maxValue then
+                self:SetValue(self.maxValue)
+                self.casting = false
+                self.channeling = false
+                self:Hide()
+                self.backdrop:Hide()
+            else
+                self:SetValue(currentTime)
+                self.backdrop:Show()
+            end
+        end
+    end)
+
+    namePlate.castBar:Hide()
+    namePlate.castBar.backdrop:Hide()
+end
+
+local function NameplateCastbarUpdate(namePlate, unit)
+    local name, _, texture, startTime, endTime, _, _, notInterruptible = UnitCastingInfo(unit)
+    local channelName, _, _, channelStartTime, channelEndTime = UnitChannelInfo(unit)
+
+    if name or channelName then
+        local castBar = namePlate.castBar
+        local duration = (endTime or channelEndTime) / 1000
+        local current = GetTime()
+
+        castBar:SetMinMaxValues((startTime or channelStartTime) / 1000, duration)
+        castBar:SetValue(current)
+
+        if notInterruptible then
+            castBar:SetStatusBarColor(0.5, 0.5, 0.5)
+        else
+            castBar:SetStatusBarColor(0, 1, 0)
+        end
+
+        castBar.casting = name ~= nil
+        castBar.channeling = channelName ~= nil
+        castBar.maxValue = duration
+        castBar.text:SetText(name or channelName)
+        castBar:Show()
+        castBar.backdrop:Show()
+    else
+        namePlate.castBar:Hide()
+        namePlate.castBar.backdrop:Hide()
+    end
+end
 
 
 
@@ -211,7 +196,7 @@ local function NameplateSpecificUpdate(unitID)
     local nameplate = C_NamePlate.GetNamePlateForUnit(unitID)
     if nameplate then
         NameplateTextureUpdate(nameplate)
-        NameplateReactionUpdate(nameplate, unitID)
+        NameplateThreatUpdate(nameplate, unitID)
         NameplateDebuffsUpdate(nameplate, unitID)
         if not nameplate.castBar then
             NameplateCastbarSetup(nameplate)
@@ -219,10 +204,6 @@ local function NameplateSpecificUpdate(unitID)
         NameplateCastbarUpdate(nameplate, unitID)
     end
 end
-
-
-
-
 
 
 
@@ -236,7 +217,6 @@ NameplatesEventFrame:RegisterEvent("UNIT_SPELLCAST_START")
 NameplatesEventFrame:RegisterEvent("UNIT_SPELLCAST_STOP")
 NameplatesEventFrame:RegisterEvent("UNIT_SPELLCAST_CHANNEL_START")
 NameplatesEventFrame:RegisterEvent("UNIT_SPELLCAST_CHANNEL_STOP")
-
 NameplatesEventFrame:SetScript("OnEvent", function(self, event, unitID)
     if event == "NAME_PLATE_UNIT_ADDED" or event == "UNIT_SPELLCAST_START" or 
        event == "UNIT_SPELLCAST_STOP" or event == "UNIT_SPELLCAST_CHANNEL_START" or 
@@ -245,7 +225,7 @@ NameplatesEventFrame:SetScript("OnEvent", function(self, event, unitID)
     elseif event == "UNIT_THREAT_SITUATION_UPDATE" or event == "UNIT_THREAT_LIST_UPDATE" then
         local nameplate = C_NamePlate.GetNamePlateForUnit(unitID)
         if nameplate then
-            NameplateReactionUpdate(nameplate, unitID)
+            NameplateThreatUpdate(nameplate, unitID)
         end
     elseif event == "UNIT_AURA" then
         local nameplate = C_NamePlate.GetNamePlateForUnit(unitID)

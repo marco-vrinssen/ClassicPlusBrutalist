@@ -1,23 +1,37 @@
-local TargetFrameBackdrop = CreateFrame("Frame", nil, TargetFrame, "BackdropTemplate")
-TargetFrameBackdrop:SetPoint("BOTTOM", UIParent, "BOTTOM", 190, 190)
+local TargetFrameBackdrop = CreateFrame("Button", nil, TargetFrame, "SecureUnitButtonTemplate, BackdropTemplate")
+TargetFrameBackdrop:SetPoint("BOTTOM", UIParent, "BOTTOM", 190, 200)
 TargetFrameBackdrop:SetSize(124, 48)
 TargetFrameBackdrop:SetBackdrop({edgeFile = "Interface/Tooltips/UI-Tooltip-Border", edgeSize = 14})
 TargetFrameBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
 TargetFrameBackdrop:SetFrameStrata("HIGH")
 
+TargetFrameBackdrop:SetAttribute("unit", "target")
+TargetFrameBackdrop:RegisterForClicks("AnyUp")
+TargetFrameBackdrop:SetAttribute("type1", "target")
+TargetFrameBackdrop:SetAttribute("type2", "togglemenu")
 
-local TargetPortraitBackdrop = CreateFrame("Frame", nil, TargetFrame, "BackdropTemplate")
+local TargetPortraitBackdrop = CreateFrame("Button", nil, TargetFrame, "SecureUnitButtonTemplate, BackdropTemplate")
 TargetPortraitBackdrop:SetPoint("LEFT", TargetFrameBackdrop, "RIGHT", 0, 0)
 TargetPortraitBackdrop:SetSize(48 ,48)
 TargetPortraitBackdrop:SetBackdrop({edgeFile = "Interface/Tooltips/UI-Tooltip-Border", edgeSize = 14})
 TargetPortraitBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
 TargetPortraitBackdrop:SetFrameStrata("HIGH")
 
+TargetPortraitBackdrop:SetAttribute("unit", "target")
+TargetPortraitBackdrop:RegisterForClicks("AnyUp")
+TargetPortraitBackdrop:SetAttribute("type1", "target")
+TargetPortraitBackdrop:SetAttribute("type2", "togglemenu")
 
 local function TargetFrameUpdate()
     TargetFrame:ClearAllPoints()
-    TargetFrame:SetPoint("BOTTOMLEFT", TargetFrameBackdrop, "BOTTOMLEFT", -8, -8)
-    TargetFrame:SetPoint("TOPRIGHT", TargetPortraitBackdrop, "TOPRIGHT", 8, 8)
+    TargetFrame:SetPoint("BOTTOMLEFT", TargetFrameBackdrop, "BOTTOMLEFT", 0, 0)
+    TargetFrame:SetPoint("TOPRIGHT", TargetPortraitBackdrop, "TOPRIGHT", 0, 0)
+    TargetFrame:SetFrameStrata("HIGH")
+
+    TargetFrame:SetAttribute("unit", "target")
+    TargetFrame:RegisterForClicks("AnyUp")
+    TargetFrame:SetAttribute("type1", "target")
+    TargetFrame:SetAttribute("type2", "togglemenu")
 
     TargetFrameBackground:ClearAllPoints()
     TargetFrameBackground:SetPoint("TOPLEFT", TargetFrameBackdrop, "TOPLEFT", 2, -2)
@@ -62,9 +76,7 @@ local function TargetFrameUpdate()
     end
 end
 
-
 hooksecurefunc("TargetFrame_Update", TargetFrameUpdate)
-
 
 local TargetFrameEventFrame = CreateFrame("Frame")
 TargetFrameEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
@@ -74,16 +86,11 @@ TargetFrameEventFrame:SetScript("OnEvent", TargetFrameUpdate)
 
 
 
-
-
-
-
 local TargetHealthText = TargetFrameHealthBar:CreateFontString(nil, "OVERLAY", "GameFontNormal")
 TargetHealthText:SetPoint("CENTER", TargetFrameHealthBar, "CENTER", 0, 0)
 TargetHealthText:SetFont(STANDARD_TEXT_FONT, 12, "OUTLINE")
 TargetHealthText:SetTextColor(1, 1, 1, 1)
 TargetHealthText:SetShadowOffset(0, 0)
-
 
 local function TargetHealthUpdate()
     if UnitExists("target") then
@@ -95,17 +102,12 @@ local function TargetHealthUpdate()
     end
 end
 
-
 local TargetHealthEventFrame = CreateFrame("Frame")
 TargetHealthEventFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
 TargetHealthEventFrame:RegisterEvent("UNIT_HEALTH")
 TargetHealthEventFrame:RegisterEvent("UNIT_HEALTH_FREQUENT")
 TargetHealthEventFrame:RegisterEvent("UNIT_MAXHEALTH")
 TargetHealthEventFrame:SetScript("OnEvent", TargetHealthUpdate)
-
-
-
-
 
 
 
@@ -130,12 +132,7 @@ local function TargetPortraitUpdate(frame)
     end
 end
 
-
 hooksecurefunc("UnitFramePortrait_Update", TargetPortraitUpdate)
-
-
-
-
 
 
 
@@ -143,7 +140,6 @@ hooksecurefunc("UnitFramePortrait_Update", TargetPortraitUpdate)
 local function ToTFrameUpdate()
     TargetFrameToT:Hide()
 end
-
 
 local ToTFrameEventFrame = CreateFrame("Frame")
 ToTFrameEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
@@ -153,14 +149,9 @@ ToTFrameEventFrame:SetScript("OnEvent", ToTFrameUpdate)
 
 
 
-
-
-
-
 local TargetDebuffContainer = CreateFrame("Frame", "MyDebuffFrame", UIParent)
 TargetDebuffContainer:SetSize(40, 40)
-TargetDebuffContainer:SetPoint("BOTTOMLEFT", TargetFrameBackdrop, "TOPLEFT", 0, 96)
-
+TargetDebuffContainer:SetPoint("BOTTOMLEFT", TargetFrameBackdrop, "TOPLEFT", 0, 84)
 
 local function TargetDebuffUpdate(index, debuff)
     local icon = TargetDebuffContainer["debuff" .. index]
@@ -181,7 +172,6 @@ local function TargetDebuffUpdate(index, debuff)
     icon.cooldown:SetCooldown(debuff.expirationTime - debuff.duration, debuff.duration)
     icon:Show()
 end
-
 
 --[[
 local function TargetFrameAuraUpdate()
@@ -211,7 +201,6 @@ local function TargetFrameAuraUpdate()
     end
 end
 ]]
-
 
 local function TargetFrameAuraUpdate()
 
@@ -252,7 +241,6 @@ local function TargetFrameAuraUpdate()
         end
     end
     
-
     --[[
     for i = 1, MAX_DEBUFFS do
         local debuff = _G["TargetFrameDebuff"..i]
@@ -262,7 +250,6 @@ local function TargetFrameAuraUpdate()
         end
     end
     ]]
-
 
     local debuffCount = 0
     for i = 1, MAX_DEBUFFS do
@@ -281,19 +268,13 @@ local function TargetFrameAuraUpdate()
     end
 end
 
-
 hooksecurefunc("TargetFrame_Update", TargetFrameAuraUpdate)
 hooksecurefunc("TargetFrame_UpdateAuras", TargetFrameAuraUpdate)
-
 
 local TargetFrameAuraEventFrame = CreateFrame("Frame")
 TargetFrameAuraEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 TargetFrameAuraEventFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
 TargetFrameAuraEventFrame:SetScript("OnEvent", TargetFrameAuraUpdate)
-
-
-
-
 
 
 
@@ -305,7 +286,6 @@ TargetFrameSpellbarBackdrop:SetHeight(24)
 TargetFrameSpellbarBackdrop:SetBackdrop({ edgeFile = "Interface/Tooltips/UI-Tooltip-Border", edgeSize = 14 })
 TargetFrameSpellbarBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
 TargetFrameSpellbarBackdrop:SetFrameStrata("HIGH")
-
 
 local function TargetFrameSpellbarUpdate()
     TargetFrameSpellBar:ClearAllPoints()
@@ -324,10 +304,8 @@ local function TargetFrameSpellbarUpdate()
     TargetFrameSpellBar.Text:SetFont(STANDARD_TEXT_FONT, 10)
 end
 
-
 TargetFrameSpellBar:HookScript("OnShow", TargetFrameSpellbarUpdate)
 TargetFrameSpellBar:HookScript("OnUpdate", TargetFrameSpellbarUpdate)
-
 
 local TargetFrameSpellbarEventFrame = CreateFrame("Frame")
 TargetFrameSpellbarEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
@@ -336,14 +314,9 @@ TargetFrameSpellbarEventFrame:SetScript("OnEvent", TargetFrameSpellbarUpdate)
 
 
 
-
-
-
-
 local TargetFrameClassificationText = TargetFrame:CreateFontString(nil, "OVERLAY")
 TargetFrameClassificationText:SetFont(STANDARD_TEXT_FONT, 12, "OUTLINE")
 TargetFrameClassificationText:SetPoint("BOTTOM", TargetPortraitBackdrop, "TOP", 0, 4)
-
 
 local function TargetFrameClassificationUpdate()
     local classification = UnitClassification("target")
@@ -361,9 +334,10 @@ local function TargetFrameClassificationUpdate()
         TargetFrameTextureFrameName:SetTextColor(1, 0.8, 0, 1)
     elseif classification == "rare" then
         TargetFrameClassificationText:SetText("Rare")
-        TargetFrameClassificationText:SetTextColor(1, 0.5, 0, 1)
+        TargetFrameClassificationText:SetTextColor(0.5, 0.5, 0.5, 1)
         TargetFrameBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
         TargetPortraitBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
+        TargetFrameTextureFrameName:SetTextColor(0.5, 0.5, 0.5, 1)
     else
         TargetFrameClassificationText:SetText("")
         TargetFrameBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
@@ -371,9 +345,7 @@ local function TargetFrameClassificationUpdate()
     end
 end
 
-
 hooksecurefunc("TargetFrame_Update", TargetFrameClassificationUpdate)
-
 
 local TargetFrameClassificationEventFrame = CreateFrame("Frame")
 TargetFrameClassificationEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
@@ -383,14 +355,9 @@ TargetFrameClassificationEventFrame:SetScript("OnEvent", TargetFrameClassificati
 
 
 
-
-
-
-
 local TargetFrameThreatText = TargetFrameThreatText or TargetFrame:CreateFontString(nil, "OVERLAY")
 TargetFrameThreatText:SetFont(STANDARD_TEXT_FONT, 12, "OUTLINE")
 TargetFrameThreatText:SetPoint("BOTTOM", TargetFrameClassificationText, "TOP", 0, 4)
-
 
 local function TargetFrameThreatTextUpdate()
     if not UnitExists("target") or UnitIsDead("target") or not UnitCanAttack("player", "target") then
@@ -403,9 +370,9 @@ local function TargetFrameThreatTextUpdate()
         TargetFrameThreatText:SetText(string.format("%.0f%%", threatPercentage))
         TargetFrameThreatText:Show()
         if isTanking or (status and status >= 2) then
-            TargetFrameThreatText:SetTextColor(1, 0.5, 0)
+            TargetFrameThreatText:SetTextColor(1, 0, 0)
         elseif status == 1 then
-            TargetFrameThreatText:SetTextColor(1, 1, 0)
+            TargetFrameThreatText:SetTextColor(1, 0.5, 0)
         else
             TargetFrameThreatText:SetTextColor(0.5, 0.5, 0.5)
         end
@@ -414,16 +381,11 @@ local function TargetFrameThreatTextUpdate()
     end
 end
 
-
 TargetFrame:HookScript("OnShow", TargetFrameThreatTextUpdate)
 TargetFrame:HookScript("OnEvent", TargetFrameThreatTextUpdate)
 TargetFrame:RegisterEvent("UNIT_THREAT_SITUATION_UPDATE")
 TargetFrame:RegisterEvent("UNIT_THREAT_LIST_UPDATE")
 TargetFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
-
-
-
-
 
 
 

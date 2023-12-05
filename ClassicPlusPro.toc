@@ -14,11 +14,11 @@ modules/commands.lua
 modules/config.lua
 modules/healthcheck.lua
 modules/items.lua
-modules/maps.lua
 modules/micromenu.lua
+modules/minimap.lua
 modules/nameplates.lua
 modules/playerframe.lua
-modules/questieupdate.lua
+modules/questiesupport.lua
 modules/resourcedisplay.lua
 modules/targetframe.lua
 modules/tooltips.lua
