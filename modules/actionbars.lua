@@ -70,23 +70,13 @@ local function StanceBarUpdate()
 end
 
 local function PetActionbarUpdate()
-    PetActionBarFrame:ClearAllPoints()
-    PetActionBarFrame:SetScale(0.8)
-    PetActionBarFrame:SetPoint("BOTTOM", MainMenuBar, "TOP", 32, 44)
-
-    local buttonsToHide = {1, 2, 3, 8, 9, 10}
-    for _, buttonID in ipairs(buttonsToHide) do
-        local button = _G["PetActionButton" .. buttonID]
-        if button then
-            button:SetAlpha(0)
-            button:Hide()
-        end
-    end
+    PetActionBarFrame:Hide()
 end
 
 local function ClassActionbarUpdate()
     StanceBarUpdate()
-    C_Timer.After(0.2, PetActionbarUpdate)
+    PetActionbarUpdate()
+    --C_Timer.After(0.2, PetActionbarUpdate)
 end
 
 local ClassActionbarEventFrame = CreateFrame("Frame")
