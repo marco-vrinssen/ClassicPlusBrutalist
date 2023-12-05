@@ -19,6 +19,7 @@ end
 local function CustomizeChatFrame(chatFrame)
     chatFrame:SetSize(320, 160)
     chatFrame:SetClampedToScreen(false)
+    chatFrame:SetPoint("BOTTOMLEFT", 24, 48)
     chatFrame:SetMovable(true)
     chatFrame:SetUserPlaced(true)
 
