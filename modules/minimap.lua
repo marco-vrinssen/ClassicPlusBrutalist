@@ -20,8 +20,11 @@ local function MinimapUpdate()
     MinimapZoomIn:Hide()
     MinimapZoomOut:Hide()
 
-    MinimapTrackingFrame:ClearAllPoints()
-    MinimapTrackingFrame:SetPoint("TOPLEFT", UIParent, "TOPLEFT", -8, 0)
+    if MinimapTrackingFrame then
+        MinimapTrackingFrame:ClearAllPoints()
+        MinimapTrackingFrame:SetPoint("CENTER", UIParent, "TOPLEFT", -8, 0)
+        self:SetScript("OnUpdate", nil)
+    end
 
     TimeManagerClockButton:Hide()
     TimeManagerClockButton.Show =  TimeManagerClockButton.Hide
@@ -41,6 +44,7 @@ local function MinimapUpdate()
 end
 
 local MinimapEventFrame = CreateFrame("Frame")
+MinimapEventFrame:RegisterEvent("PLAYER_LOGIN")
 MinimapEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 MinimapEventFrame:RegisterEvent("ZONE_CHANGED")
 MinimapEventFrame:RegisterEvent("ZONE_CHANGED_INDOORS")
