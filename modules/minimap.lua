@@ -26,13 +26,26 @@ local function MinimapUpdate()
         self:SetScript("OnUpdate", nil)
     end
 
+    TimeManagerClockButton:ClearAllPoints()
+    TimeManagerClockButton:SetPoint("TOP", Minimap, "BOTTOM", 0, 0)
+    TimeManagerClockButton:SetScale(1.5)
+
+    for i = 1, TimeManagerClockButton:GetNumRegions() do
+        local region = select(i, TimeManagerClockButton:GetRegions())
+        if region and region:IsObjectType("Texture") then
+            region:SetTexture(nil)
+        end
+    end
+
     MiniMapMailBorder:Hide()
     MiniMapMailFrame:ClearAllPoints()
-    MiniMapMailFrame:SetPoint("TOP", TimeManagerClockTicker, "BOTTOM", 0, -2)
+    MiniMapMailFrame:SetScale(1.25)
+    MiniMapMailFrame:SetPoint("TOPLEFT", Minimap, "BOTTOMLEFT", -8, 0)
 
     MiniMapBattlefieldBorder:Hide()
     MiniMapBattlefieldFrame:ClearAllPoints()
-    MiniMapBattlefieldFrame:SetPoint("RIGHT", TimeManagerClockTicker, "LEFT", -4, 0)
+    MiniMapMailFrame:SetScale(1.25)
+    MiniMapBattlefieldFrame:SetPoint("TOPRIGHT", Minimap, "BOTTOMRIGHT", 8, 0)
 end
 
 local MinimapEventFrame = CreateFrame("Frame")
@@ -63,10 +76,7 @@ MinimapZoomEventFrame:SetScript("OnMouseWheel", MinimapZoom)
 
 
 local function MinimapConfigUpdate()
-    SetCVar("timeMgrUseMilitaryTime", "1")
     SetCVar("rotateMinimap", 0)
-    SetCVar("showServerTime", 0)
-
     function GetMinimapShape()
         return "SQUARE"
     end
