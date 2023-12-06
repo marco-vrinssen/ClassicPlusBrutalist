@@ -37,7 +37,7 @@ local function BagsUpdate()
     ContainerFrame4:SetPoint("BOTTOM", ContainerFrame2, "TOP", 0, 8)
 
     ContainerFrame5:ClearAllPoints()
-    ContainerFrame5:SetPoint("TOPRIGHT", ContainerFrame4, "TOPLEFT", 0, 0)
+    ContainerFrame5:SetPoint("BOTTOM", ContainerFrame3, "TOP", 0, 8)
 
     local mainBagIsOpen = IsBagOpen(0)
     local keyringIsOpen = IsBagOpen(KEYRING_CONTAINER)

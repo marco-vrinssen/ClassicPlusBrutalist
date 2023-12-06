@@ -26,14 +26,6 @@ local function MinimapUpdate()
         self:SetScript("OnUpdate", nil)
     end
 
-    TimeManagerClockButton:Hide()
-    TimeManagerClockButton.Show =  TimeManagerClockButton.Hide
- 
-    TimeManagerClockTicker:ClearAllPoints()
-    TimeManagerClockTicker:SetParent(Minimap)
-    TimeManagerClockTicker:SetPoint("TOP", CustomMinimapBackdrop, "BOTTOM", 0, -8)
-    TimeManagerClockTicker:SetScale(1.25)
-
     MiniMapMailBorder:Hide()
     MiniMapMailFrame:ClearAllPoints()
     MiniMapMailFrame:SetPoint("TOP", TimeManagerClockTicker, "BOTTOM", 0, -2)

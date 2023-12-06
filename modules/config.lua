@@ -5,6 +5,9 @@ local function ConfigUpdate()
     SetCVar("WorldTextScale", 1.5)
     SetCVar("ffxDeath", 0)
     SetCVar("ffxGlow", 0)
+    SetCVar("GxAllowCachelessShaderMode", 0)
+    SetCVar("gxMaxFrameLatency", 1)
+
 end
 
 local function SoundUpdate()
