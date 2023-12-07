@@ -39,12 +39,10 @@ local function MinimapUpdate()
 
     MiniMapMailBorder:Hide()
     MiniMapMailFrame:ClearAllPoints()
-    MiniMapMailFrame:SetScale(1.25)
-    MiniMapMailFrame:SetPoint("TOPLEFT", Minimap, "BOTTOMLEFT", -8, 0)
+    MiniMapMailFrame:SetPoint("TOPLEFT", Minimap, "BOTTOMLEFT", -8, -4)
 
     MiniMapBattlefieldBorder:Hide()
     MiniMapBattlefieldFrame:ClearAllPoints()
-    MiniMapMailFrame:SetScale(1.25)
     MiniMapBattlefieldFrame:SetPoint("TOPRIGHT", Minimap, "BOTTOMRIGHT", 8, 0)
 end
 

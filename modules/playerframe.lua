@@ -97,8 +97,8 @@ end
 hooksecurefunc("PlayerFrame_Update", PlayerFrameUpdate)
 
 local PlayerFrameEventFrame = CreateFrame("Frame")
-PlayerFrameEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 PlayerFrameEventFrame:RegisterEvent("PLAYER_LOGIN")
+PlayerFrameEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 PlayerFrameEventFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
 PlayerFrameEventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
 PlayerFrameEventFrame:SetScript("OnEvent", PlayerFrameUpdate)

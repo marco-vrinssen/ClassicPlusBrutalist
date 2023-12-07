@@ -72,6 +72,8 @@ local function ChatUpdate()
 end
 
 local ChatEventFrame = CreateFrame("Frame")
+ChatEventFrame:RegisterEvent("PLAYER_LOGIN")
+ChatEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 ChatEventFrame:RegisterEvent("UI_SCALE_CHANGED")
 ChatEventFrame:RegisterEvent("DISPLAY_SIZE_CHANGED")
 ChatEventFrame:SetScript("OnEvent", ChatUpdate)
