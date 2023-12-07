@@ -70,7 +70,7 @@ end)
 
 
 
-local function PostChannel(msg)
+local function ChannelPost(msg)
     if msg ~= "" then
         for i = 2, 10 do
             SendChatMessage(msg, "CHANNEL", nil, i)
@@ -79,12 +79,12 @@ local function PostChannel(msg)
 end
 
 SLASH_POST1 = "/post"
-SlashCmdList["POST"] = PostChannel
+SlashCmdList["POST"] = ChannelPost
 
 
 
 
-local function WhoWhisper(msg)
+local function WhisperSpam(msg)
     if msg ~= "" then
         local numWhos, totalCount = C_FriendList.GetNumWhoResults()
         for i = 1, numWhos do
@@ -97,16 +97,31 @@ local function WhoWhisper(msg)
 end
 
 SLASH_SPAM1 = "/spam"
-SlashCmdList["SPAM"] = WhoWhisper
+SlashCmdList["SPAM"] = WhisperSpam
 
 
 
 
-function LeaveGroup()
+local function CloseWhisperWindows()
+    for _, chatFrameName in pairs(CHAT_FRAMES) do
+        local chatFrame = _G[chatFrameName]
+        if chatFrame and chatFrame.isTemporary then
+            FCF_Close(chatFrame)
+        end
+    end
+end
+
+SLASH_CLEAN1 = "/clean"
+SlashCmdList["CLEAN"] = CloseWhisperWindows
+
+
+
+
+function GroupLeave()
     if IsInGroup() or IsInRaid() then
         LeaveParty()
     end
 end
 
 SLASH_QUIT1 = "/q"
-SlashCmdList["QUIT"] = LeaveGroup
+SlashCmdList["QUIT"] = GroupLeave

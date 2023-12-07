@@ -102,7 +102,7 @@ hooksecurefunc("ActionButton_OnUpdate", ActionbarsRangeCheck)
 
 
 
-
+--[[
 local function ActionbarsConfig()
     local interfaceOptions = "InterfaceOptionsActionBarsPanel"
     local bottom = "Bottom"
@@ -122,3 +122,4 @@ end
 local ActionbarsConfigEventFrame = CreateFrame("Frame")
 ActionbarsConfigEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 ActionbarsConfigEventFrame:SetScript("OnEvent", ActionbarsConfig)
+]]

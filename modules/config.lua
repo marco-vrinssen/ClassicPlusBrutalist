@@ -1,13 +1,9 @@
 local function ConfigUpdate()
-    SetCVar("scriptErrors", 0)
+    SetCVar("scriptErrors", 1)
     SetCVar("rawMouseEnable", 1)
-    SetCVar("cursorSizePreferred", 0)
     SetCVar("WorldTextScale", 1.5)
     SetCVar("ffxDeath", 0)
     SetCVar("ffxGlow", 0)
-    SetCVar("GxAllowCachelessShaderMode", 0)
-    SetCVar("gxMaxFrameLatency", 1)
-
 end
 
 local function SoundUpdate()

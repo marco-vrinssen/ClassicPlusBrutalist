@@ -77,11 +77,17 @@ MinimapZoomEventFrame:SetScript("OnMouseWheel", MinimapZoom)
 
 local function MinimapConfigUpdate()
     SetCVar("rotateMinimap", 0)
-    function GetMinimapShape()
-        return "SQUARE"
-    end
 end
 
 local MinimapConfigEventFrame = CreateFrame("Frame")
 MinimapConfigEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 MinimapConfigEventFrame:SetScript("OnEvent", MinimapConfigUpdate)
+
+
+
+
+--[[
+    function GetMinimapShape()
+        return "SQUARE"
+    end
+]]

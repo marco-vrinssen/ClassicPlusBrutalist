@@ -1,55 +1,3 @@
-local function HideChatElements(frame, elements)
-    for _, element in ipairs(elements) do
-        local chatElement = _G[frame:GetName() .. element]
-        if chatElement then
-            chatElement:Hide()
-        end
-    end
-end
-
-local function HideChatTextures(frame)
-    for i = 1, frame:GetNumRegions() do
-        local region = select(i, frame:GetRegions())
-        if region:IsObjectType("Texture") then
-            region:SetTexture(nil)
-        end
-    end
-end
-
-local function CustomizeChatFrame(chatFrame)
-    chatFrame:SetSize(320, 160)
-    chatFrame:SetClampedToScreen(false)
-    chatFrame:SetPoint("BOTTOMLEFT", 24, 48)
-    chatFrame:SetMovable(true)
-    chatFrame:SetUserPlaced(true)
-
-    HideChatElements(chatFrame, {"ButtonFrame", "EditBoxLeft", "EditBoxMid", "EditBoxRight"})
-    HideChatTextures(chatFrame)
-    ChatFrameMenuButton:Hide()
-    ChatFrameChannelButton:Hide()
-
-    local tab = _G[chatFrame:GetName() .. "Tab"]
-    HideChatTextures(tab)
-    local tabFontString = tab:GetFontString()
-    if tabFontString then
-        tabFontString:SetFont(STANDARD_TEXT_FONT, 14)
-    end
-end
-
-local function UpdateAllChatFrames()
-    for i = 1, NUM_CHAT_WINDOWS do
-        CustomizeChatFrame(_G["ChatFrame" .. i])
-    end
-end
-
-local function RegisterEventListeners()
-    local ChatEventFrame = CreateFrame("Frame")
-    ChatEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-    ChatEventFrame:RegisterEvent("DISPLAY_SIZE_CHANGED")
-    ChatEventFrame:RegisterEvent("UI_SCALE_CHANGED")
-    ChatEventFrame:SetScript("OnEvent", UpdateAllChatFrames)
-end
-
 local function ScrollToBottom(chatFrame)
     if not chatFrame then return end
     chatFrame:ScrollToBottom()
@@ -62,10 +10,55 @@ local function HookChatTab(tab)
     end)
 end
 
-local function CustomizeAndHookChatTabs()
-    UpdateAllChatFrames()
+
+
+
+local function ChatUpdate()
+    local elementsToHide = {"ButtonFrame", "EditBoxLeft", "EditBoxMid", "EditBoxRight"}
+
+    local function HideChatElements(frame)
+        for _, element in ipairs(elementsToHide) do
+            local chatElement = _G[frame:GetName() .. element]
+            if chatElement then
+                chatElement:Hide()
+            end
+        end
+    end
+
+    local function HideChatTextures(frame)
+        for i = 1, frame:GetNumRegions() do
+            local region = select(i, frame:GetRegions())
+            if region:IsObjectType("Texture") then
+                region:SetTexture(nil)
+            end
+        end
+    end
+
+    local function CustomizeChatFrame(chatFrame)
+        chatFrame:ClearAllPoints()
+        chatFrame:SetSize(320, 160)
+        chatFrame:SetPoint("BOTTOMLEFT", 24, 48)
+        chatFrame:SetClampedToScreen(false)
+        chatFrame:SetMovable(true)
+        chatFrame:SetUserPlaced(true)
+
+        HideChatElements(chatFrame)
+        HideChatTextures(chatFrame)
+
+        ChatFrameMenuButton:Hide()
+        ChatFrameChannelButton:Hide()
+
+        local tab = _G[chatFrame:GetName() .. "Tab"]
+        HideChatTextures(tab)
+        local tabFontString = tab:GetFontString()
+        if tabFontString then
+            tabFontString:SetFont(STANDARD_TEXT_FONT, 14)
+        end
+    end
 
     for i = 1, NUM_CHAT_WINDOWS do
+        local chatFrame = _G["ChatFrame" .. i]
+        CustomizeChatFrame(chatFrame)
         HookChatTab(_G["ChatFrame" .. i .. "Tab"])
     end
 
@@ -75,16 +68,20 @@ local function CustomizeAndHookChatTabs()
         CustomizeChatFrame(chatFrame)
         HookChatTab(_G[chatFrame:GetName() .. "Tab"])
     end)
+
 end
 
-RegisterEventListeners()
-CustomizeAndHookChatTabs()
+local ChatEventFrame = CreateFrame("Frame")
+ChatEventFrame:RegisterEvent("UI_SCALE_CHANGED")
+ChatEventFrame:RegisterEvent("DISPLAY_SIZE_CHANGED")
+ChatEventFrame:SetScript("OnEvent", ChatUpdate)
+
+hooksecurefunc("FCF_OpenTemporaryWindow", ChatUpdate)
 
 
 
 
 local function ChatConfigUpdate()
-    SetCVar("chatClassColorOverride", "0")
     if ChatFrame2 then
         FCF_Close(ChatFrame2)
     end
