@@ -26,7 +26,6 @@ local function TargetFrameUpdate()
     TargetFrame:ClearAllPoints()
     TargetFrame:SetPoint("BOTTOMLEFT", TargetFrameBackdrop, "BOTTOMLEFT", 0, 0)
     TargetFrame:SetPoint("TOPRIGHT", TargetPortraitBackdrop, "TOPRIGHT", 0, 0)
-    TargetFrame:SetFrameStrata("HIGH")
 
     TargetFrame:SetAttribute("unit", "target")
     TargetFrame:RegisterForClicks("AnyUp")
