@@ -99,27 +99,3 @@ function ActionbarsRangeCheck(self)
 end
 
 hooksecurefunc("ActionButton_OnUpdate", ActionbarsRangeCheck)
-
-
-
---[[
-local function ActionbarsConfig()
-    local interfaceOptions = "InterfaceOptionsActionBarsPanel"
-    local bottom = "Bottom"
-    local actionBars = {
-        _G[interfaceOptions .. bottom .. "Left"],
-        _G[interfaceOptions .. bottom .. "Right"]
-    }
-
-    for i, bar in ipairs(actionBars) do
-        if not bar:GetChecked() then
-            bar:SetChecked(true)
-            bar:GetScript("OnClick")(bar)
-        end
-    end
-end
-
-local ActionbarsConfigEventFrame = CreateFrame("Frame")
-ActionbarsConfigEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-ActionbarsConfigEventFrame:SetScript("OnEvent", ActionbarsConfig)
-]]
