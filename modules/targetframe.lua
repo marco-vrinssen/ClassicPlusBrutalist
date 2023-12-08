@@ -163,34 +163,65 @@ ToTFrameEventFrame:SetScript("OnEvent", ToTFrameUpdate)
 
 
 
+local TargetDebuffContainer = CreateFrame("Frame", "MyDebuffFrame", UIParent)
+TargetDebuffContainer:SetSize(40, 40)
+TargetDebuffContainer:SetPoint("BOTTOMLEFT", TargetFrameBackdrop, "TOPLEFT", 0, 52)
+
+local function TargetDebuffUpdate(index, debuff)
+    local icon = TargetDebuffContainer["debuff" .. index]
+
+    if not icon then
+        icon = CreateFrame("Frame", nil, TargetDebuffContainer)
+        icon:SetSize(32, 32)
+        icon.texture = icon:CreateTexture(nil, "BACKGROUND")
+        icon.texture:SetAllPoints(icon)
+        icon.cooldown = CreateFrame("Cooldown", nil, icon, "CooldownFrameTemplate")
+        icon.cooldown:SetAllPoints(icon)
+        icon.cooldown:SetDrawSwipe(false)
+        TargetDebuffContainer["debuff" .. index] = icon
+    end
+
+    icon.texture:SetTexture(debuff.icon)
+    icon:SetPoint("LEFT", TargetDebuffContainer, "LEFT", (index - 1) * 36, 0)
+    icon.cooldown:SetCooldown(debuff.expirationTime - debuff.duration, debuff.duration)
+    icon:Show()
+end
+
 local function TargetFrameAuraUpdate()
     local MAX_BUFFS = 32
     local MAX_DEBUFFS = 32
-    local SCALE_FACTOR = 1.25  -- 25% scale up
 
     for i = 1, MAX_BUFFS do
         local buff = _G["TargetFrameBuff"..i]
         if buff then
-            buff:SetScale(SCALE_FACTOR)  -- Scaling the buff
             buff:ClearAllPoints()
-            buff:SetPoint("BOTTOMLEFT", TargetFrameBackdrop, "TOPLEFT", (i - 1) * 20 * SCALE_FACTOR, 4 * SCALE_FACTOR)
+            buff:SetPoint("BOTTOMLEFT", TargetFrameBackdrop, "TOPLEFT", (i - 1) * 24, 4) -- Using direct values for offset
         end
     end
 
     local visibleDebuffCount = 0
 
     for i = 1, MAX_DEBUFFS do
+
+        local name, icon, _, _, _, _, caster = UnitDebuff("target", i)
         local debuffFrame = _G["TargetFrameDebuff"..i]
+
         if debuffFrame then
-            debuffFrame:SetScale(SCALE_FACTOR)  -- Scaling the debuff
-            local name, icon = UnitDebuff("target", i)
-            if name then
-                debuffFrame:ClearAllPoints()
-                debuffFrame:SetPoint("BOTTOMLEFT", TargetFrameBackdrop, "TOPLEFT", visibleDebuffCount * 20 * SCALE_FACTOR, 4 * SCALE_FACTOR)
-                debuffFrame:Show()
-                visibleDebuffCount = visibleDebuffCount + 1
-            else
-                debuffFrame:Hide()
+            local debuffTexture = debuffFrame:GetRegions() -- Assuming the texture is the first region of the frame
+            if debuffTexture and debuffTexture.SetTexture then
+                if name and caster == "player" then
+                    debuffFrame:Hide()
+                else
+                    if name then  -- Make sure there is a debuff to show
+                        debuffTexture:SetTexture(icon)  -- Set the correct texture
+                        debuffFrame:ClearAllPoints()
+                        debuffFrame:SetPoint("BOTTOMLEFT", TargetFrameBackdrop, "TOPLEFT", visibleDebuffCount * 24, 4)
+                        debuffFrame:Show()
+                        visibleDebuffCount = visibleDebuffCount + 1
+                    else
+                        debuffFrame:Hide()
+                    end
+                end
             end
         end
     end
@@ -199,22 +230,15 @@ local function TargetFrameAuraUpdate()
     for i = 1, MAX_DEBUFFS do
         local name, icon, count, debuffType, duration, expirationTime, unitCaster = UnitDebuff("target", i)
         if name and unitCaster == "player" then
-            if TargetDebuffContainer then
-                local icon = TargetDebuffContainer["debuff" .. debuffCount + 1]
-                if icon then
-                    -- Update the icon here
-                end
-            end
+            TargetDebuffUpdate(debuffCount + 1, {name = name, icon = icon, duration = duration, expirationTime = expirationTime})
             debuffCount = debuffCount + 1
         end
     end
 
-    if TargetDebuffContainer then
-        for i = debuffCount + 1, MAX_DEBUFFS do
-            local icon = TargetDebuffContainer["debuff" .. i]
-            if icon then
-                icon:Hide()
-            end
+    for i = debuffCount + 1, MAX_DEBUFFS do
+        local icon = TargetDebuffContainer["debuff" .. i]
+        if icon then
+            icon:Hide()
         end
     end
 end
