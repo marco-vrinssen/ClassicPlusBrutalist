@@ -111,8 +111,8 @@ local function CloseWhisperWindows()
     end
 end
 
-SLASH_CLEAN1 = "/clean"
-SlashCmdList["CLEAN"] = CloseWhisperWindows
+SLASH_CLEAR1 = "/clear"
+SlashCmdList["CLEAR"] = CloseWhisperWindows
 
 
 
