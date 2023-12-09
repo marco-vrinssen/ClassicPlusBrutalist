@@ -34,30 +34,24 @@ end
 
 local function NameplateThreatUpdate(nameplate, unitID)
     local unitFrame = nameplate.UnitFrame
-    if not unitFrame then return end
+    if not unitFrame or not unitFrame.healthBar then return end
 
-    if not unitFrame.aggroIndicator then
-        unitFrame.aggroIndicator = CreateFrame("Frame", nil, unitFrame)
-        unitFrame.aggroIndicator:SetSize(12, 12)  -- Size of the indicator
-        unitFrame.aggroIndicator:SetPoint("LEFT", unitFrame.name, "RIGHT", 4, 0)
-
-        unitFrame.aggroIndicator.backdrop = unitFrame.aggroIndicator:CreateTexture(nil, "BACKGROUND")
-        unitFrame.aggroIndicator.backdrop:SetAllPoints(unitFrame.aggroIndicator)
-        unitFrame.aggroIndicator.backdrop:SetColorTexture(1, 0, 0)  -- Red color
-
-        unitFrame.aggroIndicator.mask = unitFrame.aggroIndicator:CreateMaskTexture()
-        unitFrame.aggroIndicator.mask:SetTexture("Interface/CharacterFrame/TempPortraitAlphaMaskSmall")
-        unitFrame.aggroIndicator.mask:SetAllPoints(unitFrame.aggroIndicator.backdrop)
-        unitFrame.aggroIndicator.backdrop:AddMaskTexture(unitFrame.aggroIndicator.mask)
+    if not unitFrame.healthBar.originalColor then
+        local r, g, b = unitFrame.healthBar:GetStatusBarColor()
+        unitFrame.healthBar.originalColor = {r, g, b}
     end
 
     local threatStatus = UnitThreatSituation("player", unitID)
     if threatStatus and threatStatus >= 2 then
-        unitFrame.aggroIndicator:Show()
+        unitFrame.healthBar:SetStatusBarColor(1, 0.5, 0)
+        unitFrame.healthBar.backdrop:SetBackdropBorderColor(1, 0.5, 0)
     else
-        unitFrame.aggroIndicator:Hide()
+        local origColor = unitFrame.healthBar.originalColor
+        unitFrame.healthBar:SetStatusBarColor(unpack(origColor))
+        unitFrame.healthBar.backdrop:SetBackdropBorderColor(0.5, 0.5, 0.5) -- Grey color
     end
 end
+
 
 
 

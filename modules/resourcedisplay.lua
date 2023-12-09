@@ -56,8 +56,8 @@ end
 local ResourceDisplayEventFrame = CreateFrame("Frame")
 ResourceDisplayEventFrame:RegisterUnitEvent("UNIT_HEALTH", "player")
 ResourceDisplayEventFrame:RegisterUnitEvent("UNIT_POWER_UPDATE", "player")
-ResourceDisplayEventFrame:RegisterEvent("PLAYER_REGEN_DISABLED")  -- Entering combat
-ResourceDisplayEventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")   -- Exiting combat
+ResourceDisplayEventFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
+ResourceDisplayEventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
 ResourceDisplayEventFrame:SetScript("OnEvent", function(self, event, arg1)
     if event == "PLAYER_REGEN_DISABLED" then
         ResourceDisplayToggle(true)
@@ -74,6 +74,70 @@ ResourceDisplayUpdate()
 
 
 
+
+
+local _, playerClass = UnitClass("player")
+if playerClass ~= "ROGUE" and playerClass ~= "DRUID" then
+    return
+end
+
+local comboPointDisplay = CreateFrame("Frame", "ComboPointDisplay", UIParent)
+comboPointDisplay:SetSize(50, 50)  -- Adjust size as needed
+if ResourceDisplayBackdrop then
+    comboPointDisplay:SetPoint("TOP", ResourceDisplayBackdrop, "BOTTOM", 0, -16)  -- Adjust position as needed
+else
+    comboPointDisplay:SetPoint("CENTER", UIParent, "CENTER", 0, 0)  -- Fallback position
+end
+
+comboPointDisplay.fontString = comboPointDisplay:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
+comboPointDisplay.fontString:SetPoint("CENTER")
+comboPointDisplay.fontString:SetText("")
+
+-- Set font, size, and outline for the fontString
+local fontPath = STANDARD_TEXT_FONT  -- Default font path, you can replace it with another if you like
+local fontSize = 30  -- Adjust font size as needed
+local fontOutline = "OUTLINE"  -- You can use "OUTLINE", "THICKOUTLINE", or "" for no outline
+comboPointDisplay.fontString:SetFont(fontPath, fontSize, fontOutline)
+
+local function UpdateComboPoints()
+    local comboPoints = GetComboPoints("player", "target") or 0
+    if comboPoints > 0 then
+        comboPointDisplay.fontString:SetText(comboPoints)
+        comboPointDisplay.fontString:SetTextColor(1, 0, 0, 1)  -- Active color
+        comboPointDisplay:Show()
+    else
+        comboPointDisplay:Hide()
+    end
+
+    -- Hide default combo points
+    ComboFrame:UnregisterAllEvents()
+    ComboFrame:Hide()
+end
+
+local ComboPointDisplayEventFrame = CreateFrame("Frame")
+ComboPointDisplayEventFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
+ComboPointDisplayEventFrame:RegisterEvent("UNIT_POWER_UPDATE")
+ComboPointDisplayEventFrame:SetScript("OnEvent", function(self, event, ...)
+    local unit = ...
+    if event == "UNIT_POWER_UPDATE" and unit == "player" then
+        UpdateComboPoints()
+    elseif event == "PLAYER_TARGET_CHANGED" then
+        UpdateComboPoints()
+    end
+end)
+
+-- Initialize display
+UpdateComboPoints()
+
+
+
+
+
+
+
+
+
+--[[
 
 local _, playerClass = UnitClass("player")
 if playerClass ~= "ROGUE" and playerClass ~= "DRUID" then
@@ -132,3 +196,5 @@ ComboPointDisplayEventFrame:SetScript("OnEvent", function(self, event, ...)
         ComboPointDisplay()
     end
 end)
+
+]]--

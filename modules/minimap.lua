@@ -43,7 +43,7 @@ local function MinimapUpdate()
 
     MiniMapBattlefieldBorder:Hide()
     MiniMapBattlefieldFrame:ClearAllPoints()
-    MiniMapBattlefieldFrame:SetPoint("TOPRIGHT", Minimap, "BOTTOMRIGHT", 8, 0)
+    MiniMapBattlefieldFrame:SetPoint("TOPRIGHT", Minimap, "BOTTOMRIGHT", 8, -4)
 end
 
 local MinimapEventFrame = CreateFrame("Frame")
