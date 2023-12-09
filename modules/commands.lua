@@ -84,9 +84,40 @@ SlashCmdList["POST"] = ChannelPost
 
 
 
+local visibleWhoCount = nil  -- Global variable to store the count of visible /who entries
+
+local function WhoFilterUpdate(maxCount)
+    visibleWhoCount = maxCount  -- Update the global variable with the new count
+    local numWhos = C_FriendList.GetNumWhoResults()
+
+    for i = maxCount + 1, numWhos do
+        local button = _G["WhoFrameButton"..i]
+        if button then
+            button:Hide()
+        end
+    end
+end
+
+SLASH_REDUCE1 = '/reduce'
+SlashCmdList["REDUCE"] = function(msg)
+    if WhoFrame:IsShown() then
+        local count = tonumber(msg)
+        if not count or count < 1 then
+            print("Invalid number. Please enter a valid number after /reduce.")
+            return
+        end
+        WhoFilterUpdate(count)
+    else
+        print("Please open the /who list first.")
+    end
+end
+
+
+
+
 local function WhisperSpam(msg)
     if msg ~= "" then
-        local numWhos, totalCount = C_FriendList.GetNumWhoResults()
+        local numWhos = visibleWhoCount or C_FriendList.GetNumWhoResults()  -- Use the global variable if set
         for i = 1, numWhos do
             local info = C_FriendList.GetWhoInfo(i)
             if info and info.fullName then

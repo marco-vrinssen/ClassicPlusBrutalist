@@ -35,13 +35,10 @@ local function ChatUpdate()
     end
 
     local function CustomizeChatFrame(chatFrame)
-        --[[
         chatFrame:ClearAllPoints()
         chatFrame:SetSize(320, 160)
         chatFrame:SetPoint("BOTTOMLEFT", 24, 48)
-
-        ]]--
-        chatFrame:SetClampedToScreen(true)
+        chatFrame:SetClampedToScreen(false)
 
         HideChatElements(chatFrame)
         HideChatTextures(chatFrame)

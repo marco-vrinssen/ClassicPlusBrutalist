@@ -57,6 +57,23 @@ ActionbarsEventFrame:SetScript("OnEvent", ActionbarUpdate)
 
 
 
+function ActionbarsRangeCheck(self)
+    if self.action then
+        local inRange = IsActionInRange(self.action)
+        local isUsable, notEnoughMana = IsUsableAction(self.action)
+        if inRange == false or (not isUsable and notEnoughMana) then
+            self.icon:SetVertexColor(0.5, 0.5, 0.5, 1)
+        else
+            self.icon:SetVertexColor(1, 1, 1, 1)
+        end
+    end
+end
+
+hooksecurefunc("ActionButton_OnUpdate", ActionbarsRangeCheck)
+
+
+
+
 local function StanceBarUpdate()
     SlidingActionBarTexture0:Hide()
     SlidingActionBarTexture1:Hide()
@@ -70,32 +87,21 @@ local function StanceBarUpdate()
 end
 
 local function PetActionbarUpdate()
-    PetActionBarFrame:Hide()
+    C_Timer.After(0.1, function()
+        PetActionBarFrame:ClearAllPoints()
+        PetActionBarFrame:SetPoint("TOPLEFT", MainMenuBar, "TOPLEFT", 0, 72)
+        PetActionBarFrame:SetScale(0.8)
+        PetActionBarFrame:SetAlpha(0.5)
+    end)
 end
 
 local function ClassActionbarUpdate()
     StanceBarUpdate()
     PetActionbarUpdate()
-    --C_Timer.After(0.2, PetActionbarUpdate)
 end
 
 local ClassActionbarEventFrame = CreateFrame("Frame")
 ClassActionbarEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 ClassActionbarEventFrame:RegisterEvent("PET_BAR_UPDATE")
+ClassActionbarEventFrame:RegisterEvent("UNIT_PET")
 ClassActionbarEventFrame:SetScript("OnEvent", ClassActionbarUpdate)
-
-
-
-
-function ActionbarsRangeCheck(self)
-    if self.action then
-        local inRange = IsActionInRange(self.action)
-        if inRange == false then
-            self.icon:SetVertexColor(0.5, 0.5, 0.5, 1)
-        else
-            self.icon:SetVertexColor(1, 1, 1, 1)
-        end
-    end
-end
-
-hooksecurefunc("ActionButton_OnUpdate", ActionbarsRangeCheck)
