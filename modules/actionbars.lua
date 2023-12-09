@@ -89,7 +89,7 @@ end
 local function PetActionbarUpdate()
     C_Timer.After(0.1, function()
         PetActionBarFrame:ClearAllPoints()
-        PetActionBarFrame:SetPoint("TOPLEFT", MainMenuBar, "TOPLEFT", 0, 72)
+        PetActionBarFrame:SetPoint("BOTTOM", MainMenuBar, "TOP", 32, 56)
         PetActionBarFrame:SetScale(0.8)
         PetActionBarFrame:SetAlpha(0.5)
     end)
