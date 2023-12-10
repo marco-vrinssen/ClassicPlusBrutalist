@@ -31,7 +31,6 @@ end
 
 
 
-
 local function NameplateThreatUpdate(nameplate, unitID)
     local unitFrame = nameplate.UnitFrame
     if not unitFrame or not unitFrame.healthBar then return end
@@ -41,14 +40,48 @@ local function NameplateThreatUpdate(nameplate, unitID)
         unitFrame.healthBar.originalColor = {r, g, b}
     end
 
+    local reaction = UnitReaction(unitID, "player")
     local threatStatus = UnitThreatSituation("player", unitID)
-    if threatStatus and threatStatus >= 2 then
+    local isTapDenied = UnitIsTapDenied(unitID)
+    local isEnemyPlayer = UnitIsPlayer(unitID) and UnitIsEnemy("player", unitID)
+
+    if isTapDenied then
+        -- Grey color for mobs tagged by other players
+        unitFrame.healthBar:SetStatusBarColor(0.5, 0.5, 0.5)
+        unitFrame.healthBar.backdrop:SetBackdropBorderColor(0.5, 0.5, 0.5)
+    elseif isEnemyPlayer then
+        if UnitCanAttack("player", unitID) then
+            -- Red color for attackable enemy players
+            unitFrame.healthBar:SetStatusBarColor(1, 0, 0)
+            unitFrame.healthBar.backdrop:SetBackdropBorderColor(1, 0, 0)
+        else
+            -- Yellow color for non-attackable enemy players
+            unitFrame.healthBar:SetStatusBarColor(1, 1, 0)
+            unitFrame.healthBar.backdrop:SetBackdropBorderColor(1, 1, 0)
+        end
+    elseif threatStatus and threatStatus >= 2 then
+        -- Threat color (e.g., when you have high threat towards the unit)
         unitFrame.healthBar:SetStatusBarColor(1, 0.5, 0)
         unitFrame.healthBar.backdrop:SetBackdropBorderColor(1, 0.5, 0)
+    elseif reaction then
+        if reaction >= 5 then
+            -- Friendly: Green
+            unitFrame.healthBar:SetStatusBarColor(0, 1, 0)
+            unitFrame.healthBar.backdrop:SetBackdropBorderColor(0, 1, 0)
+        elseif reaction == 4 then
+            -- Neutral: Yellow
+            unitFrame.healthBar:SetStatusBarColor(1, 1, 0)
+            unitFrame.healthBar.backdrop:SetBackdropBorderColor(1, 1, 0)
+        else
+            -- Hostile: Red
+            unitFrame.healthBar:SetStatusBarColor(1, 0, 0)
+            unitFrame.healthBar.backdrop:SetBackdropBorderColor(1, 0, 0)
+        end
     else
+        -- Default color (original color or any color you prefer)
         local origColor = unitFrame.healthBar.originalColor
         unitFrame.healthBar:SetStatusBarColor(unpack(origColor))
-        unitFrame.healthBar.backdrop:SetBackdropBorderColor(0.5, 0.5, 0.5) -- Grey color
+        unitFrame.healthBar.backdrop:SetBackdropBorderColor(unpack(origColor))
     end
 end
 

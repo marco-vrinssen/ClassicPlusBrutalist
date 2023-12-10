@@ -37,7 +37,7 @@ local function ChatUpdate()
     local function CustomizeChatFrame(chatFrame)
         chatFrame:ClearAllPoints()
         chatFrame:SetSize(320, 160)
-        chatFrame:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 24, 48)
+        chatFrame:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 32, 48)
         chatFrame:SetClampedToScreen(false)
 
         HideChatElements(chatFrame)

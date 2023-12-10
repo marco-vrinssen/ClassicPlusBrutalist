@@ -54,7 +54,7 @@ local function TargetFrameUpdate()
     TargetFrameHealthBar:SetSize(TargetFrameBackground:GetWidth(), 16)
     TargetFrameHealthBar:SetPoint("BOTTOM", TargetFrameManaBar, "TOP", 0, 0)
     TargetFrameHealthBar:SetStatusBarTexture("Interface/RaidFrame/Raid-Bar-HP-Fill.blp")
-
+    
     TargetFrameManaBar:ClearAllPoints()
     TargetFrameManaBar:SetSize(TargetFrameBackground:GetWidth(), 8)
     TargetFrameManaBar:SetPoint("BOTTOM", TargetFrameBackdrop, "BOTTOM", 0, 2)
