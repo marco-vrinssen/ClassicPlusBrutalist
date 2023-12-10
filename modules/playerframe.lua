@@ -49,6 +49,9 @@ local function PlayerFrameUpdate()
     PlayerFrameGroupIndicator:Hide()
     PlayerFrameGroupIndicator.Show = PlayerFrameGroupIndicator.Hide
 
+    PlayerPVPTimerText:ClearAllPoints()
+    PlayerPVPTimerText:SetPoint("BOTTOM", PlayerLeaderIcon, "TOP", 0, 0)
+
     PlayerName:ClearAllPoints()
     PlayerName:SetPoint("TOP", PlayerFrameBackdrop, "TOP", 0, -6)
     PlayerName:SetFont(STANDARD_TEXT_FONT, 10)
