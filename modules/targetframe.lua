@@ -72,7 +72,7 @@ local function TargetFrameUpdate()
 
     if UnitLevel("target") > 60 then
         TargetFrameTextureFrameLevelText:SetText("???")
-        TargetFrameTextureFrameLevelText:SetTextColor(1, 0.5, 0)  -- RGB for orange
+        TargetFrameTextureFrameLevelText:SetTextColor(1, 0.5, 0)
     end
 end
 
