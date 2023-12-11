@@ -104,6 +104,8 @@ PlayerFrameEventFrame:RegisterEvent("PLAYER_LOGIN")
 PlayerFrameEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 PlayerFrameEventFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
 PlayerFrameEventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+PlayerFrameEventFrame:RegisterEvent("UNIT_POWER_UPDATE")
+PlayerFrameEventFrame:RegisterEvent("UNIT_DISPLAYPOWER")
 PlayerFrameEventFrame:SetScript("OnEvent", PlayerFrameUpdate)
 
 
