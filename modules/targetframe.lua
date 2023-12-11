@@ -71,7 +71,8 @@ local function TargetFrameUpdate()
     TargetFrameTextureFrameHighLevelTexture.Show = TargetFrameTextureFrameHighLevelTexture.Hide
 
     if UnitLevel("target") > 60 then
-        TargetFrameTextureFrameLevelText:Hide()
+        TargetFrameTextureFrameLevelText:SetText("???")
+        TargetFrameTextureFrameLevelText:SetTextColor(1, 0.5, 0)  -- RGB for orange
     end
 end
 
