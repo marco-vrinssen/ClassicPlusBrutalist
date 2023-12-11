@@ -56,8 +56,8 @@ local function TargetFrameUpdate()
     TargetFrameHealthBar:SetStatusBarTexture("Interface/RaidFrame/Raid-Bar-HP-Fill.blp")
     
     TargetFrameManaBar:ClearAllPoints()
-    TargetFrameManaBar:SetSize(TargetFrameBackground:GetWidth(), 8)
-    TargetFrameManaBar:SetPoint("BOTTOM", TargetFrameBackdrop, "BOTTOM", 0, 2)
+    TargetFrameManaBar:SetSize(TargetFrameBackground:GetWidth()-2, 8)
+    TargetFrameManaBar:SetPoint("BOTTOM", TargetFrameBackdrop, "BOTTOM", 0, 4)
     TargetFrameManaBar:SetStatusBarTexture("Interface/RaidFrame/Raid-Bar-HP-Fill.blp")
 
     TargetFramePortrait:ClearAllPoints()
@@ -144,21 +144,6 @@ local ToTFrameEventFrame = CreateFrame("Frame")
 ToTFrameEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 ToTFrameEventFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
 ToTFrameEventFrame:SetScript("OnEvent", ToTFrameUpdate)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -254,22 +239,6 @@ TargetFrameAuraEventFrame:SetScript("OnEvent", TargetFrameAuraUpdate)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 local TargetFrameSpellbarBackdrop = CreateFrame("Frame", nil, TargetFrameSpellBar, "BackdropTemplate")
 TargetFrameSpellbarBackdrop:SetPoint("TOPLEFT", TargetFrameBackdrop, "BOTTOMLEFT", 0, -2)
 TargetFrameSpellbarBackdrop:SetPoint("TOPRIGHT", TargetFrameBackdrop, "BOTTOMRIGHT", 0, -2)
@@ -280,8 +249,8 @@ TargetFrameSpellbarBackdrop:SetFrameStrata("HIGH")
 
 local function TargetFrameSpellbarUpdate()
     TargetFrameSpellBar:ClearAllPoints()
-    TargetFrameSpellBar:SetPoint("TOPLEFT", TargetFrameSpellbarBackdrop, "TOPLEFT", 2, -4)
-    TargetFrameSpellBar:SetPoint("BOTTOMRIGHT", TargetFrameSpellbarBackdrop, "BOTTOMRIGHT", -2, 4)
+    TargetFrameSpellBar:SetPoint("TOPLEFT", TargetFrameSpellbarBackdrop, "TOPLEFT", 2, -2)
+    TargetFrameSpellBar:SetPoint("BOTTOMRIGHT", TargetFrameSpellbarBackdrop, "BOTTOMRIGHT", -2, 2)
     TargetFrameSpellBar:SetStatusBarTexture("Interface/RaidFrame/Raid-Bar-HP-Fill.blp")
 
     TargetFrameSpellBar.Border:SetTexture(nil)

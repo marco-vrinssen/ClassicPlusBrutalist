@@ -53,7 +53,7 @@ local function PlayerFrameUpdate()
     PlayerPVPTimerText:SetPoint("BOTTOM", PlayerLeaderIcon, "TOP", 0, 0)
 
     PlayerName:ClearAllPoints()
-    PlayerName:SetPoint("TOP", PlayerFrameBackdrop, "TOP", 0, -6)
+    PlayerName:SetPoint("TOP", PlayerFrameBackdrop, "TOP", 0, -5)
     PlayerName:SetFont(STANDARD_TEXT_FONT, 10)
     PlayerName:SetTextColor(1, 1, 1, 1)
 
@@ -63,8 +63,8 @@ local function PlayerFrameUpdate()
     PlayerFrameHealthBar:SetStatusBarTexture("Interface/RaidFrame/Raid-Bar-HP-Fill.blp")
 
     PlayerFrameManaBar:ClearAllPoints()
-    PlayerFrameManaBar:SetPoint("BOTTOM", PlayerFrameBackdrop, "BOTTOM", 0, 2)
-    PlayerFrameManaBar:SetSize(PlayerFrameBackground:GetWidth(), 8)
+    PlayerFrameManaBar:SetPoint("BOTTOM", PlayerFrameBackdrop, "BOTTOM", 0, 4)
+    PlayerFrameManaBar:SetSize(PlayerFrameBackground:GetWidth()-2, 8)
     PlayerFrameManaBar:SetStatusBarTexture("Interface/RaidFrame/Raid-Bar-HP-Fill.blp")
 
     PlayerFrameHealthBarText:SetPoint("CENTER", PlayerFrameHealthBar, "CENTER", 0, 0)

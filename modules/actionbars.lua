@@ -87,8 +87,10 @@ local function StanceBarUpdate()
 end
 
 local function PetActionbarUpdate()
-    C_Timer.After(0.1, function()
+    C_Timer.After(0.2, function()
         PetActionBarFrame:ClearAllPoints()
+        PetActionBarFrame:SetMovable(true)
+        PetActionBarFrame:SetUserPlaced(true)
         PetActionBarFrame:SetPoint("BOTTOM", MainMenuBar, "TOP", 32, 56)
         PetActionBarFrame:SetScale(0.8)
         PetActionBarFrame:SetAlpha(0.5)
