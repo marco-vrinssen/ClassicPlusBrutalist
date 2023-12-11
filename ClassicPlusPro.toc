@@ -11,7 +11,6 @@ modules/castbar.lua
 modules/characterstats.lua
 modules/chat.lua
 modules/commands.lua
-modules/config.lua
 modules/healthcheck.lua
 modules/items.lua
 modules/micromenu.lua
@@ -20,5 +19,6 @@ modules/nameplates.lua
 modules/playerframe.lua
 modules/questiesupport.lua
 modules/resourcedisplay.lua
+modules/system.lua
 modules/targetframe.lua
 modules/tooltips.lua
