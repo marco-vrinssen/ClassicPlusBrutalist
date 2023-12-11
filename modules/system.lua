@@ -6,16 +6,7 @@ local function ConfigUpdate()
     SetCVar("ffxGlow", 0)
 end
 
-local ConfigEventFrame = CreateFrame("Frame")
-ConfigEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-ConfigEventFrame:SetScript("OnEvent", ConfigUpdate)
-
-
-
-
-
 local function SoundUpdate()
-    SetCVar("Sound_OutputDriverIndex", "0")
     MuteSoundFile(555124) -- Mechastrider Loop
     MuteSoundFile(567677) -- Bow Pullback 1
     MuteSoundFile(567675) -- Bow Pullback 2
@@ -27,7 +18,9 @@ local function SoundUpdate()
     MuteSoundFile(567523) -- Keyring Close
 end
 
-local SoundEventFrame = CreateFrame("Frame", "DefaultSoundDeviceFrame", UIParent)
-SoundEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-SoundEventFrame:RegisterEvent("SOUND_DEVICE_UPDATE")
-SoundEventFrame:SetScript("OnEvent", SoundUpdate)
+local ConfigEventFrame = CreateFrame("Frame")
+ConfigEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+ConfigEventFrame:SetScript("OnEvent", function()
+    ConfigUpdate()
+    SoundUpdate()
+end)
