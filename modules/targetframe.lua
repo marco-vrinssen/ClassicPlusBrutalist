@@ -71,7 +71,7 @@ local function TargetFrameUpdate()
     TargetFrameTextureFrameHighLevelTexture.Show = TargetFrameTextureFrameHighLevelTexture.Hide
 
     if UnitLevel("target") > 60 then
-        TargetFrameTextureFrameLevelText:SetText("High Level")
+        TargetFrameTextureFrameLevelText:SetText("High")
         TargetFrameTextureFrameLevelText:SetTextColor(1, 0.5, 0)
     end
 end
