@@ -45,14 +45,21 @@ local function ActionbarUpdate()
     ReputationWatchBar:ClearAllPoints()
     ReputationWatchBar:UnregisterAllEvents()
     ReputationWatchBar:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMRIGHT", 10000, 0)
-
-    MainMenuBarVehicleLeaveButton:Hide()
-    MainMenuBarVehicleLeaveButton.Show = MainMenuBarVehicleLeaveButton.Hide
 end
 
 local ActionbarsEventFrame = CreateFrame("Frame")
 ActionbarsEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 ActionbarsEventFrame:SetScript("OnEvent", ActionbarUpdate)
+
+
+
+
+local function RepositionVehicleLeaveButton()
+    MainMenuBarVehicleLeaveButton:ClearAllPoints()
+    MainMenuBarVehicleLeaveButton:SetPoint("CENTER", UIParent, "CENTER", 0, -160)
+end
+
+MainMenuBarVehicleLeaveButton:HookScript("OnShow", RepositionVehicleLeaveButton)
 
 
 
@@ -69,6 +76,7 @@ function ActionbarsRangeCheck(self)
     end
 end
 
+hooksecurefunc("ActionButton_Update", ActionbarsRangeCheck)
 hooksecurefunc("ActionButton_OnUpdate", ActionbarsRangeCheck)
 
 
