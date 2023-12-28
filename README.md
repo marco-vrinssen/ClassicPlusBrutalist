@@ -12,9 +12,6 @@ The general intention for this addon is to avoid having to download a whole cata
 - Gives the overall user interface a more simple, streamlined look and feel, while maintaining the integrity of the game's overall art direction by using only native game textures and components.
 - Adds simple but effective quality of life features with minimal processing requirements.
 
-#### Font Change
-- Moving the "fonts" folder to the "classic_" directory changes the overall in-game font.
-
 #### Actionbars
 - Textures have been removed.
 - Default action bars are now centered at the bottom of the screen. 

@@ -7,9 +7,9 @@
 actionbars.lua
 bags.lua
 castbar.lua
-characterstats.lua
 chat.lua
 commands.lua
+experience.lua
 healthcheck.lua
 items.lua
 micromenu.lua

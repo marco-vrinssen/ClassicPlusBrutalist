@@ -82,36 +82,21 @@ hooksecurefunc("ActionButton_OnUpdate", ActionbarsRangeCheck)
 
 
 
-local function StanceBarUpdate()
+local function ClassActionsBarsUpdate()
     SlidingActionBarTexture0:Hide()
     SlidingActionBarTexture1:Hide()
 
-    StanceBarFrame:ClearAllPoints()
-    StanceBarFrame:SetPoint("TOPLEFT", MainMenuBar, "TOPLEFT", 0, 72)
-    StanceBarFrame:SetScale(0.8)
+    StanceBarFrame:Hide()
+    StanceBarFrame.Show = StanceBarFrame.Hide
 
     PossessBarFrame:Hide()
     PossessBarFrame.Show = PossessBarFrame.Hide
-end
 
-local function PetActionbarUpdate()
-    C_Timer.After(0.2, function()
-        PetActionBarFrame:ClearAllPoints()
-        PetActionBarFrame:SetMovable(true)
-        PetActionBarFrame:SetUserPlaced(true)
-        PetActionBarFrame:SetPoint("BOTTOM", MainMenuBar, "TOP", 32, 56)
-        PetActionBarFrame:SetScale(0.8)
-        PetActionBarFrame:SetAlpha(0.5)
-    end)
-end
-
-local function ClassActionbarUpdate()
-    StanceBarUpdate()
-    PetActionbarUpdate()
+    PetActionBarFrame:Hide()
+    PetActionBarFrame.Show = PetActionBarFrame.Hide
 end
 
 local ClassActionbarEventFrame = CreateFrame("Frame")
 ClassActionbarEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 ClassActionbarEventFrame:RegisterEvent("PET_BAR_UPDATE")
-ClassActionbarEventFrame:RegisterEvent("UNIT_PET")
-ClassActionbarEventFrame:SetScript("OnEvent", ClassActionbarUpdate)
+ClassActionbarEventFrame:SetScript("OnEvent", ClassActionsBarsUpdate)

@@ -17,8 +17,9 @@ local commandMessages = {
     "/post MESSAGE: Broadcasts MESSAGE in all joined and active chat channels.",
     "/spam MESSAGE: Sends MESSAGE to all players currently visible in the active /who list.",
     "/filter KEYWORD: Scans all active chats for a specified KEYWORD and shares matching messages in the main chat tab.",
+    "/filter clear: Clears the chat filtering",
     "/recruit MESSAGE: Delivers MESSAGE and a guild invitation to unaffiliated players listed in the active /who list.",
-    "/leave: Enables quick exit from the current party or raid."
+    "/q: Enables quick exit from the current party or raid."
 }
 
 SLASH_PROCMD1 = "/procmd"
