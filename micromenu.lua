@@ -1,6 +1,7 @@
 local function MicroMenuButtonUpdate()
     CharacterMicroButton:Hide()
     TalentMicroButton:Hide()
+    TalentMicroButton.Show = TalentMicroButton.Hide
     SpellbookMicroButton:Hide()
     QuestLogMicroButton:Hide()
     WorldMapMicroButton:Hide()
