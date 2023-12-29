@@ -62,7 +62,7 @@ ResourceDisplayEventFrame:SetScript("OnEvent", function(self, event, arg1)
     if event == "PLAYER_REGEN_DISABLED" then
         ResourceDisplayToggle(true)
     elseif event == "PLAYER_REGEN_ENABLED" then
-        ResourceDisplayToggle(false)  -- Hide immediately when exiting combat
+        ResourceDisplayToggle(false)
     elseif event == "UNIT_POWER_UPDATE" and arg1 == "player" then
         ResourceDisplayUpdate()
     elseif event == "UNIT_HEALTH" and arg1 == "player" then
@@ -81,34 +81,33 @@ if playerClass ~= "ROGUE" and playerClass ~= "DRUID" then
 end
 
 local comboPointDisplay = CreateFrame("Frame", "ComboPointDisplay", UIParent)
-comboPointDisplay:SetSize(24, 24)  -- Adjust size as needed
+comboPointDisplay:SetSize(24, 24)
 if ResourceDisplayBackdrop then
-    comboPointDisplay:SetPoint("TOP", ResourceDisplayBackdrop, "BOTTOM", 0, -8)  -- Adjust position as needed
+    comboPointDisplay:SetPoint("TOP", ResourceDisplayBackdrop, "BOTTOM", 0, -8)
 else
-    comboPointDisplay:SetPoint("CENTER", UIParent, "CENTER", 0, 0)  -- Fallback position
+    comboPointDisplay:SetPoint("CENTER", UIParent, "CENTER", 0, 0)
 end
 
 comboPointDisplay.fontString = comboPointDisplay:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
 comboPointDisplay.fontString:SetPoint("CENTER")
 comboPointDisplay.fontString:SetText("")
 
--- Set font, size, and outline for the fontString
-local fontPath = STANDARD_TEXT_FONT  -- Default font path, you can replace it with another if you like
-local fontSize = 24  -- Adjust font size as needed
-local fontOutline = "OUTLINE"  -- You can use "OUTLINE", "THICKOUTLINE", or "" for no outline
+
+local fontPath = STANDARD_TEXT_FONT
+local fontSize = 24
+local fontOutline = "OUTLINE"
 comboPointDisplay.fontString:SetFont(fontPath, fontSize, fontOutline)
 
 local function UpdateComboPoints()
     local comboPoints = GetComboPoints("player", "target") or 0
     if comboPoints > 0 then
         comboPointDisplay.fontString:SetText(comboPoints)
-        comboPointDisplay.fontString:SetTextColor(1, 0, 0, 1)  -- Active color
+        comboPointDisplay.fontString:SetTextColor(1, 0, 0, 1)
         comboPointDisplay:Show()
     else
         comboPointDisplay:Hide()
     end
 
-    -- Hide default combo points
     ComboFrame:UnregisterAllEvents()
     ComboFrame:Hide()
 end
@@ -125,5 +124,4 @@ ComboPointDisplayEventFrame:SetScript("OnEvent", function(self, event, ...)
     end
 end)
 
--- Initialize display
 UpdateComboPoints()

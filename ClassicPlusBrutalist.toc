@@ -9,7 +9,6 @@ bags.lua
 castbar.lua
 chat.lua
 commands.lua
-experience.lua
 healthcheck.lua
 items.lua
 micromenu.lua
@@ -21,3 +20,4 @@ resourcedisplay.lua
 system.lua
 targetframe.lua
 tooltips.lua
+xp.lua
