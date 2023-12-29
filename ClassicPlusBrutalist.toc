@@ -9,7 +9,6 @@ bags.lua
 castbar.lua
 chat.lua
 commands.lua
-healthcheck.lua
 items.lua
 micromenu.lua
 minimap.lua

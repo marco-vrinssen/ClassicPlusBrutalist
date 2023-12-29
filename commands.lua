@@ -12,26 +12,6 @@ CommandEventFrame:SetScript("OnEvent", CommandInfo)
 
 
 
-local commandMessages = {
-    "/healthcheck: To toggle the health check reminder for the current session.",
-    "/post MESSAGE: Broadcasts MESSAGE in all joined and active chat channels.",
-    "/spam MESSAGE: Sends MESSAGE to all players currently visible in the active /who list.",
-    "/filter KEYWORD: Scans all active chats for a specified KEYWORD and shares matching messages in the main chat tab.",
-    "/filter clear: Clears the chat filtering",
-    "/recruit MESSAGE: Delivers MESSAGE and a guild invitation to unaffiliated players listed in the active /who list.",
-    "/q: Enables quick exit from the current party or raid."
-}
-
-SLASH_PROCMD1 = "/procmd"
-SlashCmdList["PROCMD"] = function()
-    for _, message in ipairs(commandMessages) do
-        DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFFFF" .. message .. "|r") -- Your original style
-    end
-end
-
-
-
-
 local FilterKeywords = {}
 SlashCmdList["FILTER"] = function(msg)
     if msg == "" then
