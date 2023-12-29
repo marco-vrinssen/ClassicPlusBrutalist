@@ -85,9 +85,12 @@ hooksecurefunc("ActionButton_OnUpdate", ActionbarsRangeCheck)
 local function ClassActionsBarsUpdate()
     SlidingActionBarTexture0:Hide()
     SlidingActionBarTexture1:Hide()
-
-    StanceBarFrame:Hide()
-    StanceBarFrame.Show = StanceBarFrame.Hide
+    
+    StanceBarFrame:ClearAllPoints()
+    StanceBarFrame:SetMovable(true)
+    StanceBarFrame:SetUserPlaced(true)
+    StanceBarFrame:SetPoint("BOTTOMLEFT", MainMenuBar, "TOPLEFT", 0, 40)
+    StanceBarFrame:SetScale(0.8)
 
     PossessBarFrame:Hide()
     PossessBarFrame.Show = PossessBarFrame.Hide

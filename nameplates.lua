@@ -88,7 +88,6 @@ end
 
 
 
-
 local function NameplateDebuffsUpdate(nameplate, unitID)
     local MAX_DEBUFFS = 12
 
@@ -101,9 +100,9 @@ local function NameplateDebuffsUpdate(nameplate, unitID)
     local activeDebuffs = {}
 
     for i = 1, 40 do
-        local name, icon, _, _, duration, expirationTime, caster = UnitDebuff(unitID, i)
+        local name, icon, count, _, duration, expirationTime, caster = UnitDebuff(unitID, i)
         if name and icon and caster == "player" then
-            table.insert(activeDebuffs, {name, icon, duration, expirationTime})
+            table.insert(activeDebuffs, {name, icon, count, duration, expirationTime})
         end
     end
 
@@ -116,15 +115,23 @@ local function NameplateDebuffsUpdate(nameplate, unitID)
             debuffFrame.texture:SetAllPoints(debuffFrame)
             debuffFrame.cooldown = CreateFrame("Cooldown", nil, debuffFrame, "CooldownFrameTemplate")
             debuffFrame.cooldown:SetAllPoints(debuffFrame)
+            debuffFrame.stackText = debuffFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+            debuffFrame.stackText:SetPoint("BOTTOM", debuffFrame, "TOP", 0, 4)
+            debuffFrame.stackText:SetTextColor(1, 1, 1)
             nameplate.debuffIcons[i] = debuffFrame
             debuffFrame.cooldown:SetDrawSwipe(false)
         end
 
         local debuff = activeDebuffs[i]
         if debuff then
-            local name, icon, duration, expirationTime = unpack(debuff)
+            local name, icon, count, duration, expirationTime = unpack(debuff)
             debuffFrame.texture:SetTexture(icon)
             debuffFrame.cooldown:SetCooldown(expirationTime - duration, duration)
+            if count and count > 1 then
+                debuffFrame.stackText:SetText(count)
+            else
+                debuffFrame.stackText:SetText("")
+            end
             debuffFrame:Show()
         else
             debuffFrame:Hide()
@@ -141,6 +148,7 @@ local function NameplateDebuffsUpdate(nameplate, unitID)
         end
     end
 end
+
 
 
 
