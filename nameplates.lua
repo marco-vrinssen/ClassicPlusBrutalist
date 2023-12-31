@@ -111,15 +111,20 @@ local function NameplateDebuffsUpdate(nameplate, unitID)
         if not debuffFrame then
             debuffFrame = CreateFrame("Frame", nil, nameplate)
             debuffFrame:SetSize(28, 28)
+
             debuffFrame.texture = debuffFrame:CreateTexture(nil, "BORDER")
             debuffFrame.texture:SetAllPoints(debuffFrame)
+
             debuffFrame.cooldown = CreateFrame("Cooldown", nil, debuffFrame, "CooldownFrameTemplate")
             debuffFrame.cooldown:SetAllPoints(debuffFrame)
+            debuffFrame.cooldown:SetDrawSwipe(false)
+
             debuffFrame.stackText = debuffFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
             debuffFrame.stackText:SetPoint("BOTTOM", debuffFrame, "TOP", 0, 4)
             debuffFrame.stackText:SetTextColor(1, 1, 1)
+            debuffFrame.stackText:SetFont("GameFontNormal", 12, "OUTLINE")
+            
             nameplate.debuffIcons[i] = debuffFrame
-            debuffFrame.cooldown:SetDrawSwipe(false)
         end
 
         local debuff = activeDebuffs[i]

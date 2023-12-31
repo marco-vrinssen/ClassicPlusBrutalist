@@ -250,8 +250,8 @@ TargetFrameSpellbarBackdrop:SetFrameStrata("HIGH")
 
 local function TargetFrameSpellbarUpdate()
     TargetFrameSpellBar:ClearAllPoints()
-    TargetFrameSpellBar:SetPoint("TOPLEFT", TargetFrameSpellbarBackdrop, "TOPLEFT", 2, -2)
-    TargetFrameSpellBar:SetPoint("BOTTOMRIGHT", TargetFrameSpellbarBackdrop, "BOTTOMRIGHT", -2, 2)
+    TargetFrameSpellBar:SetPoint("TOPLEFT", TargetFrameSpellbarBackdrop, "TOPLEFT", 3, -2)
+    TargetFrameSpellBar:SetPoint("BOTTOMRIGHT", TargetFrameSpellbarBackdrop, "BOTTOMRIGHT", -3, 2)
     TargetFrameSpellBar:SetStatusBarTexture("Interface/RaidFrame/Raid-Bar-HP-Fill.blp")
 
     TargetFrameSpellBar.Border:SetTexture(nil)

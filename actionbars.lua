@@ -67,17 +67,23 @@ MainMenuBarVehicleLeaveButton:HookScript("OnShow", RepositionVehicleLeaveButton)
 function ActionbarsRangeCheck(self)
     if self.action then
         local inRange = IsActionInRange(self.action)
-        local isUsable, notEnoughMana = IsUsableAction(self.action)
-        if inRange == false or (not isUsable and notEnoughMana) then
+        local isUsable = IsUsableAction(self.action)
+        
+        -- Set colors based on usability and range
+        if not isUsable then
+            -- Ability is not usable (gray color)
             self.icon:SetVertexColor(0.5, 0.5, 0.5, 1)
+        elseif inRange == false then
+            -- Ability is usable but out of range (red color)
+            self.icon:SetVertexColor(1, 0.5, 0.5, 1)
         else
+            -- Ability is usable and in range (normal color)
             self.icon:SetVertexColor(1, 1, 1, 1)
         end
     end
 end
 
 hooksecurefunc("ActionButton_Update", ActionbarsRangeCheck)
-hooksecurefunc("ActionButton_OnUpdate", ActionbarsRangeCheck)
 
 
 
