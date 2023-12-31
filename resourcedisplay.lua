@@ -94,7 +94,7 @@ comboPointDisplay.fontString:SetText("")
 
 
 local fontPath = STANDARD_TEXT_FONT
-local fontSize = 24
+local fontSize = 32
 local fontOutline = "OUTLINE"
 comboPointDisplay.fontString:SetFont(fontPath, fontSize, fontOutline)
 
