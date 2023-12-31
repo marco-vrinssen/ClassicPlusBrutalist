@@ -80,6 +80,7 @@ function ActionbarsRangeCheck(self)
 end
 
 hooksecurefunc("ActionButton_Update", ActionbarsRangeCheck)
+hooksecurefunc("ActionButton_OnUpdate", ActionbarsRangeCheck)
 
 
 

@@ -1,17 +1,3 @@
-local function CommandInfo()
-    DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFFFF Classic+ Pro loaded.|r")
-    DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFFFF Type /procmd for chat commands.|r") 
-    DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFFFF Press B to open all Bags.|r") 
-    DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFFFF Autolooting enabled.|r")
-end
-
-local CommandEventFrame = CreateFrame("Frame")
-CommandEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-CommandEventFrame:SetScript("OnEvent", CommandInfo)
-
-
-
-
 local FilterKeywords = {}
 SlashCmdList["FILTER"] = function(msg)
     if msg == "" then
