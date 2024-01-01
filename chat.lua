@@ -1,12 +1,9 @@
-local function ScrollToBottom(chatFrame)
-    if not chatFrame then return end
-    chatFrame:ScrollToBottom()
-end
-
 local function HookChatTab(tab)
     if not tab then return end
     tab:HookScript("OnClick", function() 
-        ScrollToBottom(SELECTED_DOCK_FRAME) 
+        if SELECTED_DOCK_FRAME then 
+            SELECTED_DOCK_FRAME:ScrollToBottom() 
+        end
     end)
 end
 
@@ -16,7 +13,7 @@ end
 local function ChatUpdate()
     local elementsToHide = {"ButtonFrame", "EditBoxLeft", "EditBoxMid", "EditBoxRight"}
 
-    local function HideChatElements(frame)
+    local function ChatElementUpdate(frame)
         for _, element in ipairs(elementsToHide) do
             local chatElement = _G[frame:GetName() .. element]
             if chatElement then
@@ -25,7 +22,7 @@ local function ChatUpdate()
         end
     end
 
-    local function HideChatTextures(frame)
+    local function ChatTextureUpdate(frame)
         for i = 1, frame:GetNumRegions() do
             local region = select(i, frame:GetRegions())
             if region:IsObjectType("Texture") then
@@ -34,20 +31,20 @@ local function ChatUpdate()
         end
     end
 
-    local function CustomizeChatFrame(chatFrame)
+    local function ChatFrameUpdate(chatFrame)
         chatFrame:ClearAllPoints()
         chatFrame:SetSize(320, 160)
         chatFrame:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 32, 48)
         chatFrame:SetClampedToScreen(false)
 
-        HideChatElements(chatFrame)
-        HideChatTextures(chatFrame)
+        ChatElementUpdate(chatFrame)
+        ChatTextureUpdate(chatFrame)
 
         ChatFrameMenuButton:Hide()
         ChatFrameChannelButton:Hide()
 
         local tab = _G[chatFrame:GetName() .. "Tab"]
-        HideChatTextures(tab)
+        ChatTextureUpdate(tab)
         local tabFontString = tab:GetFontString()
         if tabFontString then
             tabFontString:SetFont(STANDARD_TEXT_FONT, 14)
@@ -56,17 +53,16 @@ local function ChatUpdate()
 
     for i = 1, NUM_CHAT_WINDOWS do
         local chatFrame = _G["ChatFrame" .. i]
-        CustomizeChatFrame(chatFrame)
+        ChatFrameUpdate(chatFrame)
         HookChatTab(_G["ChatFrame" .. i .. "Tab"])
     end
 
     hooksecurefunc("FCF_OpenTemporaryWindow", function(chatType)
         if chatType ~= "WHISPER" and chatType ~= "BN_WHISPER" then return end
         local chatFrame = FCF_GetCurrentChatFrame()
-        CustomizeChatFrame(chatFrame)
+        ChatFrameUpdate(chatFrame)
         HookChatTab(_G[chatFrame:GetName() .. "Tab"])
     end)
-
 end
 
 local ChatEventFrame = CreateFrame("Frame")
