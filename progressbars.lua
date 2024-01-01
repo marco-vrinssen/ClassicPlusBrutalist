@@ -7,12 +7,12 @@ XPBarBackdrop:SetFrameStrata(HIGH)
 
 local function XPBarUpdate()
     if UnitLevel("player") == 60 then
-        MainMenuExpBar:Hide()  -- Hides the XP bar
-        XPBarBackdrop:Hide()   -- Hides the backdrop of the XP bar
-        return                 -- Exit the function early
+        MainMenuExpBar:Hide()
+        XPBarBackdrop:Hide()
+        return          
     else
-        MainMenuExpBar:Show()  -- Shows the XP bar
-        XPBarBackdrop:Show()   -- Shows the backdrop of the XP bar
+        MainMenuExpBar:Show()
+        XPBarBackdrop:Show()
     end
 
     MainMenuExpBar:ClearAllPoints()
