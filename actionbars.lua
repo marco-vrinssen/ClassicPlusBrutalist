@@ -35,16 +35,6 @@ local function ActionbarUpdate()
 
     MainMenuBarPerformanceBarFrame:Hide()
     MainMenuBarPerformanceBarFrameButton:Hide()
-
-    MainMenuExpBar:Hide()
-    MainMenuExpBar:UnregisterAllEvents()
-    MainMenuExpBar:ClearAllPoints()
-    MainMenuExpBar:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMRIGHT", 10000, 0)
-
-    ReputationWatchBar:Hide()
-    ReputationWatchBar:ClearAllPoints()
-    ReputationWatchBar:UnregisterAllEvents()
-    ReputationWatchBar:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMRIGHT", 10000, 0)
 end
 
 local ActionbarsEventFrame = CreateFrame("Frame")
@@ -72,7 +62,7 @@ function ActionbarsRangeCheck(self)
         if not isUsable then
             self.icon:SetVertexColor(0.5, 0.5, 0.5, 1)
         elseif inRange == false then
-            self.icon:SetVertexColor(1, 0.5, 0.5, 1)
+            self.icon:SetVertexColor(0.5, 0.5, 0.5, 1)
         else
             self.icon:SetVertexColor(1, 1, 1, 1)
         end
@@ -90,10 +80,7 @@ local function ClassActionsBarsUpdate()
     SlidingActionBarTexture1:Hide()
     
     StanceBarFrame:ClearAllPoints()
-    StanceBarFrame:SetMovable(true)
-    StanceBarFrame:SetUserPlaced(true)
-    StanceBarFrame:SetPoint("BOTTOMLEFT", MainMenuBar, "TOPLEFT", 0, 40)
-    StanceBarFrame:SetScale(0.8)
+    StanceBarFrame:SetAlpha(0)
 
     PossessBarFrame:Hide()
     PossessBarFrame.Show = PossessBarFrame.Hide

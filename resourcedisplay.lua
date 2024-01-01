@@ -20,9 +20,9 @@ ResourcePowerbar:SetFrameStrata("LOW")
 local function ResourceDisplayToggle(isVisible)
     local alpha = isVisible and 1 or 0
     if isVisible then
-        UIFrameFadeIn(ResourceDisplayBackdrop, 0.2, ResourceDisplayBackdrop:GetAlpha(), alpha)
+        UIFrameFadeIn(ResourceDisplayBackdrop, 0.25, ResourceDisplayBackdrop:GetAlpha(), alpha)
     else
-        UIFrameFadeOut(ResourceDisplayBackdrop, 4, ResourceDisplayBackdrop:GetAlpha(), alpha)
+        UIFrameFadeOut(ResourceDisplayBackdrop, 0.25, ResourceDisplayBackdrop:GetAlpha(), alpha)
     end
 end
 

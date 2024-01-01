@@ -149,6 +149,16 @@ ToTFrameEventFrame:SetScript("OnEvent", ToTFrameUpdate)
 
 
 
+
+
+
+
+
+
+
+
+
+
 local TargetDebuffContainer = CreateFrame("Frame", "MyDebuffFrame", UIParent)
 TargetDebuffContainer:SetSize(40, 40)
 TargetDebuffContainer:SetPoint("BOTTOMLEFT", TargetFrameBackdrop, "TOPLEFT", 0, 52)
@@ -161,47 +171,67 @@ local function TargetDebuffUpdate(index, debuff)
         icon:SetSize(32, 32)
         icon.texture = icon:CreateTexture(nil, "BACKGROUND")
         icon.texture:SetAllPoints(icon)
+
         icon.cooldown = CreateFrame("Cooldown", nil, icon, "CooldownFrameTemplate")
         icon.cooldown:SetAllPoints(icon)
         icon.cooldown:SetDrawSwipe(false)
+
+        icon.stackText = icon:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+        icon.stackText:SetPoint("BOTTOMRIGHT", icon, "BOTTOMRIGHT", -2, 2)
+        icon.stackText:SetFont("GameFontNormal", 12, "OUTLINE")
+
         TargetDebuffContainer["debuff" .. index] = icon
     end
 
     icon.texture:SetTexture(debuff.icon)
     icon:SetPoint("LEFT", TargetDebuffContainer, "LEFT", (index - 1) * 36, 0)
     icon.cooldown:SetCooldown(debuff.expirationTime - debuff.duration, debuff.duration)
+
+    if debuff.count and debuff.count > 0 then
+        icon.stackText:SetText(debuff.count)
+    else
+        icon.stackText:SetText("")  -- Clear text if no stacks
+    end
+    
     icon:Show()
 end
 
 local function TargetFrameAuraUpdate()
     local MAX_BUFFS = 32
     local MAX_DEBUFFS = 32
+    local MAX_AURAS_PER_ROW = 6
+    local AURA_SIZE = 24  -- Size of each aura icon (width and height)
+    local AURA_PADDING = 0  -- Space between each aura icon
 
+    -- Position Buffs
     for i = 1, MAX_BUFFS do
         local buff = _G["TargetFrameBuff"..i]
         if buff then
+            local row = math.floor((i - 1) / MAX_AURAS_PER_ROW)
+            local col = (i - 1) % MAX_AURAS_PER_ROW
             buff:ClearAllPoints()
-            buff:SetPoint("BOTTOMLEFT", TargetFrameBackdrop, "TOPLEFT", (i - 1) * 24, 4) -- Using direct values for offset
+            buff:SetPoint("BOTTOMLEFT", TargetFrameBackdrop, "TOPLEFT", col * (AURA_SIZE + AURA_PADDING), row * (AURA_SIZE + AURA_PADDING))
         end
     end
 
+    -- Position Debuffs
     local visibleDebuffCount = 0
-
     for i = 1, MAX_DEBUFFS do
-
         local name, icon, _, _, _, _, caster = UnitDebuff("target", i)
         local debuffFrame = _G["TargetFrameDebuff"..i]
 
         if debuffFrame then
-            local debuffTexture = debuffFrame:GetRegions() -- Assuming the texture is the first region of the frame
+            local debuffTexture = debuffFrame:GetRegions()
             if debuffTexture and debuffTexture.SetTexture then
                 if name and caster == "player" then
                     debuffFrame:Hide()
                 else
-                    if name then  -- Make sure there is a debuff to show
-                        debuffTexture:SetTexture(icon)  -- Set the correct texture
+                    if name then
+                        debuffTexture:SetTexture(icon)
                         debuffFrame:ClearAllPoints()
-                        debuffFrame:SetPoint("BOTTOMLEFT", TargetFrameBackdrop, "TOPLEFT", visibleDebuffCount * 24, 4)
+                        local row = math.floor(visibleDebuffCount / MAX_AURAS_PER_ROW)
+                        local col = visibleDebuffCount % MAX_AURAS_PER_ROW
+                        debuffFrame:SetPoint("BOTTOMLEFT", TargetFrameBackdrop, "TOPLEFT", col * (AURA_SIZE + AURA_PADDING), row * (AURA_SIZE + AURA_PADDING) + 52)  -- 52 is the vertical offset
                         debuffFrame:Show()
                         visibleDebuffCount = visibleDebuffCount + 1
                     else
@@ -212,11 +242,12 @@ local function TargetFrameAuraUpdate()
         end
     end
 
+    -- Update Custom Debuffs
     local debuffCount = 0
     for i = 1, MAX_DEBUFFS do
         local name, icon, count, debuffType, duration, expirationTime, unitCaster = UnitDebuff("target", i)
         if name and unitCaster == "player" then
-            TargetDebuffUpdate(debuffCount + 1, {name = name, icon = icon, duration = duration, expirationTime = expirationTime})
+            TargetDebuffUpdate(debuffCount + 1, {name = name, icon = icon, count = count, duration = duration, expirationTime = expirationTime})
             debuffCount = debuffCount + 1
         end
     end
@@ -229,6 +260,7 @@ local function TargetFrameAuraUpdate()
     end
 end
 
+
 hooksecurefunc("TargetFrame_Update", TargetFrameAuraUpdate)
 hooksecurefunc("TargetFrame_UpdateAuras", TargetFrameAuraUpdate)
 
@@ -236,6 +268,15 @@ local TargetFrameAuraEventFrame = CreateFrame("Frame")
 TargetFrameAuraEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 TargetFrameAuraEventFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
 TargetFrameAuraEventFrame:SetScript("OnEvent", TargetFrameAuraUpdate)
+
+
+
+
+
+
+
+
+
 
 
 
