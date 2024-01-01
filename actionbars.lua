@@ -18,6 +18,7 @@ local function ActionbarUpdate()
 
     MainMenuBarLeftEndCap:Hide()
     MainMenuBarRightEndCap:Hide()
+
     MainMenuBarPageNumber:Hide()
     ActionBarUpButton:Hide()
     ActionBarDownButton:Hide()

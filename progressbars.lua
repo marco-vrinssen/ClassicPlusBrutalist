@@ -28,12 +28,12 @@ local function XPBarUpdate()
     local currentXP = UnitXP("player")
     local maxXP = UnitXPMax("player")
     local missingXP = maxXP - currentXP
-    local restedXP = GetXPExhaustion() or 0
     local xpPercent = floor((currentXP / maxXP) * 100)
+    local restedXP = GetXPExhaustion() or 0
     local restedPercent = floor((restedXP / maxXP) * 100)
 
-    local xpText = string.format("XP: |cffFFFFFF%d%%|r |cffFFFFFF(%d)|r\nMissing: |cffFFFFFF+%d|r\nRested: |cffFFFFFF%d%%|r |cffFFFFFF(%d)|r",
-        xpPercent, currentXP, missingXP, restedPercent, restedXP)
+    local xpText = string.format("|cff808080Total:|r |cffFFFFFF%d|r\n|cff808080Current:|r |cffFFFFFF%d|r\n|cff808080Missing:|r |cffFFFFFF%d|r\n|cff808080Progress:|r |cffFFFFFF%d%%|r\n|cff808080Rested:|r |cffFFFFFF%d%%|r",
+        maxXP, currentXP, missingXP, xpPercent, restedPercent)
 
     MainMenuExpBar:SetScript("OnEnter", function(self)
         GameTooltip:SetOwner(self, "ANCHOR_RIGHT")

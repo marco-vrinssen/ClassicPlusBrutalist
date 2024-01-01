@@ -1,8 +1,6 @@
 local function AutoLootUpdate()
-    if GetNumLootItems() > 0 then
-        for i = 1, GetNumLootItems() do
-            LootSlot(i)
-        end
+    for i = 1, GetNumLootItems() do
+        LootSlot(i)
     end
 end
 
