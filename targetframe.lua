@@ -186,7 +186,7 @@ local function CustomDebuffIcon(index, debuff)
     icon:Show()
 end
 
-local function CustomDebuffUpdate()
+local function TargetDebuffsUpdate()
     local MAX_DEBUFFS = 32
     local debuffCount = 0
 
@@ -206,45 +206,45 @@ local function CustomDebuffUpdate()
     end
 end
 
-hooksecurefunc("TargetFrame_Update", CustomDebuffUpdate)
-hooksecurefunc("TargetFrame_UpdateAuras", CustomDebuffUpdate)
+hooksecurefunc("TargetFrame_Update", TargetDebuffsUpdate)
+hooksecurefunc("TargetFrame_UpdateAuras", TargetDebuffsUpdate)
 
-local TargetFrameAuraEventFrame = CreateFrame("Frame")
-TargetFrameAuraEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-TargetFrameAuraEventFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
-TargetFrameAuraEventFrame:SetScript("OnEvent", CustomDebuffUpdate)
-
-
+local TargetDebuffsEventFrame = CreateFrame("Frame")
+TargetDebuffsEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+TargetDebuffsEventFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
+TargetDebuffsEventFrame:SetScript("OnEvent", TargetDebuffsUpdate)
 
 
-local function TargetAuraUpdate()
+
+
+local function TargetAurasUpdate()
     local AURA_OFFSET_Y = 2  -- Vertical offset
     local DEBUFF_OFFSET_X = 2  -- Horizontal offset for debuffs
 
-    local firstBuff = _G["TargetFrameBuff1"]
-    if firstBuff then
-        firstBuff:ClearAllPoints()
-        firstBuff:SetPoint("BOTTOMLEFT", TargetFrameBackdrop, "TOPLEFT", 2, AURA_OFFSET_Y)
+    local InitialBuff = _G["TargetFrameBuff1"]
+    if InitialBuff then
+        InitialBuff:ClearAllPoints()
+        InitialBuff:SetPoint("BOTTOMLEFT", TargetFrameBackdrop, "TOPLEFT", 2, AURA_OFFSET_Y)
     end
 
-    local firstDebuff = _G["TargetFrameDebuff1"]
-    if firstDebuff then
-        firstDebuff:ClearAllPoints()
-        if firstBuff then
-            firstDebuff:SetPoint("BOTTOMLEFT", firstBuff, "TOPLEFT", 0, AURA_OFFSET_Y)
+    local InitialDebuff = _G["TargetFrameDebuff1"]
+    if InitialDebuff then
+        InitialDebuff:ClearAllPoints()
+        if InitialBuff then
+            InitialDebuff:SetPoint("BOTTOMLEFT", InitialBuff, "TOPLEFT", 0, AURA_OFFSET_Y)
         else
-            firstDebuff:SetPoint("BOTTOMLEFT", TargetFrameBackdrop, "TOPLEFT", DEBUFF_OFFSET_X, AURA_OFFSET_Y)
+            InitialDebuff:SetPoint("BOTTOMLEFT", TargetFrameBackdrop, "TOPLEFT", DEBUFF_OFFSET_X, AURA_OFFSET_Y)
         end
     end
 end
 
-hooksecurefunc("TargetFrame_Update", TargetAuraUpdate)
-hooksecurefunc("TargetFrame_UpdateAuras", TargetAuraUpdate)
+hooksecurefunc("TargetFrame_Update", TargetAurasUpdate)
+hooksecurefunc("TargetFrame_UpdateAuras", TargetAurasUpdate)
 
-local TargetFrameAuraEventFrame = CreateFrame("Frame")
-TargetFrameAuraEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-TargetFrameAuraEventFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
-TargetFrameAuraEventFrame:SetScript("OnEvent", TargetAuraUpdate)
+local TargetAurasEventFrame = CreateFrame("Frame")
+TargetAurasEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+TargetAurasEventFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
+TargetAurasEventFrame:SetScript("OnEvent", TargetAurasUpdate)
 
 
 
