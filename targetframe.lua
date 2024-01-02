@@ -151,7 +151,7 @@ ToTFrameEventFrame:SetScript("OnEvent", ToTFrameUpdate)
 
 local CustomDebuffContainer = CreateFrame("Frame", "MyDebuffFrame", UIParent)
 CustomDebuffContainer:SetSize(40, 40)
-CustomDebuffContainer:SetPoint("BOTTOMLEFT", TargetFrameBackdrop, "TOPLEFT", 0, 52)
+CustomDebuffContainer:SetPoint("BOTTOMLEFT", TargetFrameBackdrop, "TOPLEFT", 0, 80)
 
 local function CustomDebuffIcon(index, debuff)
     local icon = CustomDebuffContainer["debuff" .. index]
