@@ -4,9 +4,7 @@ local function ConfigUpdate()
     SetCVar("WorldTextScale", 1.5)
     SetCVar("ffxDeath", 0)
     SetCVar("ffxGlow", 0)
-end
 
-local function SoundUpdate()
     MuteSoundFile(555124) -- Mechastrider Loop
     MuteSoundFile(567677) -- Bow Pullback 1
     MuteSoundFile(567675) -- Bow Pullback 2
@@ -20,7 +18,4 @@ end
 
 local ConfigEventFrame = CreateFrame("Frame")
 ConfigEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-ConfigEventFrame:SetScript("OnEvent", function()
-    ConfigUpdate()
-    SoundUpdate()
-end)
+ConfigEventFrame:SetScript("OnEvent", ConfigUpdate)

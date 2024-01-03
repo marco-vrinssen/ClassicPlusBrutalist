@@ -9,6 +9,7 @@ bags.lua
 castbar.lua
 chat.lua
 commands.lua
+config.lua
 items.lua
 micromenu.lua
 minimap.lua
@@ -17,6 +18,5 @@ playerframe.lua
 progressbars.lua
 questiesupport.lua
 resourcedisplay.lua
-system.lua
 targetframe.lua
 tooltips.lua
