@@ -11,7 +11,7 @@ end
 
 
 local function ChatUpdate()
-    local elementsToHide = {"ButtonFrame", "EditBoxLeft", "EditBoxMid", "EditBoxRight"}
+    local elementsToHide = {"ButtonFrame", "EditBoxLeft", "EditBoxMid", "EditBoxRight", "EditBoxHeaderSuffix"}
 
     local function ChatElementUpdate(frame)
         for _, element in ipairs(elementsToHide) do

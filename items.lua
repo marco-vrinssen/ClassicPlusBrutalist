@@ -12,7 +12,6 @@ AutoLootEventFrame:SetScript("OnEvent", AutoLootUpdate)
 
 
 local function LootConfigUpdate()
-    SetCVar("autoLootDefault", 1)
     SetCVar("lootUnderMouse", 0)
 end
 

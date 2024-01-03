@@ -149,77 +149,9 @@ ToTFrameEventFrame:SetScript("OnEvent", ToTFrameUpdate)
 
 
 
-local CustomDebuffContainer = CreateFrame("Frame", "MyDebuffFrame", UIParent)
-CustomDebuffContainer:SetSize(40, 40)
-CustomDebuffContainer:SetPoint("BOTTOMLEFT", TargetFrameBackdrop, "TOPLEFT", 0, 80)
-
-local function CustomDebuffIcon(index, debuff)
-    local icon = CustomDebuffContainer["debuff" .. index]
-
-    if not icon then
-        icon = CreateFrame("Frame", nil, CustomDebuffContainer)
-        icon:SetSize(32, 32)
-        icon.texture = icon:CreateTexture(nil, "BACKGROUND")
-        icon.texture:SetAllPoints(icon)
-
-        icon.cooldown = CreateFrame("Cooldown", nil, icon, "CooldownFrameTemplate")
-        icon.cooldown:SetAllPoints(icon)
-        icon.cooldown:SetDrawSwipe(false)
-
-        icon.stackText = icon:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-        icon.stackText:SetPoint("BOTTOMRIGHT", icon, "BOTTOMRIGHT", -2, 2)
-        icon.stackText:SetFont("GameFontNormal", 12, "OUTLINE")
-
-        CustomDebuffContainer["debuff" .. index] = icon
-    end
-
-    icon.texture:SetTexture(debuff.icon)
-    icon:SetPoint("LEFT", CustomDebuffContainer, "LEFT", (index - 1) * 36, 0)
-    icon.cooldown:SetCooldown(debuff.expirationTime - debuff.duration, debuff.duration)
-
-    if debuff.count and debuff.count > 0 then
-        icon.stackText:SetText(debuff.count)
-    else
-        icon.stackText:SetText("")  -- Clear text if no stacks
-    end
-    
-    icon:Show()
-end
-
-local function TargetDebuffsUpdate()
-    local MAX_DEBUFFS = 32
-    local debuffCount = 0
-
-    for i = 1, MAX_DEBUFFS do
-        local name, icon, count, _, duration, expirationTime, caster = UnitDebuff("target", i)
-        if name and caster == "player" then
-            CustomDebuffIcon(debuffCount + 1, {icon = icon, count = count, duration = duration, expirationTime = expirationTime})
-            debuffCount = debuffCount + 1
-        end
-    end
-
-    for i = debuffCount + 1, MAX_DEBUFFS do
-        local icon = CustomDebuffContainer["debuff" .. i]
-        if icon then
-            icon:Hide()
-        end
-    end
-end
-
-hooksecurefunc("TargetFrame_Update", TargetDebuffsUpdate)
-hooksecurefunc("TargetFrame_UpdateAuras", TargetDebuffsUpdate)
-
-local TargetDebuffsEventFrame = CreateFrame("Frame")
-TargetDebuffsEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-TargetDebuffsEventFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
-TargetDebuffsEventFrame:SetScript("OnEvent", TargetDebuffsUpdate)
-
-
-
-
 local function TargetAurasUpdate()
-    local AURA_OFFSET_Y = 2  -- Vertical offset
-    local DEBUFF_OFFSET_X = 2  -- Horizontal offset for debuffs
+    local AURA_OFFSET_Y = 2
+    local DEBUFF_OFFSET_X = 2
 
     local InitialBuff = _G["TargetFrameBuff1"]
     if InitialBuff then
@@ -367,3 +299,72 @@ TargetFrameConfigFrame:SetScript("OnEvent", function()
     SetCVar("showTargetOfTarget", "0")
     TARGET_FRAME_BUFFS_ON_TOP = true
 end)
+
+
+
+
+local DebuffTrackerContainer = CreateFrame("Frame", nil, UIParent)
+DebuffTrackerContainer:SetSize(32, 32)
+DebuffTrackerContainer:SetPoint("BOTTOMLEFT", TargetFrameBackdrop, "TOPLEFT", 0, 100)
+
+local function DebuffTrackerIcon(index, debuff)
+    local icon = DebuffTrackerContainer["debuff" .. index]
+
+    if not icon then
+        icon = CreateFrame("Frame", nil, DebuffTrackerContainer)
+        icon:SetSize(32, 32)
+        icon.texture = icon:CreateTexture(nil, "BACKGROUND")
+        icon.texture:SetAllPoints(icon)
+
+        icon.cooldown = CreateFrame("Cooldown", nil, icon, "CooldownFrameTemplate")
+        icon.cooldown:SetAllPoints(icon)
+        icon.cooldown:SetDrawSwipe(false)
+
+        icon.stackText = icon:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+        icon.stackText:SetPoint("BOTTOM", icon, "TOP", 0, 4)
+        icon.stackText:SetTextColor(1, 1, 1)
+        icon.stackText:SetFont("GameFontNormal", 12, "OUTLINE")
+
+        DebuffTrackerContainer["debuff" .. index] = icon
+    end
+
+    icon.texture:SetTexture(debuff.icon)
+    icon:SetPoint("LEFT", DebuffTrackerContainer, "LEFT", (index - 1) * 36, 0)
+    icon.cooldown:SetCooldown(debuff.expirationTime - debuff.duration, debuff.duration)
+
+    if debuff.count and debuff.count > 0 then
+        icon.stackText:SetText(debuff.count)
+    else
+        icon.stackText:SetText("")
+    end
+    
+    icon:Show()
+end
+
+local function DebuffTrackerUpdate()
+    local MAX_DEBUFFS = 32
+    local debuffCount = 0
+
+    for i = 1, MAX_DEBUFFS do
+        local name, icon, count, _, duration, expirationTime, caster = UnitDebuff("target", i)
+        if name and caster == "player" then
+            DebuffTrackerIcon(debuffCount + 1, {icon = icon, count = count, duration = duration, expirationTime = expirationTime})
+            debuffCount = debuffCount + 1
+        end
+    end
+
+    for i = debuffCount + 1, MAX_DEBUFFS do
+        local icon = DebuffTrackerContainer["debuff" .. i]
+        if icon then
+            icon:Hide()
+        end
+    end
+end
+
+hooksecurefunc("TargetFrame_Update", DebuffTrackerUpdate)
+hooksecurefunc("TargetFrame_UpdateAuras", DebuffTrackerUpdate)
+
+local DebuffTrackerEventFrame = CreateFrame("Frame")
+DebuffTrackerEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+DebuffTrackerEventFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
+DebuffTrackerEventFrame:SetScript("OnEvent", DebuffTrackerUpdate)
