@@ -85,6 +85,5 @@ local function MinimapConfigUpdate()
 end
 
 local MinimapConfigEventFrame = CreateFrame("Frame")
-MinimapConfigEventFrame:RegisterEvent("PLAYER_LOGIN")
 MinimapConfigEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 MinimapConfigEventFrame:SetScript("OnEvent", MinimapConfigUpdate)

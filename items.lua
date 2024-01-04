@@ -1,23 +1,14 @@
 local function AutoLootUpdate()
-    for i = 1, GetNumLootItems() do
-        LootSlot(i)
+    if GetCVar("autoLootDefault") == "1" then
+        for i = 1, GetNumLootItems() do
+            LootSlot(i)
+        end
     end
 end
 
 local AutoLootEventFrame = CreateFrame("Frame")
 AutoLootEventFrame:RegisterEvent("LOOT_READY")
 AutoLootEventFrame:SetScript("OnEvent", AutoLootUpdate)
-
-
-
-
-local function LootConfigUpdate()
-    SetCVar("lootUnderMouse", 0)
-end
-
-local LootConfigEventFrame = CreateFrame("Frame")
-LootConfigEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-LootConfigEventFrame:SetScript("OnEvent", LootConfigUpdate)
 
 
 
