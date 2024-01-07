@@ -9,7 +9,8 @@ local function MinimapUpdate()
     Minimap:ClearAllPoints()
     Minimap:SetPoint("TOPRIGHT", UIParent, "TOPRIGHT", -16, -16)
     Minimap:SetSize(140, 140)
-    Minimap:SetMaskTexture("Interface/ChatFrame/ChatFrameBackground") 
+
+    Minimap:SetMaskTexture("Interface\\Buttons\\WHITE8X8")
 
     GameTimeFrame:Hide()
     MinimapCompassTexture:SetTexture(nil)
@@ -44,6 +45,10 @@ local function MinimapUpdate()
     MiniMapBattlefieldBorder:Hide()
     MiniMapBattlefieldFrame:ClearAllPoints()
     MiniMapBattlefieldFrame:SetPoint("TOPRIGHT", Minimap, "BOTTOMRIGHT", 8, -4)
+
+    function GetMinimapShape()
+        return "SQUARE"
+    end
 end
 
 local MinimapEventFrame = CreateFrame("Frame")
@@ -69,21 +74,3 @@ local MinimapZoomEventFrame = CreateFrame("Frame", nil, Minimap)
 MinimapZoomEventFrame:SetAllPoints(Minimap)
 MinimapZoomEventFrame:EnableMouseWheel(true)
 MinimapZoomEventFrame:SetScript("OnMouseWheel", MinimapZoom)
-
-
-
-
-function GetMinimapShape()
-    return "SQUARE"
-end
-
-
-
-
-local function MinimapConfigUpdate()
-    SetCVar("rotateMinimap", 0)
-end
-
-local MinimapConfigEventFrame = CreateFrame("Frame")
-MinimapConfigEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-MinimapConfigEventFrame:SetScript("OnEvent", MinimapConfigUpdate)

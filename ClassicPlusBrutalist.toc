@@ -7,11 +7,11 @@
 bags.lua
 bars.lua
 chat.lua
+combatframe.lua
 config.lua
 items.lua
-map.lua
+maps.lua
 nameplates.lua
 playerframe.lua
-resourcedisplay.lua
 targetframe.lua
 tooltips.lua
