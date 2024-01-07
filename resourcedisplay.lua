@@ -58,8 +58,11 @@ ResourceDisplayEventFrame:RegisterUnitEvent("UNIT_HEALTH", "player")
 ResourceDisplayEventFrame:RegisterUnitEvent("UNIT_POWER_UPDATE", "player")
 ResourceDisplayEventFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
 ResourceDisplayEventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+ResourceDisplayEventFrame:RegisterEvent("PLAYER_LOGIN")
 ResourceDisplayEventFrame:SetScript("OnEvent", function(self, event, arg1)
-    if event == "PLAYER_REGEN_DISABLED" then
+    if event == "PLAYER_LOGIN" then
+        ResourceDisplayUpdate()
+    elseif event == "PLAYER_REGEN_DISABLED" then
         ResourceDisplayToggle(true)
     elseif event == "PLAYER_REGEN_ENABLED" then
         ResourceDisplayToggle(false)
@@ -69,8 +72,6 @@ ResourceDisplayEventFrame:SetScript("OnEvent", function(self, event, arg1)
         ResourceDisplayUpdate()
     end
 end)
-
-ResourceDisplayUpdate()
 
 
 
@@ -92,7 +93,6 @@ comboPointDisplay.fontString = comboPointDisplay:CreateFontString(nil, "ARTWORK"
 comboPointDisplay.fontString:SetPoint("CENTER")
 comboPointDisplay.fontString:SetText("")
 
-
 local fontPath = STANDARD_TEXT_FONT
 local fontSize = 24
 local fontOutline = "OUTLINE"
@@ -113,15 +113,15 @@ local function UpdateComboPoints()
 end
 
 local ComboPointDisplayEventFrame = CreateFrame("Frame")
+ComboPointDisplayEventFrame:RegisterEvent("PLAYER_LOGIN")
 ComboPointDisplayEventFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
 ComboPointDisplayEventFrame:RegisterEvent("UNIT_POWER_UPDATE")
 ComboPointDisplayEventFrame:SetScript("OnEvent", function(self, event, ...)
-    local unit = ...
-    if event == "UNIT_POWER_UPDATE" and unit == "player" then
+    if event == "PLAYER_LOGIN" then
+        UpdateComboPoints()
+    elseif event == "UNIT_POWER_UPDATE" and ... == "player" then
         UpdateComboPoints()
     elseif event == "PLAYER_TARGET_CHANGED" then
         UpdateComboPoints()
     end
 end)
-
-UpdateComboPoints()

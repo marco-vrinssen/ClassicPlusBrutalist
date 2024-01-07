@@ -4,19 +4,14 @@
 ## Version: 1.0
 ## Author: MIYANKO
 
-actionbars.lua
 bags.lua
-castbar.lua
+bars.lua
 chat.lua
-commands.lua
 config.lua
 items.lua
-micromenu.lua
-minimap.lua
+map.lua
 nameplates.lua
 playerframe.lua
-progressbars.lua
-questiesupport.lua
 resourcedisplay.lua
 targetframe.lua
 tooltips.lua
