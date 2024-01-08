@@ -10,7 +10,7 @@ chat.lua
 commands.lua
 config.lua
 items.lua
-maps.lua
+minimap.lua
 nameplates.lua
 playerframe.lua
 resourcedisplay.lua

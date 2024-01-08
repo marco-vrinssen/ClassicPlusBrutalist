@@ -52,7 +52,7 @@ local function ChatUpdate()
         local chatFrame = _G["ChatFrame" .. i]
         ChatFrameUpdate(chatFrame)
         HookChatTab(_G["ChatFrame" .. i .. "Tab"])
-    end
+    end 
 end
 
 local function OnTemporaryWindowOpen(chatType)
