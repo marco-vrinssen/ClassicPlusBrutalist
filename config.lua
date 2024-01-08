@@ -1,9 +1,20 @@
-local function ConfigUpdate()
+local function GameSettingsUpdate()
     SetCVar("scriptErrors", 1)
     SetCVar("rawMouseEnable", 1)
     SetCVar("WorldTextScale", 1.5)
     SetCVar("ffxDeath", 0)
     SetCVar("ffxGlow", 0)
+end
+
+local GameSettingsEventFrame = CreateFrame("Frame")
+GameSettingsEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+GameSettingsEventFrame:SetScript("OnEvent", GameSettingsUpdate)
+
+
+
+
+local function SoundUpdate()
+    SetCVar("Sound_OutputDriverIndex", 0)
 
     MuteSoundFile(555124) -- Mechastrider Loop
     MuteSoundFile(567677) -- Bow Pullback 1
@@ -16,9 +27,9 @@ local function ConfigUpdate()
     MuteSoundFile(567523) -- Keyring Close
 end
 
-local ConfigEventFrame = CreateFrame("Frame")
-ConfigEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-ConfigEventFrame:SetScript("OnEvent", ConfigUpdate)
+local SoundEventFrame = CreateFrame("Frame")
+SoundEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+SoundEventFrame:SetScript("OnEvent", SoundUpdate)
 
 
 
