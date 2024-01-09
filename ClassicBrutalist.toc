@@ -1,6 +1,6 @@
 ## Interface: 11500
-## Title: Classic+ Brutalist
-## Notes: Lightweight, native user interface and experience enhancements.
+## Title: Classic Brutalist
+## Notes: Interface and user experience modifications.
 ## Version: 1.0
 ## Author: MIYANKO
 

@@ -1,42 +1,40 @@
+local CustomMinimapBackdrop = CreateFrame("Frame", nil, Minimap, "BackdropTemplate")
+CustomMinimapBackdrop:SetPoint("TOPLEFT", Minimap, "TOPLEFT", -4, 4)
+CustomMinimapBackdrop:SetPoint("BOTTOMRIGHT", Minimap, "BOTTOMRIGHT", 4, -4)
+CustomMinimapBackdrop:SetBackdrop({edgeFile = "Interface/Tooltips/UI-Tooltip-Border", edgeSize = 14})
+CustomMinimapBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
+CustomMinimapBackdrop:SetFrameStrata("LOW")
+
 local function MinimapUpdate()
     Minimap:ClearAllPoints()
     Minimap:SetPoint("TOPRIGHT", UIParent, "TOPRIGHT", -16, -16)
     Minimap:SetSize(140, 140)
 
+    Minimap:SetMaskTexture("Interface/Buttons/WHITE8X8")
+
     GameTimeFrame:Hide()
     MinimapCompassTexture:SetTexture(nil)
     MinimapZoneTextButton:Hide()
-    MinimapToggleButton:Hide()
-    MinimapBorderTop:Hide()
-    MinimapBackdrop:Hide()
-    MinimapZoomIn:Hide()
-    MinimapZoomOut:Hide()
-
-    if MinimapTrackingFrame then
-        MinimapTrackingFrame:ClearAllPoints()
-        MinimapTrackingFrame:SetPoint("CENTER", UIParent, "TOPLEFT", -8, 0)
-        self:SetScript("OnUpdate", nil)
-    end
 
     TimeManagerClockButton:ClearAllPoints()
     TimeManagerClockButton:SetPoint("TOP", Minimap, "BOTTOM", 0, 0)
-    TimeManagerClockButton:SetScale(1.25)
-
-    MiniMapMailFrame:ClearAllPoints()
-    MiniMapMailFrame:SetPoint("CENTER", Minimap, "BOTTOM", -40, 0)
-
-    MiniMapBattlefieldFrame:ClearAllPoints()
-    MiniMapBattlefieldFrame:SetPoint("CENTER", Minimap, "BOTTOM", 40, 0)
+    TimeManagerClockButton:SetScale(1.5)
 
     for i = 1, TimeManagerClockButton:GetNumRegions() do
         local region = select(i, TimeManagerClockButton:GetRegions())
-        if region and region:IsObjectType("Texture") then
-            region:SetTexture(nil)
         end
     end
 
+    MiniMapMailBorder:Hide()
+    MiniMapMailFrame:ClearAllPoints()
+    MiniMapMailFrame:SetPoint("TOPLEFT", Minimap, "BOTTOMLEFT", -8, -4)
+
+    MiniMapBattlefieldBorder:Hide()
+    MiniMapBattlefieldFrame:ClearAllPoints()
+    MiniMapBattlefieldFrame:SetPoint("TOPRIGHT", Minimap, "BOTTOMRIGHT", 8, -4)
+
     function GetMinimapShape()
-        return "ROUND"
+        return "SQUARE"
     end
 end
 

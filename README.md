@@ -1,36 +1,22 @@
-# Classic+ Brutalist
+# Classic Brutalist
 
-### Addon for World of Warcraft Classic 1.15.0
+### Addon for World of Warcraft Classic
 
-### Overview
-- A resource-efficient add-on that uses only 380kb of memory to customize and enhance the native user interface and user experience.
-- The general intention for this addon was to avoid having to download a whole catalog of addons, which are often bloated with features.
-- Primarily download this addon as well as Questie and Auctionator, and you are ready to play.
-- Gives the overall user interface a more simple, streamlined look and feel, while maintaining the integrity of the game's overall art direction by using only native game textures and components.
-- Adds simple but effective quality of life features with minimal processing requirements.
+### Summary
+This add-on exemplifies efficiency and simplicity, adopting a brutalist approach to enhance the gaming experience. Tailored primarily to my personal preferences, it may not suit everyone; however, I welcome everyone to try it and provide feedback. Its main goal is to consolidate several complex add-ons into a single, streamlined option. The user interface is redesigned into a minimalistic yet practical style, faithfully maintaining the game's original art style by utilizing existing game elements. It introduces key quality-of-life features with minimal processing demand, concentrating on essential functionalities without superfluous details.
 
-### User Interface Customization:
-- Redesigned unit frames with a minimalist aesthetic, utilizing only internal textures for consistent art direction, aligned with action buttons.
-- Overhauled action bars featuring new recoloring schemes for enhanced visibility of usable spells and abilities.
-- Customized chat interface with streamlined functionality and several commands for efficient communication.
-- Micromenu and bag slot visibility toggled off, with bag slots appearing only when bags are accessed (via "B" key).
-- Square-shaped minimap for optimized space usage and aesthetic consistency.
-
-### Inventory Management:
-- Automated selling of grey (junk) items and gear repair upon interaction with relevant NPCs.
-- Reorganized bag containers for improved item management and accessibility.
-- Instant autolooting enabled by default for efficient resource collection.
-
-### Player Experience and Health Features:
-- Experience bar integrated into the top of the character pane for immediate visibility.
-- Health reminder system to encourage breaks and maintain player well-being during extended gaming sessions, toggleable as per user preference.
-
-### Combat and Encounter Enhancements:
-- Refined player and target frames, redesigned using internal textures for a cohesive look.
-- Enhanced nameplates with integrated debuff tracking for improved combat awareness.
-- Personal Resource Display activated during combat, including real-time tracking of combo points.
-- Active debuff tracking on target frames to monitor enemy status efficiently.
-
-### Audio and Visual Adjustments:
-- Disabling of specific in-game glow and death effects for a cleaner visual experience.
-- Option to mute repetitive or distracting sounds such as bow pulling and mechastrider engine loops.
+### Feature Overview
+- Simplified and centralized action bars, including new coloring for actionable items.
+- Micromenu buttons hidden, with keyboard shortcuts as the primary method of use.
+- Bag buttons hidden; they appear only when bags are opened by pressing "B." Bag containers rearranged for better accessibility.
+- Redesigned unit frames featuring a simple aesthetic, using only internal textures for a consistent art direction.
+- Debuff tracking positioned at the left center of the screen, integrated with the target frame.
+- Enhanced nameplates with built-in debuff tracking.
+- Personal Resource Display activated in combat, with real-time tracking of combo points.
+- Customized chat interface with streamlined functionality and various commands for efficient communication.
+- Redesigned square minimap for improved visibility and alignment with unit frames and action bars.
+- Automated selling of grey items and gear repair upon interacting with vendor NPCs.
+- Instant item looting when auto looting is enabled.
+- Experience and reputation bars displayed at the top of the screen when active.
+- Specific in-game glow and death effects disabled for subtler graphical rendering.
+- Option to mute repetitive or distracting sounds, such as bow pulling and mechastrider engine noises.
